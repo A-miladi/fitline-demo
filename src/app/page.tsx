@@ -1,10 +1,11 @@
-import Navbar from "@/components/navbar";
-import Image from "next/image";
+"use client";
+
+import { HomePage } from "@/screens/Home";
 
 export default function Home() {
   return (
     <div className="" dir="rtl">
-      <Navbar />
+      <HomePage />
     </div>
   );
 }

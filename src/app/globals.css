@@ -8,8 +8,15 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: #583f99;
+  --color-secondary: #32bcce;
 }
-
+.gradient-text {
+  background: linear-gradient(to right, #583f99, #32bcce);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 /* Morabba Font Family */
 @font-face {
   font-family: "Morabba";

@@ -1,17 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import LOGO from "../../../public/images/logo.png";
+import { useEffect, useState } from "react";
 import ArrowDown from "../../../public/icon/ArrowDown";
 import BurgerMenu from "../../../public/icon/BurgerMenu";
 import Close from "../../../public/icon/Close";
+import Login from "../../../public/icon/Login";
 
 const ScreenLinks = [
-  { name: "صفحه اصلی", link: "/" },
   {
-    name: "تخصص کاری",
+    name: "خدمات ما",
     link: "/project",
     children: [
       { name: "احداث", link: "/project?projectName=construction" },
@@ -22,13 +19,6 @@ const ScreenLinks = [
   {
     name: "درباره ما",
     link: "/about",
-    children: [
-      { name: "تاریخچه", link: "/about?detail=history" },
-      { name: "رزومه شرکت", link: "/about?detail=resume" },
-      { name: "گواهینامه ها", link: "/about?detail=certificate" },
-      { name: "کارفرمایان", link: "/about?detail=masters" },
-      { name: "تقدیر نامه ها", link: "/about?detail=appreciation" },
-    ],
   },
   {
     name: "شرکت های تابعه",
@@ -119,22 +109,15 @@ function Navbar() {
 
   return (
     <>
-      {/* Top Contact Bar */}
-
       {/* Main Navigation */}
-      <header className="w-full h-14 flex items-center justify-center border-b sticky z-50 bg-white top-0 shadow-lg shadow-[rgba(0,0,0,0.2)]">
-        <div className="container h-full w-full flex justify-between items-center px-4 md:px-0">
-          <div className="w-20 h-full py-1">
-            <Image
-              src={LOGO}
-              alt="LOGO"
-              className="w-full h-full"
-              loading="lazy"
-            />
-          </div>
+      <header className="w-full h-14 flex items-center justify-center sticky z-50 bg-primary/10 top-0 shadow-lg shadow-[rgba(0,0,0,0.1)]">
+        <div className="max-w-[1225px] h-full w-full flex justify-between items-center px-4 md:px-0">
+          <h1 className="font-extrabold font-mono text-2xl h-full flex items-center justify-center gradient-text">
+            FITLINE
+          </h1>
 
           {/* Desktop Navigation */}
-          <ul className="hidden lg:flex items-center justify-end gap-6 h-full relative w-3/4">
+          <ul className="hidden lg:flex items-center justify-end gap-6 h-full relative">
             {ScreenLinks.map((item, idx) => (
               <li
                 key={idx}
@@ -144,7 +127,7 @@ function Navbar() {
               >
                 <button
                   onClick={() => handleNavigation(item.link)}
-                  className={`font-medium cursor-pointer text-black flex items-center h-full justify-center px-2 ${
+                  className={`font-semibold font-morabba cursor-pointer text-primary flex items-center h-full justify-center px-2 ${
                     (activeLink === idx || isLinkActive(item.link)) &&
                     "border-b-2 border-[#274272]"
                   }`}
@@ -185,6 +168,10 @@ function Navbar() {
             ) : (
               <BurgerMenu color="black" />
             )}
+          </button>
+          <button className="border-[2px] cursor-pointer flex items-center gap-1 justify-center text-lg text-primary rounded-xl border-primary px-4 h-9">
+            <Login color="#583f99" />
+            <p className="pb-1"> ورود و ثبت‌‌نام</p>
           </button>
         </div>
       </header>
