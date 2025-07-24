@@ -9,44 +9,29 @@ import Login from "../../../public/icon/Login";
 const ScreenLinks = [
   {
     name: "خدمات ما",
-    link: "/project",
+    link: "",
     children: [
-      { name: "احداث", link: "/project?projectName=construction" },
-      { name: "باز سازی", link: "/project?projectName=reconstruction" },
-      { name: "راه سازی", link: "/project?projectName=way" },
+      { name: "احداث", link: "" },
+      { name: "باز سازی", link: "" },
+      { name: "راه سازی", link: "" },
     ],
   },
   {
     name: "درباره ما",
-    link: "/about",
+    link: "",
   },
   {
     name: "شرکت های تابعه",
-    link: "/companies",
+    link: "",
     children: [
-      { name: "زرین سازه آریا", link: "/companies/arya" },
-      { name: "تحکیم عمران قرن", link: "/companies/gharn" },
-      { name: "عمران دژ آبنوس", link: "/companies/abnous" },
-      { name: "چکاد قالب پرشیا", link: "/companies" },
+      { name: "زرین سازه آریا", link: "" },
+      { name: "تحکیم عمران قرن", link: "" },
+      { name: "عمران دژ آبنوس", link: "" },
+      { name: "چکاد قالب پرشیا", link: "" },
     ],
   },
-  { name: "ارتباط با ما", link: "/contact" },
+  { name: "ارتباط با ما", link: "" },
 ];
-
-// const contactInfo = [
-//   {
-//     icon: <FaPhone className="text-blue-200" size={16} />,
-//     link: "tel:021-88888008",
-//   },
-//   {
-//     icon: <FaEnvelope className="text-blue-200" size={16} />,
-//     link: "mailto:info@omranhesar.com",
-//   },
-//   {
-//     icon: <FaInstagram className="text-blue-200" size={16} />,
-//     link: "https://instagram.com",
-//   },
-// ];
 
 function Navbar() {
   const pathname = usePathname();
@@ -251,18 +236,7 @@ function Navbar() {
                 ادرس دفتر مرکزی: تهران-بلوار نلسون ماندلا (جردن) خیابان پدیدار-
                 پلاک ۶۵
               </p>
-              <div className="flex gap-4">
-                {/* {contactInfo.map((i, idx) => (
-                  <a
-                    key={idx}
-                    href={i.link}
-                    className="bg-blue-600 p-2 rounded-full hover:bg-blue-800"
-                    target="_blank"
-                  >
-                    {i.icon}
-                  </a>
-                ))} */}
-              </div>
+              <div className="flex gap-4"></div>
             </div>
           </div>
         </div>
