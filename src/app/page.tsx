@@ -1,6 +1,6 @@
 "use client";
 
-import { HomePage } from "@/screens/Home";
+import { HomePage } from "@/screens/FirstPage";
 
 export default function Home() {
   return (
