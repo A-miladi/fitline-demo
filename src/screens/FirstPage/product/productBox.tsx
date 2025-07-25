@@ -19,11 +19,11 @@ export default function ProductBox() {
           key={idx}
           className="flex hover:-translate-y-1.5 justify-around transition-all duration-300 cursor-pointer overflow-hidden relative mt-4 md:mt-8 flex-col items-center h-72 hover:bg-secondary/20 bg-gradient-to-b from-secondary/20 to-neutral-50 border-t-2 border-secondary/40 rounded-xl shadow-xl w-full md:w-1/4"
         >
-          <div className="h-[50%]">
+          <div className="h-1/2 flex w-1/2">
             <Image
               src={i.image}
               alt={i.title}
-              className="h-full w-full object-cover"
+              className="h-full md:w-full md:object-cover"
               loading="lazy"
             />
           </div>
