@@ -13,11 +13,11 @@ const data = [
 ];
 export default function ProductBox() {
   return (
-    <div className="flex justify-between gap-4 items-center w-full">
+    <div className="flex max-md:flex-col justify-between md:gap-4 items-center w-full">
       {data.map((i, idx) => (
         <div
           key={idx}
-          className="flex hover:scale-105 justify-around transition-all duration-300 cursor-pointer overflow-hidden relative mt-8 flex-col items-center h-64 hover:bg-secondary/40 bg-secondary/10 rounded-xl shadow-xl w-1/4"
+          className="flex hover:-translate-y-1.5 justify-around transition-all duration-300 cursor-pointer overflow-hidden relative mt-4 md:mt-8 flex-col items-center h-72 hover:bg-secondary/20 bg-gradient-to-b from-secondary/20 to-neutral-50 border-t-2 border-secondary/40 rounded-xl shadow-xl w-full md:w-1/4"
         >
           <div className="h-[50%]">
             <Image

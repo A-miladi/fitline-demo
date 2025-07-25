@@ -2,6 +2,7 @@
 import Navbar from "@/components/navbar";
 import ImageSlider from "@/components/slider";
 import Product from "./product";
+import Footer from "@/components/footer";
 
 export function HomePage() {
   return (
@@ -9,6 +10,7 @@ export function HomePage() {
       <Navbar />
       <ImageSlider />
       <Product />
+      <Footer />
     </main>
   );
 }

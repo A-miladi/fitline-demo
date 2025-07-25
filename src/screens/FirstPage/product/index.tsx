@@ -3,7 +3,7 @@ import ProductBox from "./productBox";
 
 export default function Product() {
   return (
-    <div className="flex items-center justify-center flex-col max-w-[1225px] w-full mx-auto">
+    <div className="flex items-center justify-center flex-col max-w-[1225px] w-full mx-auto px-4 mt-24 mb-28">
       <h2 className="text-primary text-3xl font-morabba font-extrabold text-right w-full border-r-4 border-secondary pr-4">
         خدمات مجموعه
       </h2>

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Image1 from "../../public/images/image.jpg";
-import Image2 from "../../public/images/image.jpg";
+import Image2 from "../../public/images/image2.jpg";
 
 export default function ImageSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -51,7 +51,7 @@ export default function ImageSlider() {
   };
 
   return (
-    <div className="relative my-12 rounded-2xl shadow-xl shadow-[rgba(1,1,1,0.2)] max-w-[1225px] mx-auto h-[45vh] overflow-hidden">
+    <div className="relative mb-12 md:my-12 md:rounded-2xl shadow-xl shadow-[rgba(1,1,1,0.2)] max-w-[1225px] mx-auto h-[45vh] overflow-hidden">
       {/* Slides with fade effect */}
       <div className="relative w-full h-full ">
         {slides.map((slide, index) => (
