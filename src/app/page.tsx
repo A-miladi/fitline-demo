@@ -2,6 +2,11 @@
 
 import Navbar from "@/components/navbar";
 import Link from "next/link";
+import MASSAGE from "../../public/images/massage.png";
+import VECTOR1 from "../../public/images/sport1.png";
+import VECTOR2 from "../../public/images/sport2.png";
+import OTHERS from "../../public/images/others.png";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -22,12 +27,12 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/appointment">
-                <button className="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-lg">
+                <button className="bg-primary text-white px-4 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-lg">
                   رزرو نوبت
                 </button>
               </Link>
               <Link href="/consultation">
-                <button className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200 text-lg">
+                <button className="border-2 border-primary text-primary px-4 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200 text-lg">
                   مشاوره رایگان
                 </button>
               </Link>
@@ -49,9 +54,9 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300 cursor-pointer">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🏃‍♂️</span>
+                <Image src={VECTOR2} alt="" className="w-11" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3 font-morabba">
                 حرکات اصلاحی
@@ -66,9 +71,9 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300 cursor-pointer">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">⚽</span>
+                <Image src={VECTOR1} alt="" className="w-11" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3 font-morabba">
                 توانبخشی ورزشی
@@ -83,9 +88,9 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300 cursor-pointer">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">💆‍♀️</span>
+                <Image src={MASSAGE} alt="" className="w-11" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3 font-morabba">
                 ماساژ درمانی
@@ -100,9 +105,9 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300 cursor-pointer">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🎯</span>
+                <Image src={OTHERS} alt="" className="w-11" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3 font-morabba">
                 سایر خدمات
@@ -245,12 +250,12 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/appointment">
-              <button className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200">
+              <button className="bg-primary text-white px-4 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200">
                 رزرو نوبت
               </button>
             </Link>
             <Link href="/consultation">
-              <button className="border-2 border-primary text-primary px-8 py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200">
+              <button className="border-2 border-primary text-primary px-4 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200">
                 مشاوره رایگان
               </button>
             </Link>
