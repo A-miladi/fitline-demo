@@ -1,4 +1,7 @@
 import Navbar from "@/components/navbar";
+import DOCTOR from "../../../public/images/Doctor1.jpg";
+import DOCTOR1 from "../../../public/images/Doctor2.jpg";
+import Image from "next/image";
 
 const specialists = [
   {
@@ -7,7 +10,7 @@ const specialists = [
     title: "فیزیوتراپیست ارشد",
     experience: "۱۵ سال تجربه",
     specialization: "حرکات اصلاحی و توانبخشی ورزشی",
-    image: "/images/specialist-1.jpg",
+    image: DOCTOR,
     description:
       "متخصص در درمان آسیب‌های ورزشی و حرکات اصلاحی با بیش از ۱۵ سال تجربه در مراکز درمانی معتبر.",
   },
@@ -17,7 +20,7 @@ const specialists = [
     title: "کارشناس حرکات اصلاحی",
     experience: "۱۲ سال تجربه",
     specialization: "اصلاح ناهنجاری‌های اسکلتی-عضلانی",
-    image: "/images/specialist-2.jpg",
+    image: DOCTOR1,
     description:
       "متخصص در تشخیص و درمان ناهنجاری‌های ستون فقرات و اندام‌های فوقانی و تحتانی.",
   },
@@ -27,7 +30,7 @@ const specialists = [
     title: "مربی ورزشی ارشد",
     experience: "۱۰ سال تجربه",
     specialization: "برنامه‌ریزی تمرینی و بازگشت به ورزش",
-    image: "/images/specialist-3.jpg",
+    image: DOCTOR,
     description:
       "متخصص در طراحی برنامه‌های تمرینی شخصی‌سازی شده برای بازگشت به فعالیت‌های ورزشی.",
   },
@@ -37,7 +40,7 @@ const specialists = [
     title: "متخصص ماساژ درمانی",
     experience: "۸ سال تجربه",
     specialization: "ماساژ تخصصی و ریلکسیشن",
-    image: "/images/specialist-4.jpg",
+    image: DOCTOR1,
     description:
       "متخصص در انواع ماساژ درمانی و تکنیک‌های آرامش‌بخش برای کاهش استرس و درد.",
   },
@@ -47,7 +50,7 @@ const specialists = [
     title: "فیزیوتراپیست ورزشی",
     experience: "۱۳ سال تجربه",
     specialization: "توانبخشی آسیب‌های ورزشی",
-    image: "/images/specialist-5.jpg",
+    image: DOCTOR,
     description:
       "متخصص در درمان و توانبخشی آسیب‌های ورزشی با استفاده از جدیدترین تکنیک‌های درمانی.",
   },
@@ -57,7 +60,7 @@ const specialists = [
     title: "کارشناس تغذیه ورزشی",
     experience: "۹ سال تجربه",
     specialization: "تغذیه و مکمل‌های ورزشی",
-    image: "/images/specialist-6.jpg",
+    image: DOCTOR1,
     description: "متخصص در برنامه‌ریزی تغذیه‌ای برای ورزشکاران و افراد فعال.",
   },
 ];
@@ -92,11 +95,11 @@ export default function SpecialistsPage() {
                 className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="h-64 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <div className="w-32 h-32 bg-primary/30 rounded-full flex items-center justify-center">
-                    <span className="text-4xl font-bold text-primary">
-                      {specialist.name.split(" ")[0].charAt(0)}
-                    </span>
-                  </div>
+                  <Image
+                    src={specialist.image}
+                    alt={specialist.name}
+                    className="w-32 h-32 rounded-full shadow-lg shadow-primary/40"
+                  />
                 </div>
 
                 <div className="p-6">

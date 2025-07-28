@@ -17,7 +17,7 @@ export default function HomePage() {
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 font-morabba">
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 font-morabba">
               مرکز تخصصی
               <span className="gradient-text"> فیت‌لاین</span>
             </h1>
@@ -25,14 +25,14 @@ export default function HomePage() {
               ارائه خدمات تخصصی حرکات اصلاحی، توانبخشی ورزشی و ماساژ درمانی با
               بهره‌گیری از متخصصان مجرب و تجهیزات پیشرفته
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-2 justify-center">
               <Link href="/appointment">
-                <button className="bg-primary text-white px-4 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-lg">
+                <button className="bg-primary text-white w-full md:w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-lg">
                   رزرو نوبت
                 </button>
               </Link>
               <Link href="/consultation">
-                <button className="border-2 border-primary text-primary px-4 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200 text-lg">
+                <button className="border-2 border-primary text-primary w-full md:w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200 text-lg">
                   مشاوره رایگان
                 </button>
               </Link>
@@ -248,14 +248,14 @@ export default function HomePage() {
           <p className="text-gray-600 mb-8 text-lg">
             همین امروز با ما تماس بگیرید و مشاوره رایگان دریافت کنید
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-2 justify-center">
             <Link href="/appointment">
-              <button className="bg-primary text-white px-4 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200">
+              <button className="bg-primary text-white w-full md:w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200">
                 رزرو نوبت
               </button>
             </Link>
             <Link href="/consultation">
-              <button className="border-2 border-primary text-primary px-4 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200">
+              <button className="border-2 border-primary text-primary w-full md:w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200">
                 مشاوره رایگان
               </button>
             </Link>
