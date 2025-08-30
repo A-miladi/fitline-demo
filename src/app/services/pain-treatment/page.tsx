@@ -1,7 +1,7 @@
 import Navbar from "@/components/navbar";
 import Link from "next/link";
 
-export default function SportsRehabilitationPage() {
+export default function PainTreatmentPage() {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
@@ -11,11 +11,11 @@ export default function SportsRehabilitationPage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-morabba">
-              توانبخشی ورزشی و بازگشت به ورزش
+              درمان دردهای اسکلتی-عضلانی
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              بازگشت ایمن و تدریجی به فعالیت‌های ورزشی پس از آسیب، تحت نظر
-              متخصصین مجرب
+              کاهش و درمان دردهای ناشی از ناهنجاری‌های اسکلتی-عضلانی با تجویز و
+              ارجاع پزشک متخصص
             </p>
           </div>
         </div>
@@ -27,31 +27,30 @@ export default function SportsRehabilitationPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6 font-morabba">
-                خدمات توانبخشی ورزشی در مرکز راه تناسب
+                خدمات درمان دردهای اسکلتی-عضلانی
               </h2>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  آسیب‌های ورزشی می‌توانند مسیر پیشرفت ورزشی شما را متوقف کنند.
-                  در مرکز <strong>راه تناسب</strong>، با بهره‌گیری از متخصصین
-                  مجرب و استفاده از روش‌های علمی روز دنیا، به شما کمک می‌کنیم تا
-                  به صورت ایمن و مؤثر به ورزش بازگردید.
+                  دردهای اسکلتی-عضلانی اغلب ناشی از ناهنجاری‌های ساختاری،
+                  الگوهای حرکتی نادرست یا عدم تعادل عضلانی هستند. در مرکز
+                  <strong> راه تناسب</strong>، با همکاری پزشکان متخصص، به درمان
+                  ریشه‌ای این دردها می‌پردازیم.
                 </p>
                 <p>
-                  برنامه‌های توانبخشی ما بر اساس ارزیابی دقیق نوع آسیب، سطح
-                  آمادگی جسمانی و اهداف ورزشی شما طراحی می‌شود. ما نه تنها به
-                  درمان آسیب فعلی می‌پردازیم، بلکه با تقویت نقاط ضعف و بهبود
-                  تکنیک‌های حرکتی، از آسیب‌های آینده پیشگیری می‌کنیم.
+                  رویکرد ما در درمان دردها، ترکیبی از حرکات اصلاحی، تکنیک‌های
+                  کاهش درد و آموزش الگوهای حرکتی صحیح است. تمام برنامه‌های
+                  درمانی پس از ارزیابی دقیق و با تجویز پزشک متخصص طراحی می‌شوند.
                 </p>
                 <p>
-                  <strong>هدف نهایی ما</strong> بازگرداندن شما به میادین ورزشی
-                  با عملکردی بهتر و آمادگی جسمانی بالاتر از قبل است.
+                  هدف ما نه تنها کاهش درد، بلکه شناسایی و درمان علت اصلی ایجاد
+                  درد برای جلوگیری از بازگشت آن است.
                 </p>
               </div>
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6 font-morabba">
-                آسیب‌های قابل درمان
+                انواع دردهای قابل درمان
               </h3>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3 space-x-reverse">
@@ -60,10 +59,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های شانه
+                      دردهای ستون فقرات
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      پارگی روتاتور کاف، دررفتگی، تاندونیت
+                      کمردرد، گردن درد، دردهای ناحیه توراسیک
                     </p>
                   </div>
                 </div>
@@ -74,10 +73,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های آرنج
+                      دردهای مفاصل
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      تنیس البو، گلف البو، کشیدگی تاندون
+                      آرتروز، دردهای زانو، شانه، لگن و مچ
                     </p>
                   </div>
                 </div>
@@ -88,10 +87,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های لگن
+                      دردهای عضلانی
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      بورسیت، کشیدگی عضلات، سندرم ایلیوتیبیال باند
+                      فیبرومیالژیا، میوفاشیال پین، کشیدگی عضلات
                     </p>
                   </div>
                 </div>
@@ -102,10 +101,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های زانو
+                      دردهای ناشی از ناهنجاری
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      پارگی رباط صلیبی، آسیب منیسک، تاندونیت
+                      دردهای ناشی از اسکولیوز، لوردوز، کایفوز
                     </p>
                   </div>
                 </div>
@@ -116,10 +115,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های مچ پا
+                      دردهای وضعیتی
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      پیچ خوردگی، پارگی رباط، التهاب تاندون
+                      دردهای ناشی از وضعیت‌های نامناسب کاری و روزمره
                     </p>
                   </div>
                 </div>
@@ -129,19 +128,19 @@ export default function SportsRehabilitationPage() {
         </div>
       </section>
 
-      {/* Rehabilitation Phases */}
-      <section className="bg-white py-16">
+      {/* Approach Section */}
+      <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 font-morabba">
-              فرآیند توانبخشی تخصصی
+              رویکرد درمانی ما
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              برنامه‌ای جامع و علمی برای بازگشت ایمن به ورزش
+              روش‌های علمی و تخصصی برای درمان مؤثر دردها
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white text-xl font-bold">۱</span>
@@ -150,7 +149,7 @@ export default function SportsRehabilitationPage() {
                 ارزیابی دقیق
               </h3>
               <p className="text-gray-600 text-sm">
-                بررسی کامل آسیب، تست‌های عملکردی و تعیین سطح آمادگی
+                بررسی کامل وضعیت بدنی و تشخیص علت اصلی درد
               </p>
             </div>
 
@@ -159,10 +158,10 @@ export default function SportsRehabilitationPage() {
                 <span className="text-white text-xl font-bold">۲</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                کاهش درد و التهاب
+                همکاری با پزشک
               </h3>
               <p className="text-gray-600 text-sm">
-                استفاده از روش‌های مختلف برای کنترل درد و کاهش التهاب
+                دریافت تجویز و برنامه درمانی از پزشک متخصص
               </p>
             </div>
 
@@ -171,10 +170,10 @@ export default function SportsRehabilitationPage() {
                 <span className="text-white text-xl font-bold">۳</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                بازتوانی و تقویت
+                درمان تخصصی
               </h3>
               <p className="text-gray-600 text-sm">
-                تمرینات پیشرونده برای بازگرداندن قدرت و انعطاف‌پذیری
+                اجرای تمرینات و تکنیک‌های کاهش درد تحت نظارت متخصص
               </p>
             </div>
 
@@ -183,64 +182,66 @@ export default function SportsRehabilitationPage() {
                 <span className="text-white text-xl font-bold">۴</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                بازگشت تدریجی
+                پیشگیری از بازگشت
               </h3>
               <p className="text-gray-600 text-sm">
-                بازگشت پلکانی به فعالیت ورزشی با نظارت مستمر
+                آموزش روش‌های پیشگیری و حفظ نتایج درمان
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Approach Section */}
-      <section className="py-16 bg-gray-100">
+      {/* Collaboration Section */}
+      <section className="py-16 bg-blue-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 font-morabba">
-              رویکرد منحصر به فرد ما
+              همکاری با پزشکان متخصص
             </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              رویکردی بین‌رشته‌ای برای درمان مؤثر دردها
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🎯 برنامه شخصی‌سازی شده
+                👨‍⚕️ ارجاع پزشکی
               </h3>
               <p className="text-gray-600">
-                هر برنامه توانبخشی بر اساس شرایط خاص شما طراحی می‌شود. نوع آسیب،
-                سطح ورزشی، اهداف و محدودیت‌های شما در طراحی برنامه در نظر گرفته
-                می‌شوند.
+                تمامی برنامه‌های درمانی پس از معاینه و تشخیص پزشک متخصص و با
+                دریافت ارجاع مناسب طراحی و اجرا می‌شوند.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                📊 پایش مستمر پیشرفت
+                🔄 پیگیری مستمر
               </h3>
               <p className="text-gray-600">
-                با استفاده از تست‌های عملکردی و ارزیابی‌های دوره‌ای، پیشرفت شما
-                به دقت پایش شده و برنامه بر اساس نتایج به‌روزرسانی می‌شود.
+                گزارش پیشرفت درمان به پزشک معالج و تنظیم برنامه بر اساس
+                توصیه‌های پزشکی و پاسخ بیمار به درمان.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🛡️ پیشگیری از آسیب مجدد
+                📋 برنامه یکپارچه
               </h3>
               <p className="text-gray-600">
-                آموزش تکنیک‌های صحیح حرکتی، تقویت عضلات stabilizer و بهبود
-                الگوهای حرکتی برای پیشگیری از آسیب‌های آینده.
+                تلفیق درمان‌های پزشکی با حرکات اصلاحی برای دستیابی به بهترین
+                نتایج در کوتاه‌ترین زمان ممکن.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🤝 همکاری تیمی
+                🎯 هدف مشترک
               </h3>
               <p className="text-gray-600">
-                در صورت نیاز، با پزشک معالج، جراح و دیگر متخصصین در ارتباط هستیم
-                تا بهترین نتیجه برای شما حاصل شود.
+                همکاری نزدیک با پزشک برای دستیابی به اهداف درمانی مشترک و بهبود
+                کیفیت زندگی بیمار.
               </p>
             </div>
           </div>
@@ -270,10 +271,10 @@ export default function SportsRehabilitationPage() {
                   توجه مهم
                 </h3>
                 <p className="text-gray-700">
-                  بازگشت زودهنگام و بدون برنامه‌ریزی به ورزش می‌تواند منجر به
-                  آسیب‌های جدی‌تر و مزمن شدن مشکل شود.
-                  <strong> برنامه توانبخشی باید تحت نظر متخصص مجرب</strong> و با
-                  رعایت اصول علمی طراحی و اجرا شود.
+                  درمان دردهای اسکلتی-عضلانی باید تحت نظارت پزشک متخصص و توسط
+                  افراد دارای مجوز انجام شود. خوددرمانی یا مراجعه به افراد
+                  غیرمتخصص ممکن است باعث تشدید مشکل و ایجاد آسیب‌های
+                  جبران‌ناپذیر شود.
                 </p>
               </div>
             </div>
@@ -283,10 +284,11 @@ export default function SportsRehabilitationPage() {
       <section className="bg-gradient-to-r from-primary to-secondary py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4 font-morabba">
-            آماده بازگشت به ورزش هستید؟
+            از دردهای اسکلتی-عضلانی رهایی یابید
           </h2>
           <p className="text-white/90 mb-8 text-lg">
-            با برنامه‌ریزی تخصصی و علمی، ایمن و مطمئن به میادین ورزشی بازگردید
+            با برنامه‌ریزی تخصصی و همکاری پزشکان متخصص، زندگی بدون درد را تجربه
+            کنید
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/appointment">

@@ -4,19 +4,23 @@ import { useEffect, useState } from "react";
 import ArrowDown from "../../../public/icon/ArrowDown";
 import BurgerMenu from "../../../public/icon/BurgerMenu";
 import Close from "../../../public/icon/Close";
-import Login from "../../../public/icon/Login";
+import Profile from "../../../public/icon/Profile";
 
 const ScreenLinks = [
+  {
+    name: "صفحه اصلی",
+    link: "/",
+  },
   {
     name: "معرفی مرکز",
     link: "/about",
   },
   {
-    name: "متخصصان ما",
+    name: "متخصصین ما",
     link: "/specialists",
   },
   {
-    name: "حوزه‌های کاری",
+    name: "خدمات ما",
     link: "/services",
     children: [
       {
@@ -25,25 +29,25 @@ const ScreenLinks = [
         description: "اصلاح ناهنجاری‌های اسکلتی-عضلانی",
       },
       {
-        name: "بازگشت به ورزش و توانبخشی",
+        name: "توانبخشی ورزشی",
         link: "/services/sports-rehabilitation",
-        description: "توانبخشی آسیب‌های ورزشی و بازگشت به فعالیت",
+        description: "بازگشت به ورزش پس از آسیب‌های ورزشی",
       },
       {
-        name: "ماساژ تخصصی",
-        link: "/services/therapeutic-massage",
-        description: "ماساژ درمانی و ریلکسیشن",
+        name: "درمان دردهای اسکلتی-عضلانی",
+        link: "/services/pain-treatment",
+        description: "با تجویز و ارجاع پزشک متخصص",
       },
       {
-        name: "سایر خدمات",
-        link: "/services/other-services",
-        description: "خدمات تخصصی دیگر مرکز",
+        name: "تیپینگ و ماساژ",
+        link: "/services/taping-massage",
+        description: "خدمات تخصصی تیپینگ و ماساژ درمانی",
       },
     ],
   },
   {
-    name: "مشاوره رایگان",
-    link: "/consultation",
+    name: "فرآیند درمان",
+    link: "/treatment-process",
   },
   {
     name: "ثبت نوبت",
@@ -115,20 +119,30 @@ function Navbar() {
     <>
       {/* Main Navigation */}
       <header className="w-full h-16 flex items-center justify-center sticky z-50 backdrop-blur-2xl bg-white/95 top-0 shadow-lg shadow-[rgba(0,0,0,0.1)] border-b border-gray-100">
-        <div className="max-w-[1225px] h-full w-full flex justify-between items-center px-4 md:px-0">
+        <div className="max-w-6xl h-full w-full flex justify-between items-center px-4 md:px-0">
+          <button
+            onClick={() => router.push("/login")}
+            className=" flex items-center justify-center md:hidden"
+          >
+            <div className="h-8 cursor-pointer w-8 hover:bg-primary/20 rounded-lg items-center justify-center border border-primary flex bg-white">
+              <Profile color="#583f99" size={22} />
+            </div>
+          </button>
           <h1
-            className="gradient-text font-extrabold font-sans text-2xl h-full flex items-center justify-center text-blue-600 cursor-pointer"
+            className="gradient-text md:pr-4 font-extrabold font-sans text-2xl h-full flex items-center justify-center text-blue-600 cursor-pointer"
             onClick={() => router.push("/")}
           >
             FITLINE
           </h1>
 
           {/* Desktop Navigation */}
-          <ul className="hidden lg:flex items-center justify-end gap-4 h-full relative">
+          <ul className="hidden lg:flex items-center justify-end  h-full relative">
             {ScreenLinks.map((item, idx) => (
               <li
                 key={idx}
-                className="relative flex items-center"
+                className={`relative flex items-center ${
+                  item.highlight ? "h-10" : "h-full"
+                }`}
                 onMouseEnter={() => handleMouseEnter(idx, item.name)}
                 onMouseLeave={handleMouseLeave}
               >
@@ -162,7 +176,7 @@ function Navbar() {
 
                 {item.children && hoveredMenu === item.name && (
                   <div
-                    className="absolute mt-1 top-full shadow-lg bg-white rounded-lg z-50 overflow-hidden border border-gray-100 w-64"
+                    className="absolute mt-1 top-full shadow-lg bg-white rounded-lg z-50 overflow-hidden border border-gray-100 w-80"
                     onMouseEnter={() => handleMouseEnter(idx, item.name)}
                     onMouseLeave={handleMouseLeave}
                   >
@@ -170,7 +184,7 @@ function Navbar() {
                       <button
                         key={childIdx}
                         onClick={() => handleNavigation(child.link)}
-                        className="px-4 w-full text-right flex flex-col py-3 text-sm hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-0"
+                        className="px-4 w-full text-right flex flex-col py-3 cursor-pointer text-sm hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-0"
                       >
                         <span className="font-medium text-gray-800">
                           {child.name}
@@ -193,10 +207,18 @@ function Navbar() {
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
-              <Close size={22} color="#4b5563" />
+              <Close size={25} color="#4b5563" />
             ) : (
-              <BurgerMenu color="#4b5563" />
+              <BurgerMenu size={25} color="#4b5563" />
             )}
+          </button>
+          <button
+            onClick={() => router.push("/login")}
+            className=" md:flex items-center justify-center hidden"
+          >
+            <div className="h-10 cursor-pointer w-10 hover:bg-primary/20 rounded-full items-center justify-center border border-primary flex bg-white">
+              <Profile color="#583f99" size={25} />
+            </div>
           </button>
         </div>
       </header>
@@ -282,10 +304,9 @@ function Navbar() {
               <div className="bg-primary/10 rounded-lg p-4">
                 <h3 className="font-medium text-primary mb-2">اطلاعات تماس</h3>
                 <p className="text-sm text-gray-700 mb-2">
-                  آدرس: تهران، خیابان نمونه، پلاک ۱۲
+                  مرکز تندرستی و حرکات اصلاحی راه تناسب
                 </p>
-                <p className="text-sm text-gray-700 mb-2">تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</p>
-                <p className="text-sm text-gray-700">ساعت کار: ۸ صبح تا ۸ شب</p>
+                <p className="text-sm text-gray-700">با کادر مجرب و متخصص</p>
               </div>
             </div>
           </div>

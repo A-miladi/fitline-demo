@@ -1,7 +1,7 @@
 import Navbar from "@/components/navbar";
 import Link from "next/link";
 
-export default function SportsRehabilitationPage() {
+export default function TapingMassagePage() {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
@@ -11,11 +11,10 @@ export default function SportsRehabilitationPage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-morabba">
-              توانبخشی ورزشی و بازگشت به ورزش
+              تیپینگ و ماساژ تخصصی
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              بازگشت ایمن و تدریجی به فعالیت‌های ورزشی پس از آسیب، تحت نظر
-              متخصصین مجرب
+              خدمات تکمیلی تیپینگ و ماساژ برای بهبود سریع‌تر و کاهش درد
             </p>
           </div>
         </div>
@@ -27,31 +26,30 @@ export default function SportsRehabilitationPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6 font-morabba">
-                خدمات توانبخشی ورزشی در مرکز راه تناسب
+                خدمات تیپینگ و ماساژ تخصصی
               </h2>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  آسیب‌های ورزشی می‌توانند مسیر پیشرفت ورزشی شما را متوقف کنند.
-                  در مرکز <strong>راه تناسب</strong>، با بهره‌گیری از متخصصین
-                  مجرب و استفاده از روش‌های علمی روز دنیا، به شما کمک می‌کنیم تا
-                  به صورت ایمن و مؤثر به ورزش بازگردید.
+                  در مرکز <strong>راه تناسب</strong>، خدمات تیپینگ و ماساژ به
+                  عنوان درمان‌های مکمل و تکمیلی alongside حرکات اصلاحی ارائه
+                  می‌شوند. این خدمات به تسریع روند بهبود، کاهش درد و افزایش
+                  اثربخشی درمان اصلی کمک می‌کنند.
                 </p>
                 <p>
-                  برنامه‌های توانبخشی ما بر اساس ارزیابی دقیق نوع آسیب، سطح
-                  آمادگی جسمانی و اهداف ورزشی شما طراحی می‌شود. ما نه تنها به
-                  درمان آسیب فعلی می‌پردازیم، بلکه با تقویت نقاط ضعف و بهبود
-                  تکنیک‌های حرکتی، از آسیب‌های آینده پیشگیری می‌کنیم.
+                  تیپینگ (نوارگذاری) تکنیکی تخصصی است که با استفاده از نوارهای
+                  مخصوص، به اصلاح وضعیت مفاصل و عضلات، کاهش درد و بهبود عملکرد
+                  حرکتی کمک می‌کند.
                 </p>
                 <p>
-                  <strong>هدف نهایی ما</strong> بازگرداندن شما به میادین ورزشی
-                  با عملکردی بهتر و آمادگی جسمانی بالاتر از قبل است.
+                  ماساژ درمانی نیز با بهبود گردش خون، کاهش تنش عضلانی و افزایش
+                  انعطاف‌پذیری، نقش مهمی در تکمیل فرآیند درمان ایفا می‌کند.
                 </p>
               </div>
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6 font-morabba">
-                آسیب‌های قابل درمان
+                خدمات ارائه شده
               </h3>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3 space-x-reverse">
@@ -60,10 +58,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های شانه
+                      تیپینگ تخصصی
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      پارگی روتاتور کاف، دررفتگی، تاندونیت
+                      نوارگذاری حرفه‌ای برای اصلاح ناهنجاری و کاهش درد
                     </p>
                   </div>
                 </div>
@@ -74,10 +72,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های آرنج
+                      ماساژ درمانی
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      تنیس البو، گلف البو، کشیدگی تاندون
+                      کاهش درد و تنش عضلانی با تکنیک‌های علمی
                     </p>
                   </div>
                 </div>
@@ -88,10 +86,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های لگن
+                      ماساژ ریلکسیشن
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      بورسیت، کشیدگی عضلات، سندرم ایلیوتیبیال باند
+                      آرامش‌بخشی و کاهش استرس
                     </p>
                   </div>
                 </div>
@@ -102,24 +100,10 @@ export default function SportsRehabilitationPage() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های زانو
+                      ماساژ ورزشی
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      پارگی رباط صلیبی، آسیب منیسک، تاندونیت
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 space-x-reverse">
-                  <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">
-                      آسیب‌های مچ پا
-                    </h4>
-                    <p className="text-gray-600 text-sm">
-                      پیچ خوردگی، پارگی رباط، التهاب تاندون
+                      بهبود ریکاوری و عملکرد ورزشی
                     </p>
                   </div>
                 </div>
@@ -129,118 +113,120 @@ export default function SportsRehabilitationPage() {
         </div>
       </section>
 
-      {/* Rehabilitation Phases */}
-      <section className="bg-white py-16">
+      {/* Benefits Section */}
+      <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 font-morabba">
-              فرآیند توانبخشی تخصصی
+              مزایای تیپینگ و ماساژ
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              برنامه‌ای جامع و علمی برای بازگشت ایمن به ورزش
+              چگونه این خدمات به بهبود سریع‌تر شما کمک می‌کنند؟
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-xl font-bold">۱</span>
+                <span className="text-white text-2xl">📉</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                ارزیابی دقیق
+                کاهش درد
               </h3>
               <p className="text-gray-600 text-sm">
-                بررسی کامل آسیب، تست‌های عملکردی و تعیین سطح آمادگی
+                کاهش سریع‌تر دردهای عضلانی و مفصلی
               </p>
             </div>
 
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-xl font-bold">۲</span>
+                <span className="text-white text-2xl">⚡</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                کاهش درد و التهاب
+                تسریع بهبودی
               </h3>
               <p className="text-gray-600 text-sm">
-                استفاده از روش‌های مختلف برای کنترل درد و کاهش التهاب
+                بهبود سریع‌تر روند درمان و ریکاوری
               </p>
             </div>
 
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-xl font-bold">۳</span>
+                <span className="text-white text-2xl">🔄</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                بازتوانی و تقویت
+                بهبود عملکرد
               </h3>
               <p className="text-gray-600 text-sm">
-                تمرینات پیشرونده برای بازگرداندن قدرت و انعطاف‌پذیری
+                افزایش دامنه حرکتی و عملکرد مفاصل
               </p>
             </div>
 
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-xl font-bold">۴</span>
+                <span className="text-white text-2xl">😌</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                بازگشت تدریجی
+                آرامش روانی
               </h3>
               <p className="text-gray-600 text-sm">
-                بازگشت پلکانی به فعالیت ورزشی با نظارت مستمر
+                کاهش استرس و افزایش آرامش عمومی
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Approach Section */}
-      <section className="py-16 bg-gray-100">
+      {/* Integration Section */}
+      <section className="py-16 bg-blue-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 font-morabba">
-              رویکرد منحصر به فرد ما
+              یکپارچگی با درمان اصلی
             </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              چگونه تیپینگ و ماساژ در کنار حرکات اصلاحی عمل می‌کنند؟
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🎯 برنامه شخصی‌سازی شده
+                🔗 درمان مکمل
               </h3>
               <p className="text-gray-600">
-                هر برنامه توانبخشی بر اساس شرایط خاص شما طراحی می‌شود. نوع آسیب،
-                سطح ورزشی، اهداف و محدودیت‌های شما در طراحی برنامه در نظر گرفته
-                می‌شوند.
+                تیپینگ و ماساژ به عنوان درمان‌های مکمل و تکمیلی alongside برنامه
+                اصلی حرکات اصلاحی ارائه می‌شوند و نه جایگزین آن.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                📊 پایش مستمر پیشرفت
+                🎯 هدف مشترک
               </h3>
               <p className="text-gray-600">
-                با استفاده از تست‌های عملکردی و ارزیابی‌های دوره‌ای، پیشرفت شما
-                به دقت پایش شده و برنامه بر اساس نتایج به‌روزرسانی می‌شود.
+                تمامی خدمات با هدف نهایی اصلاح ناهنجاری و بهبود کیفیت زندگی شما
+                ارائه می‌شوند و به صورت هماهنگ عمل می‌کنند.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🛡️ پیشگیری از آسیب مجدد
+                ⏱️ صرفه‌جویی در زمان
               </h3>
               <p className="text-gray-600">
-                آموزش تکنیک‌های صحیح حرکتی، تقویت عضلات stabilizer و بهبود
-                الگوهای حرکتی برای پیشگیری از آسیب‌های آینده.
+                استفاده از این خدمات مکمل می‌تواند مدت زمان مورد نیاز برای
+                دستیابی به نتایج مطلوب را کاهش دهد.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🤝 همکاری تیمی
+                💪 افزایش اثربخشی
               </h3>
               <p className="text-gray-600">
-                در صورت نیاز، با پزشک معالج، جراح و دیگر متخصصین در ارتباط هستیم
-                تا بهترین نتیجه برای شما حاصل شود.
+                ترکیب این روش‌ها با حرکات اصلاحی، اثربخشی کلی درمان را به طور
+                قابل توجهی افزایش می‌دهد.
               </p>
             </div>
           </div>
@@ -270,23 +256,24 @@ export default function SportsRehabilitationPage() {
                   توجه مهم
                 </h3>
                 <p className="text-gray-700">
-                  بازگشت زودهنگام و بدون برنامه‌ریزی به ورزش می‌تواند منجر به
-                  آسیب‌های جدی‌تر و مزمن شدن مشکل شود.
-                  <strong> برنامه توانبخشی باید تحت نظر متخصص مجرب</strong> و با
-                  رعایت اصول علمی طراحی و اجرا شود.
+                  خدمات تیپینگ و ماساژ باید توسط متخصصین مجرب و دارای مدرک معتبر
+                  ارائه شوند. این خدمات صرفاً به عنوان درمان مکمل و تکمیلی
+                  alongside برنامه اصلی حرکات اصلاحی قابل استفاده هستند و
+                  جایگزین درمان اصلی نمی‌شوند.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+      {/* CTA Section */}
       <section className="bg-gradient-to-r from-primary to-secondary py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4 font-morabba">
-            آماده بازگشت به ورزش هستید؟
+            آماده بهبود سریع‌تر هستید؟
           </h2>
           <p className="text-white/90 mb-8 text-lg">
-            با برنامه‌ریزی تخصصی و علمی، ایمن و مطمئن به میادین ورزشی بازگردید
+            از خدمات تکمیلی تیپینگ و ماساژ برای تسریع روند درمان بهره‌مند شوید
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/appointment">
