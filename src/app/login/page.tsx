@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -336,24 +337,33 @@ export default function LoginPage() {
         ></motion.div>
       </div>
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+      <div
+        dir="rtl"
+        className="relative z-10 md:min-h-screen max-h-screen flex items-center justify-center p-4"
+      >
         <motion.div
           className="w-full max-w-md"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2 font-morabba">
-              FITLINE
-            </h1>
-            <p className="text-blue-200 text-sm">
+          <div className="text-center mb-8 flex flex-col items-center justify-center w-full max-md:hidden">
+            <div className="w-full max-md:h-52 flex items-center justify-center font-bold text-white mb-2 font-morabba">
+              <Image
+                src="/images/logo2.png"
+                alt=""
+                width={150}
+                height={200}
+                className="w-1/2"
+              />
+            </div>
+            <p className="text-blue-200 text-xl">
               مرکز تخصصی فیزیوتراپی و توانبخشی
             </p>
           </div>
 
-          <div className="backdrop-blur-xl bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/20 transition-colors duration-300">
-            <div className="text-center mb-8">
+          <div className="backdrop-blur-xl flex flex-col h-full bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/20 transition-colors duration-300">
+            <div className="text-center mb-8 max-md:hidden">
               <h2 className="text-2xl font-bold text-white mb-2 font-morabba">
                 ورود به سیستم
               </h2>
@@ -528,7 +538,7 @@ export default function LoginPage() {
           </div>
 
           <motion.div
-            className="text-center mt-6"
+            className="text-center mt-4 md:mt-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1 }}

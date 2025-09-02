@@ -102,7 +102,6 @@ const ServiceCard: FC<ServiceCardProps> = ({
   );
 };
 
-// کامپوننت انیمیشنی برای آمارها
 const StatItem: FC<StatItemProps> = ({ number, text, delay }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -135,7 +134,6 @@ const StatItem: FC<StatItemProps> = ({ number, text, delay }) => {
   );
 };
 
-// کامپوننت انیمیشنی برای مراحل فرآیند
 const ProcessStep: FC<ProcessStepProps> = ({
   number,
   title,
@@ -178,7 +176,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
 
-      {/* Hero Section با انیمیشن */}
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
@@ -235,7 +232,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Section */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <AnimatedSection>
@@ -283,7 +279,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why Us Section */}
       <section className="bg-white py-16">
         <div className="max-w-6xl mx-auto px-4">
           <AnimatedSection>
@@ -394,7 +389,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className="bg-primary py-16">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
@@ -412,7 +406,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Process Section */}
       <section className="py-16 bg-gray-100">
         <div className="max-w-6xl mx-auto px-4">
           <AnimatedSection>
@@ -464,7 +457,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <AnimatedSection>

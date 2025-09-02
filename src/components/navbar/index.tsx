@@ -5,6 +5,7 @@ import ArrowDown from "../../../public/icon/ArrowDown";
 import BurgerMenu from "../../../public/icon/BurgerMenu";
 import Close from "../../../public/icon/Close";
 import Profile from "../../../public/icon/Profile";
+import Image from "next/image";
 
 const ScreenLinks = [
   {
@@ -128,12 +129,12 @@ function Navbar() {
               <Profile color="#583f99" size={22} />
             </div>
           </button>
-          <h1
-            className="gradient-text md:pr-4 font-extrabold font-sans text-2xl h-full flex items-center justify-center text-blue-600 cursor-pointer"
+          <div
+            className="gradient-text md:pr-4 font-extrabold font-sans h-full flex items-center justify-start text-blue-600 cursor-pointer"
             onClick={() => router.push("/")}
           >
-            FITLINE
-          </h1>
+            <Image src="/images/logo2.png" alt="" width={150} height={200} />
+          </div>
 
           {/* Desktop Navigation */}
           <ul className="hidden lg:flex items-center justify-end  h-full relative">
