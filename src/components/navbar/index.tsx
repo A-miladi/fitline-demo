@@ -136,7 +136,6 @@ function Navbar() {
             <Image src="/images/logo2.png" alt="" width={150} height={200} />
           </div>
 
-          {/* Desktop Navigation */}
           <ul className="hidden lg:flex items-center justify-end  h-full relative">
             {ScreenLinks.map((item, idx) => (
               <li
@@ -201,7 +200,6 @@ function Navbar() {
             ))}
           </ul>
 
-          {/* Mobile Burger Button */}
           <button
             className="lg:hidden text-2xl text-gray-700"
             onClick={toggleMobileMenu}
@@ -213,7 +211,8 @@ function Navbar() {
               <BurgerMenu size={25} color="#4b5563" />
             )}
           </button>
-          <div className="flex gap-2">
+
+          <div className="flex gap-2 max-md:hidden">
             <button
               onClick={() => router.push("/login")}
               className="md:flex items-center justify-center hidden"
@@ -237,6 +236,12 @@ function Navbar() {
         <div className="lg:hidden fixed inset-0 bg-white z-40 pt-20 overflow-y-auto">
           <div className="container px-4">
             <ul className="flex flex-col gap-1">
+              <button
+                onClick={() => router.push("/admin")}
+                className="flex w-full font-medium border-b py-4 px-2 border-gray-100 items-start justify-start"
+              >
+                پنل مدیریت
+              </button>
               {ScreenLinks.map((item, idx) => (
                 <li key={idx} className="border-b border-gray-100">
                   <div className="flex flex-col items-start w-full">
