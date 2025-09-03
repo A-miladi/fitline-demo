@@ -213,14 +213,22 @@ function Navbar() {
               <BurgerMenu size={25} color="#4b5563" />
             )}
           </button>
-          <button
-            onClick={() => router.push("/login")}
-            className=" md:flex items-center justify-center hidden"
-          >
-            <div className="h-10 cursor-pointer w-10 hover:bg-primary/20 rounded-full items-center justify-center border border-primary flex bg-white">
-              <Profile color="#583f99" size={25} />
-            </div>
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => router.push("/login")}
+              className="md:flex items-center justify-center hidden"
+            >
+              <div className="h-10 cursor-pointer w-10 hover:bg-primary/20 rounded-full items-center justify-center border border-primary flex bg-white">
+                <Profile color="#583f99" size={25} />
+              </div>
+            </button>
+            <button
+              onClick={() => router.push("/admin")}
+              className="h-10 px-4 flex items-center justify-center pb-0.5 cursor-pointer hover:bg-primary/20 rounded-lg border text-primary border-primary"
+            >
+              Admin Panel
+            </button>
+          </div>
         </div>
       </header>
 
