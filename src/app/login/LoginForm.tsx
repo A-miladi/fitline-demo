@@ -7,6 +7,7 @@ import {
   LoginFormProps,
   Step,
 } from "@/types/auth";
+import { API_URL } from "@/constants/api";
 
 export default function LoginForm({ toggleMode }: LoginFormProps) {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ export default function LoginForm({ toggleMode }: LoginFormProps) {
   const { loading: emailLoading, execute: sendEmail } = usePost<
     EmailResponse,
     { email: string }
-  >("/auth/register-user-send-email", {
+  >(API_URL.Auth.Send_Email, {
     onSuccess: (data) => {
       if (data.success) {
         setStep("CODE");
@@ -35,7 +36,7 @@ export default function LoginForm({ toggleMode }: LoginFormProps) {
   const { loading: codeLoading, execute: verifyCode } = usePost<
     CodeResponse,
     { code: number }
-  >("/auth/register-user-step-Two", {
+  >(API_URL.Auth.OTP, {
     onSuccess: (data) => {
       if (data.success && data.data?.token) {
         setInfo("ورود موفقیت آمیز بود!");
@@ -65,7 +66,7 @@ export default function LoginForm({ toggleMode }: LoginFormProps) {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:4123/auth/google/login";
+    window.location.href = API_URL.Auth.GOOGLE;
   };
 
   const resendCode = async () => {
