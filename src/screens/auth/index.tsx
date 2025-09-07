@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
-import LogoSection from "./LogoSection";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import LogoSection from "./components/LogoSection";
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 
-export default function LoginPage() {
+export default function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(true);
 
   const toggleMode = () => {

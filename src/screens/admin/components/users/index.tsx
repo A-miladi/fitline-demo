@@ -11,21 +11,21 @@ export default function Users() {
   ];
 
   return (
-    <div className="p-5 flex flex-col rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md shadow-lg transition">
-      <h2 className="font-semibold text-lg mb-3 flex w-full items-center justify-center gap-2 border-b pb-4 border-b-white/20">
+    <div className="p-5 md:h-2/3 text-black md:w-1/3 w-full flex flex-col rounded-2xl border border-black/10 backdrop-blur-md shadow-lg transition">
+      <h2 className="font-semibold text-black text-lg mb-3 flex w-full items-center justify-center gap-2 border-b pb-4 border-b-black/20">
         <FiUsers size={20} />
         تمام نوبت‌ها
       </h2>
 
       <div className="h-full w-full">
-        <div className="max-h-64 md:max-h-[85%] w-full flex flex-col gap-2 overflow-y-scroll pl-2">
+        <div className="max-h-64 md:max-h-[85%] w-full flex flex-col gap-2 overflow-y-scroll">
           {users.map((user) => (
             <div
               key={user.id}
               className="flex justify-between items-center bg-white/10 rounded-lg p-3 text-sm shadow"
             >
               <span className="font-medium">{user.name}</span>
-              <span className="text-xs text-gray-300">
+              <span className="text-xs text-black/80">
                 {user.date} - {user.time}
               </span>
             </div>
@@ -33,7 +33,7 @@ export default function Users() {
         </div>
       </div>
 
-      <button className="mt-4 w-full cursor-pointer bg-gradient-to-r from-primary to-secondary h-14 rounded-lg font-medium">
+      <button className="mt-4 text-white w-full cursor-pointer bg-gradient-to-r from-primary to-secondary h-12 md:h-14 rounded-lg font-medium">
         مشاهده همه موارد
       </button>
     </div>

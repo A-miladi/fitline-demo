@@ -18,7 +18,6 @@ export default function RegisterForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Logic for registration
   };
 
   return (
