@@ -70,9 +70,10 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
       </button>
 
       {/* Animated Dropdown Options */}
-      <div className="absolute z-50 w-full mt-1">
-        <div
-          className={`
+      {isOpen && (
+        <div className="absolute z-50 w-full mt-1">
+          <div
+            className={`
             bg-white border border-gray-200 rounded-lg shadow-lg 
             max-h-64 overflow-y-auto
             transform origin-top
@@ -83,13 +84,13 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                 : "opacity-0 scale-y-95 -translate-y-2 pointer-events-none"
             }
           `}
-        >
-          {options.map((option, index) => (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => handleSelect(option)}
-              className={`
+          >
+            {options.map((option, index) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleSelect(option)}
+                className={`
                 w-full px-4 py-3 text-right 
                 hover:bg-primary/10 transition-all duration-200 ease-out
                 transform
@@ -104,15 +105,16 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                     : "opacity-0 translate-x-2"
                 }
               `}
-              style={{
-                transitionDelay: isOpen ? `${index * 30}ms` : "0ms",
-              }}
-            >
-              {option.label}
-            </button>
-          ))}
+                style={{
+                  transitionDelay: isOpen ? `${index * 30}ms` : "0ms",
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

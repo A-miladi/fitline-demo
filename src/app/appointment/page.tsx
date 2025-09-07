@@ -8,9 +8,11 @@ import {
 } from "@/types";
 
 import { useState } from "react";
-import CustomDropdown from "../DropDown";
 import ContactInfoCard from "@/components/contactInfoCard";
 import ProcessInfo from "@/components/processInfo";
+import CustomDropdown from "@/components/DropDown";
+import CalendarPicker from "@/components/callender";
+import dayjs from "dayjs";
 
 const SERVICES: DropdownOption[] = [
   { value: "corrective", label: "حرکات اصلاحی" },
@@ -18,29 +20,6 @@ const SERVICES: DropdownOption[] = [
   { value: "pain-treatment", label: "درمان دردهای اسکلتی-عضلانی" },
   { value: "taping-massage", label: "تیپینگ و ماساژ" },
   { value: "evaluation", label: "ارزیابی وضعیت جسمانی" },
-];
-
-const DAYS: DropdownOption[] = [
-  { value: "saturday", label: "شنبه" },
-  { value: "sunday", label: "یکشنبه" },
-  { value: "monday", label: "دوشنبه" },
-  { value: "tuesday", label: "سه‌شنبه" },
-  { value: "wednesday", label: "چهارشنبه" },
-  { value: "thursday", label: "پنجشنبه" },
-];
-
-const TIMES: DropdownOption[] = [
-  { value: "08:00", label: "۸:۰۰ صبح" },
-  { value: "09:00", label: "۹:۰۰ صبح" },
-  { value: "10:00", label: "۱۰:۰۰ صبح" },
-  { value: "11:00", label: "۱۱:۰۰ صبح" },
-  { value: "12:00", label: "۱۲:۰۰ ظهر" },
-  { value: "14:00", label: "۲:۰۰ عصر" },
-  { value: "15:00", label: "۳:۰۰ عصر" },
-  { value: "16:00", label: "۴:۰۰ عصر" },
-  { value: "17:00", label: "۵:۰۰ عصر" },
-  { value: "18:00", label: "۶:۰۰ عصر" },
-  { value: "19:00", label: "۷:۰۰ عصر" },
 ];
 
 const GENDERS: DropdownOption[] = [
@@ -76,6 +55,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     description: "شروع فرآیند درمان با برنامه‌ریزی شخصی‌سازی شده",
   },
 ];
+const DEFAULT_TIME = "08:00";
 
 const AppointmentPage: React.FC = () => {
   const [formData, setFormData] = useState<AppointmentFormData>({
@@ -85,12 +65,13 @@ const AppointmentPage: React.FC = () => {
     age: "",
     gender: "",
     serviceType: "",
-    preferredDay: "",
-    preferredTime: "",
+    preferredDay: dayjs().calendar("jalali").format("YYYY/MM/DD"),
+    preferredTime: DEFAULT_TIME,
     description: "",
     previousTreatment: "",
     contactPreference: "",
   });
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleInputChange = (
     field: keyof AppointmentFormData,
@@ -106,15 +87,24 @@ const AppointmentPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
     console.log(formData);
+  };
+  const handleDateSelect = (date: Date | null) => {
+    setSelectedDate(date);
+    if (date) {
+      const persianDate = date.toLocaleDateString("fa-IR");
+      handleInputChange("preferredDay", persianDate);
+    }
+  };
+
+  const handleTimeSelect = (time: string) => {
+    handleInputChange("preferredTime", time);
   };
 
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
 
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
@@ -129,7 +119,6 @@ const AppointmentPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Appointment Form */}
       <section className="py-16 ">
         <div className="max-w-6xl mx-auto px-5">
           <div className="grid lg:grid-cols-2 gap-12">
@@ -232,34 +221,19 @@ const AppointmentPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
                     ترجیح زمانی *
                   </label>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm text-gray-600 mb-2">
-                        روز هفته
-                      </label>
-                      <CustomDropdown
-                        options={DAYS}
-                        value={formData.preferredDay}
-                        onSelect={handleDropdownSelect("preferredDay")}
-                        placeholder="انتخاب روز"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm text-gray-600 mb-2">
-                        ساعت
-                      </label>
-                      <CustomDropdown
-                        options={TIMES}
-                        value={formData.preferredTime}
-                        onSelect={handleDropdownSelect("preferredTime")}
-                        placeholder="انتخاب ساعت"
-                      />
-                    </div>
-                  </div>
+                  <CalendarPicker
+                    selectedDate={formData.preferredDay}
+                    selectedTime={formData.preferredTime}
+                    onDateSelect={(date) =>
+                      handleInputChange("preferredDay", date)
+                    }
+                    onTimeSelect={(time) =>
+                      handleInputChange("preferredTime", time)
+                    }
+                  />
                 </div>
 
                 <div>
@@ -275,75 +249,7 @@ const AppointmentPage: React.FC = () => {
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="مشکل خود را به طور مختصر توضیح دهید..."
-                  ></textarea>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    آیا قبلاً برای این مشکل درمانی دریافت کرده‌اید؟ *
-                  </label>
-                  <div className="flex space-x-4 space-x-reverse">
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="previous_treatment"
-                        value="yes"
-                        checked={formData.previousTreatment === "yes"}
-                        onChange={(e) =>
-                          handleInputChange("previousTreatment", e.target.value)
-                        }
-                        className="ml-2"
-                      />
-                      <span>بله</span>
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="previous_treatment"
-                        value="no"
-                        checked={formData.previousTreatment === "no"}
-                        onChange={(e) =>
-                          handleInputChange("previousTreatment", e.target.value)
-                        }
-                        className="ml-2"
-                      />
-                      <span>خیر</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    ترجیح تماس
-                  </label>
-                  <div className="flex space-x-4 space-x-reverse">
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="contact_preference"
-                        value="phone"
-                        checked={formData.contactPreference === "phone"}
-                        onChange={(e) =>
-                          handleInputChange("contactPreference", e.target.value)
-                        }
-                        className="ml-2"
-                      />
-                      <span>تلفنی</span>
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="contact_preference"
-                        value="whatsapp"
-                        checked={formData.contactPreference === "whatsapp"}
-                        onChange={(e) =>
-                          handleInputChange("contactPreference", e.target.value)
-                        }
-                        className="ml-2"
-                      />
-                      <span>واتساپ</span>
-                    </label>
-                  </div>
+                  />
                 </div>
 
                 <button
