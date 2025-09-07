@@ -6,6 +6,7 @@ import BurgerMenu from "../../../public/icon/BurgerMenu";
 import Close from "../../../public/icon/Close";
 import Profile from "../../../public/icon/Profile";
 import Image from "next/image";
+import LoginAction from "./login";
 
 const ScreenLinks = [
   {
@@ -118,16 +119,18 @@ function Navbar() {
 
   return (
     <>
-      {/* Main Navigation */}
       <header className="w-full h-16 flex items-center justify-center sticky z-50 backdrop-blur-2xl bg-white/95 top-0 shadow-lg shadow-[rgba(0,0,0,0.1)] border-b border-gray-100">
         <div className="max-w-6xl h-full w-full flex justify-between items-center px-4 md:px-0">
           <button
-            onClick={() => router.push("/Auth")}
-            className=" flex items-center justify-center md:hidden"
+            className="lg:hidden text-2xl text-gray-700"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
           >
-            <div className="h-8 cursor-pointer w-8 hover:bg-primary/20 rounded-lg items-center justify-center border border-primary flex bg-white">
-              <Profile color="#583f99" size={22} />
-            </div>
+            {mobileMenuOpen ? (
+              <Close size={25} color="#4b5563" />
+            ) : (
+              <BurgerMenu size={25} color="#4b5563" />
+            )}
           </button>
           <div
             className="gradient-text md:pr-4 font-extrabold font-sans h-full flex items-center justify-start text-blue-600 cursor-pointer"
@@ -155,7 +158,7 @@ function Navbar() {
                       : "text-gray-900 hover:text-primary"
                   } ${
                     item.highlight
-                      ? "bg-primary text-white rounded-lg px-4 py-2 hover:bg-neutral-200 ml-2"
+                      ? "bg-primary/20 text-primary rounded-lg px-4 py-2 hover:bg-primary hover:text-white transition-colors duration-500 ml-2"
                       : ""
                   }`}
                 >
@@ -200,41 +203,13 @@ function Navbar() {
             ))}
           </ul>
 
-          <button
-            className="lg:hidden text-2xl text-gray-700"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <Close size={25} color="#4b5563" />
-            ) : (
-              <BurgerMenu size={25} color="#4b5563" />
-            )}
-          </button>
-
-          <div className="flex gap-2 max-md:hidden">
-            <button
-              onClick={() => router.push("/Auth")}
-              className="md:flex items-center justify-center hidden"
-            >
-              <div className="h-10 cursor-pointer w-10 hover:bg-primary/20 rounded-full items-center justify-center border border-primary flex bg-white">
-                <Profile color="#583f99" size={25} />
-              </div>
-            </button>
-            <button
-              onClick={() => router.push("/admin")}
-              className="h-10 px-4 flex items-center justify-center pb-0.5 cursor-pointer hover:bg-primary/20 rounded-lg border text-primary border-primary"
-            >
-              Admin Panel
-            </button>
-          </div>
+          <LoginAction />
         </div>
       </header>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-white z-40 pt-20 overflow-y-auto">
-          <div className="container px-4">
+        <div className="lg:hidden fixed inset-0  bg-white z-40 pt-20 overflow-hidden">
+          <div className="px-4">
             <ul className="flex flex-col gap-1">
               <button
                 onClick={() => router.push("/admin")}
@@ -313,7 +288,6 @@ function Navbar() {
               ))}
             </ul>
 
-            {/* Mobile Contact Info */}
             <div className="mt-8 pb-8">
               <div className="bg-primary/10 rounded-lg p-4">
                 <h3 className="font-medium text-primary mb-2">اطلاعات تماس</h3>

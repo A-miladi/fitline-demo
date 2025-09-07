@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
+* {
+  scroll-behavior: smooth;
+}
 :root {
   --font-morabba: "Morabba", system-ui, -apple-system, sans-serif;
   --font-iransans: "IranSans", system-ui, -apple-system, sans-serif;
+  scroll-behavior: smooth;
 
   /* Light mode colors */
   --color-primary: #583f99;
