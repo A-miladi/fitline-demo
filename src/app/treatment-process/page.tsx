@@ -473,13 +473,8 @@ const TreatmentProcessPage: React.FC = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Link href="/appointment">
-              <button className="bg-white text-primary w-full h-14 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg">
+              <button className="bg-white text-primary w-full py-4 px-8 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg">
                 رزرو نوبت ارزیابی
-              </button>
-            </Link>
-            <Link href="/consultation">
-              <button className="border-2 border-white text-white w-full h-14 rounded-xl font-semibold hover:bg-white hover:text-primary transition-colors duration-300 text-lg">
-                درخواست مشاوره
               </button>
             </Link>
           </motion.div>

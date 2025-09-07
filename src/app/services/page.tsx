@@ -328,11 +328,6 @@ export default function ServicesPage() {
                 دریافت نوبت ارزیابی
               </button>
             </Link>
-            <Link href="/consultation">
-              <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors duration-200">
-                مشاوره رایگان
-              </button>
-            </Link>
           </div>
         </div>
       </section>

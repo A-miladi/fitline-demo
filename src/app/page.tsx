@@ -185,16 +185,16 @@ export default function HomePage() {
             className="text-center"
           >
             <motion.h1
-              className="text-3xl font-extrabold text-gray-900 mb-6 font-morabba"
+              className="md:text-3xl text-xl font-extrabold text-gray-900 mb-6 font-morabba"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              مرکز تندرستی و
-              <span className="gradient-text"> حرکات اصلاحی راه تناسب</span>
+              مرکز تندرستی و حرکات اصلاحی{" "}
+              <span className="gradient-text"> راه تناسب</span>
             </motion.h1>
             <motion.p
-              className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8"
+              className="md:text-xl text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
@@ -211,20 +211,11 @@ export default function HomePage() {
             >
               <Link href="/appointment">
                 <motion.button
-                  className="bg-primary text-white w-full px-2 md:min-w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-lg"
+                  className="bg-gradient-to-br from-primary to-secondary text-white w-full px-6 md:min-w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-lg"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   دریافت نوبت ارزیابی
-                </motion.button>
-              </Link>
-              <Link href="/consultation">
-                <motion.button
-                  className="border-2 border-primary text-primary w-full md:w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200 text-lg"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  مشاوره رایگان
                 </motion.button>
               </Link>
             </motion.div>
@@ -474,20 +465,11 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-2 justify-center">
               <Link href="/appointment">
                 <motion.button
-                  className="bg-primary text-white w-full px-2 md:min-w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200"
+                  className="bg-gradient-to-br from-primary to-secondary text-white w-full px-6 md:min-w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   دریافت نوبت ارزیابی
-                </motion.button>
-              </Link>
-              <Link href="/consultation">
-                <motion.button
-                  className="border-2 border-primary text-primary w-full md:w-30 h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-200"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  مشاوره رایگان
                 </motion.button>
               </Link>
             </div>
