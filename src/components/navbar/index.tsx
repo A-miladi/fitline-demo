@@ -122,7 +122,7 @@ function Navbar() {
       <header className="w-full h-16 flex items-center justify-center sticky z-50 backdrop-blur-2xl bg-white/95 top-0 shadow-lg shadow-[rgba(0,0,0,0.1)] border-b border-gray-100">
         <div className="max-w-6xl h-full w-full flex justify-between items-center px-4 md:px-0">
           <button
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/Auth")}
             className=" flex items-center justify-center md:hidden"
           >
             <div className="h-8 cursor-pointer w-8 hover:bg-primary/20 rounded-lg items-center justify-center border border-primary flex bg-white">
@@ -214,7 +214,7 @@ function Navbar() {
 
           <div className="flex gap-2 max-md:hidden">
             <button
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/Auth")}
               className="md:flex items-center justify-center hidden"
             >
               <div className="h-10 cursor-pointer w-10 hover:bg-primary/20 rounded-full items-center justify-center border border-primary flex bg-white">
