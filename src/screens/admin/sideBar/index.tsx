@@ -37,12 +37,16 @@ const menuItems = [
 const Sidebar: FC<ISidebarProps> = ({ setCurrentContent, currentContent }) => {
   const [open, setOpen] = useState(false);
   const navigate = useRouter();
+  const ButtonAction = (key: AdminAccess) => {
+    setCurrentContent(key as AdminAccess);
+    setOpen(false);
+  };
 
   return (
     <>
       <button
         onClick={() => setOpen(!open)}
-        className="lg:hidden absolute top-3.5 right-4 z-50 p-2 rounded-lg bg-gradient-to-r backdrop-blur-md from-primary/30 to-secondary/30 text-white shadow-lg"
+        className="lg:hidden absolute top-3.5 right-4 z-50 p-2 rounded-lg bg-gradient-to-br from-primary to-secondary text-white shadow-lg"
       >
         {open ? <FiX size={20} /> : <FiMenu size={20} />}
       </button>
@@ -66,7 +70,7 @@ const Sidebar: FC<ISidebarProps> = ({ setCurrentContent, currentContent }) => {
             return (
               <button
                 key={key}
-                onClick={() => setCurrentContent(key as AdminAccess)}
+                onClick={() => ButtonAction(key as AdminAccess)}
                 className={`relative cursor-pointer group flex items-center justify-center gap-4 w-full px-4 py-3 rounded-xl transition-all duration-300
                   ${
                     isActive

@@ -25,7 +25,7 @@ export default function Users() {
               className="flex justify-between items-center bg-white/10 rounded-lg p-3 text-sm shadow"
             >
               <span className="font-medium">{user.name}</span>
-              <span className="text-xs text-gray-300">
+              <span className="text-xs text-black/80">
                 {user.date} - {user.time}
               </span>
             </div>

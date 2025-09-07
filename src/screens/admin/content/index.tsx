@@ -12,7 +12,7 @@ const Content: FC<IContentProps> = ({ content, setCurrentContent }) => {
   const Dashboard = {
     ADMIN: <AdminContent />,
     SPECIALIST: <SpecialistContent />,
-    APPOINTMENTS: <p className="text-white">APPOINTMENTS</p>,
+    APPOINTMENTS: <p className="text-black z-10">APPOINTMENTS</p>,
   };
 
   const CurrentContent = Dashboard[content];
