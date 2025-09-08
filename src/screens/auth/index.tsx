@@ -1,11 +1,10 @@
 "use client";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 import BackgroundEffects from "@/components/BackgroundEffects";
-import LogoSection from "./components/LogoSection";
 import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/RegisterForm";
+import LogoSection from "./components/LogoSection";
 
 export default function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(true);
