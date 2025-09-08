@@ -26,11 +26,7 @@ export default function Auth() {
           <LogoSection />
 
           <div className="backdrop-blur-xl flex flex-col w-full h-full bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/20 transition-colors duration-300">
-            {isLoginMode ? (
-              <LoginForm toggleMode={toggleMode} isLoading={false} />
-            ) : (
-              <RegisterForm toggleMode={toggleMode} isLoading={false} />
-            )}
+            <LoginForm toggleMode={toggleMode} isLoading={false} />
           </div>
 
           <motion.div

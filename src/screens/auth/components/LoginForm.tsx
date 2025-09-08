@@ -364,16 +364,6 @@ export default function LoginForm({ toggleMode }: LoginFormProps) {
       >
         ورود با گوگل
       </Button>
-
-      <div className="mt-4 text-center text-sm text-blue-200">
-        قبلا ثبت‌نام کرده‌اید؟{" "}
-        <button
-          onClick={() => toggleMode?.()}
-          className="text-pink-200 underline hover:text-pink-100 transition-colors"
-        >
-          وارد شوید
-        </button>
-      </div>
     </>
   );
 }
