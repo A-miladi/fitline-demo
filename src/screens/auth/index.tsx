@@ -1,11 +1,10 @@
 "use client";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 import BackgroundEffects from "@/components/BackgroundEffects";
-import LogoSection from "./components/LogoSection";
 import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/RegisterForm";
+import LogoSection from "./components/LogoSection";
 
 export default function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -22,15 +21,11 @@ export default function Auth() {
         dir="rtl"
         className="relative z-10 min-h-screen flex items-center justify-center p-4"
       >
-        <div className="w-full h-full flex items-center justify-center flex-col max-w-lg">
+        <div className="w-full h-full flex items-center justify-center flex-col max-w-xl">
           <LogoSection />
 
           <div className="backdrop-blur-xl flex flex-col w-full h-full bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/20 transition-colors duration-300">
-            {isLoginMode ? (
-              <LoginForm toggleMode={toggleMode} isLoading={false} />
-            ) : (
-              <RegisterForm toggleMode={toggleMode} isLoading={false} />
-            )}
+            <LoginForm toggleMode={toggleMode} isLoading={false} />
           </div>
 
           <motion.div
