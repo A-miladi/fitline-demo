@@ -74,7 +74,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         <div className="absolute z-50 w-full mt-1">
           <div
             className={`
-            bg-white border border-gray-200 rounded-lg shadow-lg 
+            bg-white border px-2 py-1 border-gray-200 rounded-lg shadow-lg 
             max-h-64 overflow-y-auto
             transform origin-top
             transition-all duration-300 ease-out
@@ -86,17 +86,19 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
           `}
           >
             {options.map((option, index) => (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => handleSelect(option)}
-                className={`
-                w-full px-4 py-3 text-right 
+              <>
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => handleSelect(option)}
+                  className={`
+                w-full rounded-xl px-4 py-2 my-1 text-right 
                 hover:bg-primary/10 transition-all duration-200 ease-out
                 transform
+               
                 ${
                   value === option.value
-                    ? "bg-primary/20 text-primary font-medium"
+                    ? "bg-gradient-to-br from-primary to-secondary text-white font-medium"
                     : "text-gray-700"
                 }
                 ${
@@ -105,12 +107,16 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                     : "opacity-0 translate-x-2"
                 }
               `}
-                style={{
-                  transitionDelay: isOpen ? `${index * 30}ms` : "0ms",
-                }}
-              >
-                {option.label}
-              </button>
+                  style={{
+                    transitionDelay: isOpen ? `${index * 30}ms` : "0ms",
+                  }}
+                >
+                  {option.label}
+                </button>
+                {index < options.length - 1 && (
+                  <div className="w-full h-[1px] bg-neutral-100" />
+                )}
+              </>
             ))}
           </div>
         </div>
