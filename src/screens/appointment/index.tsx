@@ -13,6 +13,20 @@ import ProcessInfo from "@/components/processInfo";
 import CustomDropdown from "@/components/DropDown";
 import CalendarPicker from "@/components/callender";
 import dayjs from "dayjs";
+import jalaliday from "jalaliday";
+import usePost from "@/hooks/usePost";
+import { API_URL } from "@/constants/api";
+
+dayjs.extend(jalaliday);
+
+// Map services to backend enum values
+const SERVICE_MAP: Record<string, string> = {
+  corrective: "consultation",
+  rehabilitation: "treatment",
+  "pain-treatment": "treatment",
+  "taping-massage": "cleaning",
+  evaluation: "checkup",
+};
 
 const SERVICES: DropdownOption[] = [
   { value: "corrective", label: "حرکات اصلاحی" },
@@ -23,8 +37,8 @@ const SERVICES: DropdownOption[] = [
 ];
 
 const GENDERS: DropdownOption[] = [
-  { value: "male", label: "مرد" },
-  { value: "female", label: "زن" },
+  { value: "مرد", label: "مرد" },
+  { value: "زن", label: "زن" },
 ];
 
 const CONTACT_INFO: ContactInfo = {
@@ -57,25 +71,65 @@ const PROCESS_STEPS: ProcessStep[] = [
 ];
 const DEFAULT_TIME = "08:00";
 
+// Convert Jalali date (YYYY/MM/DD) to Gregorian date (YYYY-MM-DD)
+const convertJalaliToGregorian = (jalaliDate: string): string => {
+  try {
+    const [year, month, day] = jalaliDate.split("/").map(Number);
+    const jalaliDateObj = dayjs()
+      .calendar("jalali")
+      .year(year)
+      .month(month - 1)
+      .date(day);
+    const gregorianDate = jalaliDateObj.calendar("gregory");
+    return gregorianDate.format("YYYY-MM-DD");
+  } catch (error) {
+    console.error("Error converting date:", error);
+    return dayjs().format("YYYY-MM-DD");
+  }
+};
+
 const Appointment: React.FC = () => {
   const [formData, setFormData] = useState<AppointmentFormData>({
-    fullName: "",
+    name: "",
+    lastName: "",
     phone: "",
     email: "",
-    age: "",
+    age: 0,
     gender: "",
-    serviceType: "",
-    preferredDay: dayjs().calendar("jalali").format("YYYY/MM/DD"),
-    preferredTime: DEFAULT_TIME,
+    services: "",
+    date: dayjs().calendar("jalali").format("YYYY/MM/DD"),
+    time: DEFAULT_TIME,
     description: "",
-    previousTreatment: "",
-    contactPreference: "",
   });
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const { loading, execute } = usePost<any, AppointmentFormData>(
+    API_URL.Appointments.Create,
+    {
+      onSuccess: () => {
+        alert("نوبت شما با موفقیت ثبت شد!");
+        // Reset form
+        setFormData({
+          name: "",
+          lastName: "",
+          phone: "",
+          email: "",
+          age: 0,
+          gender: "",
+          services: "",
+          date: dayjs().calendar("jalali").format("YYYY/MM/DD"),
+          time: DEFAULT_TIME,
+          description: "",
+        });
+      },
+      onError: (error) => {
+        alert(error || "خطا در ثبت نوبت. لطفا دوباره تلاش کنید.");
+      },
+    }
+  );
 
   const handleInputChange = (
     field: keyof AppointmentFormData,
-    value: string
+    value: string | number
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -85,20 +139,38 @@ const Appointment: React.FC = () => {
       setFormData((prev) => ({ ...prev, [field]: option.value }));
     };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+
+    // Convert Jalali date to Gregorian
+    const gregorianDate = convertJalaliToGregorian(formData.date);
+
+    // Map service to backend enum
+    const mappedService = SERVICE_MAP[formData.services] || "consultation";
+
+    // Prepare payload
+    const payload: AppointmentFormData = {
+      name: formData.name,
+      lastName: formData.lastName,
+      phone: formData.phone,
+      email: formData.email || undefined,
+      age: Number(formData.age),
+      gender: formData.gender,
+      services: mappedService,
+      date: gregorianDate,
+      time: formData.time,
+      description: formData.description,
+    };
+
+    await execute(payload);
   };
-  const handleDateSelect = (date: Date | null) => {
-    setSelectedDate(date);
-    if (date) {
-      const persianDate = date.toLocaleDateString("fa-IR");
-      handleInputChange("preferredDay", persianDate);
-    }
+
+  const handleDateSelect = (date: string) => {
+    handleInputChange("date", date);
   };
 
   const handleTimeSelect = (time: string) => {
-    handleInputChange("preferredTime", time);
+    handleInputChange("time", time);
   };
 
   return (
@@ -135,35 +207,49 @@ const Appointment: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      نام و نام خانوادگی *
+                      نام *
                     </label>
                     <input
                       type="text"
                       required
-                      value={formData.fullName}
+                      value={formData.name}
                       onChange={(e) =>
-                        handleInputChange("fullName", e.target.value)
+                        handleInputChange("name", e.target.value)
                       }
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                      placeholder="نام کامل خود را وارد کنید"
+                      placeholder="نام خود را وارد کنید"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      شماره تماس *
+                      نام خانوادگی *
                     </label>
                     <input
-                      type="tel"
+                      type="text"
                       required
-                      value={formData.phone}
+                      value={formData.lastName}
                       onChange={(e) =>
-                        handleInputChange("phone", e.target.value)
+                        handleInputChange("lastName", e.target.value)
                       }
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                      placeholder="۰۹۱۲۳۴۵۶۷۸۹"
+                      placeholder="نام خانوادگی خود را وارد کنید"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    شماره تماس *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
+                    placeholder="۰۹۱۲۳۴۵۶۷۸۹"
+                  />
                 </div>
 
                 <div>
@@ -185,13 +271,16 @@ const Appointment: React.FC = () => {
                       سن *
                     </label>
                     <input
+                      type="number"
                       required
-                      value={formData.age}
-                      onChange={(e) => handleInputChange("age", e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                      placeholder="سن خود را وارد کنید"
                       min="1"
                       max="100"
+                      value={formData.age || ""}
+                      onChange={(e) =>
+                        handleInputChange("age", Number(e.target.value))
+                      }
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
+                      placeholder="سن خود را وارد کنید"
                     />
                   </div>
 
@@ -214,8 +303,8 @@ const Appointment: React.FC = () => {
                   </label>
                   <CustomDropdown
                     options={SERVICES}
-                    value={formData.serviceType}
-                    onSelect={handleDropdownSelect("serviceType")}
+                    value={formData.services}
+                    onSelect={handleDropdownSelect("services")}
                     placeholder="انتخاب نوع خدمت"
                   />
                 </div>
@@ -225,14 +314,10 @@ const Appointment: React.FC = () => {
                     ترجیح زمانی *
                   </label>
                   <CalendarPicker
-                    selectedDate={formData.preferredDay}
-                    selectedTime={formData.preferredTime}
-                    onDateSelect={(date) =>
-                      handleInputChange("preferredDay", date)
-                    }
-                    onTimeSelect={(time) =>
-                      handleInputChange("preferredTime", time)
-                    }
+                    selectedDate={formData.date}
+                    selectedTime={formData.time}
+                    onDateSelect={handleDateSelect}
+                    onTimeSelect={handleTimeSelect}
                   />
                 </div>
 
@@ -254,9 +339,10 @@ const Appointment: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 px-6 rounded-lg hover:opacity-90 transition-opacity duration-200 font-medium text-lg"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 px-6 rounded-lg hover:opacity-90 transition-opacity duration-200 font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  ارسال درخواست نوبت
+                  {loading ? "در حال ارسال..." : "ارسال درخواست نوبت"}
                 </button>
               </form>
             </div>

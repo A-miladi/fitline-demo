@@ -27,17 +27,45 @@ export interface DropdownOption {
 }
 
 export interface AppointmentFormData {
-  fullName: string;
+  name: string;
+  lastName: string;
   phone: string;
-  email: string;
-  age: string;
+  email?: string;
+  age: number;
   gender: string;
-  serviceType: string;
-  preferredDay: string;
-  preferredTime: string;
+  services: string;
+  date: string;
+  time: string;
   description: string;
-  previousTreatment: string;
-  contactPreference: string;
+}
+
+export interface Appointment {
+  id: string;
+  name: string;
+  lastName: string;
+  email?: string;
+  mobile: string;
+  gender: string;
+  age: number;
+  services: string;
+  date: string;
+  time: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AdminLoginData {
+  email: string;
+  password: string;
+}
+
+export interface AdminLoginResponse {
+  id: string;
+  email: string;
+  username: string;
+  role: string;
+  token: string;
 }
 
 export interface ContactInfo {

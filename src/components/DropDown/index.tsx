@@ -38,7 +38,6 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
 
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
-      {/* Dropdown Trigger Button */}
       <button
         type="button"
         disabled={disabled}
@@ -69,7 +68,6 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         </svg>
       </button>
 
-      {/* Animated Dropdown Options */}
       {isOpen && (
         <div className="absolute z-50 w-full mt-1">
           <div
@@ -86,7 +84,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
           `}
           >
             {options.map((option, index) => (
-              <>
+              <div>
                 <button
                   key={option.value}
                   type="button"
@@ -116,7 +114,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                 {index < options.length - 1 && (
                   <div className="w-full h-[1px] bg-neutral-100" />
                 )}
-              </>
+              </div>
             ))}
           </div>
         </div>
