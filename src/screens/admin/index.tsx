@@ -3,7 +3,7 @@ import { useState } from "react";
 import Sidebar from "./sideBar";
 import Content from "./content";
 
-export type AdminAccess = "APPOINTMENTS" | "SPECIALIST" | "ADMIN";
+export type AdminAccess = "APPOINTMENTS" | "ADMIN";
 
 function AdminPanel() {
   const [currentContent, setCurrentContent] = useState<AdminAccess>("ADMIN");
