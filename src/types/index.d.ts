@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-
+declare module "*.css";
 export interface IconProps {
   size?: number;
   color?: string;
