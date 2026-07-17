@@ -1,74 +1,28 @@
 import Navbar from "@/components/navbar";
-import DOCTOR from "../../../public/images/Doctor1.jpg";
-import DOCTOR1 from "../../../public/images/Doctor2.jpg";
 import Image from "next/image";
 
 const specialists = [
   {
     id: 1,
-    name: "دکتر سید احمد حسینی",
-    title: "متخصص ارشد حرکات اصلاحی",
-    experience: "۱۲ سال تجربه تخصصی",
-    education: "دکترای حرکات اصلاحی و آسیب شناسی ورزشی",
-    specialization: "ناهنجاری‌های ستون فقرات و اندام تحتانی",
-    image: DOCTOR,
+    name: "دکتر مهسا عسگری",
+    title: "متخصص حرکات اصلاحی و آسیب شناسی ورزشی",
+    experience: "عضو انجمن آسیب شناسی ورزشی و حرکات اصلاحی ایران",
+    education: "دکتری تخصصی آسیب شناسی ورزشی و حرکات اصلاحی - دانشگاه اصفهان",
+    specialization: "بازتوانی دردهای اسکلتی-عضلانی، اصلاح ناهنجاری‌های قامتی",
+    image: "/images/doctor-female-placeholder.jpg",
     description:
-      "متخصص در تشخیص و اصلاح ناهنجاری‌های اسکلتی-عضلانی با مدرک معتبر از دانشگاه علوم پزشکی تهران. دارای گواهینامه‌های بین‌المللی در حوزه حرکات اصلاحی.",
+      "نائب رئیس کمیته حرکات اصلاحی و تندرستی استان مرکزی و جزو استعدادهای درخشان دانشگاه. متخصص در بازتوانی دردهای اسکلتی عضلانی مانند کمردرد، دیسک گردن، آرتروز زانو، روماتیسم مفصلی، بهبود دردهای سیاتیک و گرفتگی‌های عضلانی، و حرکات اصلاحی برای اصلاح گودی کمر، گودپشتی، زانوی پرانتزی و ضربدری، و کف پای صاف.",
   },
   {
     id: 2,
-    name: "دکتر فاطمه محمدی",
-    title: "متخصص حرکات اصلاحی",
-    experience: "۱۰ سال تجربه تخصصی",
-    education: "دکترای بیومکانیک ورزشی",
-    specialization: "اصلاح ناهنجاری‌های راه رفتن و ایستادن",
-    image: DOCTOR1,
+    name: "دکتر حسین حیدری نیک",
+    title: "متخصص حرکات اصلاحی و آسیب شناسی ورزشی",
+    experience: "عضو انجمن آسیب شناسی ورزشی و حرکات اصلاحی ایران",
+    education: "دکتری تخصصی آسیب شناسی ورزشی و حرکات اصلاحی - دانشگاه تهران",
+    specialization: "پیشگیری و توانبخشی آسیب‌های اسکلتی-عضلانی",
+    image: "/images/doctor-male-placeholder.jpg",
     description:
-      "متخصص در ارزیابی و درمان اختلالات قامتی و الگوهای حرکتی نادرست. مدرس کارگاه‌های تخصصی حرکات اصلاحی برای متخصصین.",
-  },
-  {
-    id: 3,
-    name: "دکتر علی رضایی",
-    title: "متخصص آسیب‌شناسی ورزشی",
-    experience: "۱۴ سال تجربه تخصصی",
-    education: "پزشکی ورزشی و توانبخشی",
-    specialization: "بازگشت به ورزش پس از آسیب",
-    image: DOCTOR,
-    description:
-      "متخصص در طراحی برنامه‌های بازتوانی ورزشی و پیشگیری از آسیب‌های مکرر. مشاور تیم‌های ورزشی در زمینه پیشگیری و توانبخشی آسیب‌ها.",
-  },
-  {
-    id: 4,
-    name: "دکتر مریم کریمی",
-    title: "متخصص ارگونومی و حرکات اصلاحی",
-    experience: "۹ سال تجربه تخصصی",
-    education: "کارشناسی ارشد حرکات اصلاحی و آسیب شناسی ورزشی",
-    specialization: "اصلاح ناهنجاری‌های ناشی از محیط کار",
-    image: DOCTOR1,
-    description:
-      "متخصص در طراحی برنامه‌های اصلاحی برای کارمندان و افراد با سبک زندگی کم‌تحرک. طراحی برنامه‌های ارگونومیک برای محیط‌های کاری.",
-  },
-  {
-    id: 5,
-    name: "دکتر حسین نوری",
-    title: "فیزیوتراپیست و متخصص حرکات اصلاحی",
-    experience: "۱۱ سال تجربه تخصصی",
-    education: "دکترای فیزیوتراپی و حرکات اصلاحی",
-    specialization: "درمان دردهای اسکلتی-عضلانی",
-    image: DOCTOR,
-    description:
-      "متخصص در درمان غیرجراحی دردهای مزمن ستون فقرات و مفاصل. ترکیب روش‌های فیزیوتراپی و حرکات اصلاحی برای بهترین نتایج.",
-  },
-  {
-    id: 6,
-    name: "دکتر زهرا صادقی",
-    title: "متخصص حرکات اصلاحی کودکان",
-    experience: "۸ سال تجربه تخصصی",
-    education: "کارشناسی ارشد رشد و تکامل حرکتی",
-    specialization: "ناهنجاری‌های اسکلتی در کودکان و نوجوانان",
-    image: DOCTOR1,
-    description:
-      "متخصص در شناسایی و اصلاح ناهنجاری‌های دوران رشد. طراحی برنامه‌های تمرینی جذاب و مؤثر برای کودکان و نوجوانان.",
+      "رئیس کمیته حرکات اصلاحی و تندرستی استان مرکزی، مولف، پژوهشگر و مدرس دانشگاه. متخصص در مشاوره، ارزیابی و تجویز برنامه تمرینی، پیشگیری و اصلاح ناهنجاری‌های بدنی، پیشگیری و توانبخشی دردهای اسکلتی عضلانی (کمردرد، آرتروز، دردهای شانه و ...)، و بازگشت به ورزش.",
   },
 ];
 
@@ -95,22 +49,20 @@ export default function Specialists() {
       {/* Specialists Grid */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {specialists.map((specialist) => (
               <div
                 key={specialist.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
+                className="bg-white flex flex-col w-full h-full rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
               >
                 <div className="h-64 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative">
                   <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Image
-                    src={specialist.image}
-                    alt={specialist.name}
-                    className="w-32 h-32 rounded-full shadow-lg shadow-primary/40 border-4 border-white"
-                  />
+                  <div className="w-32 h-32 rounded-full shadow-lg shadow-primary/40 border-4 border-white bg-gray-200 flex items-center justify-center text-5xl text-primary/50">
+                    {specialist.id === 1 ? "👩‍⚕️" : "👨‍⚕️"}
+                  </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-6 h-full w-full flex items-start justify-between flex-col">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 font-morabba">
                     {specialist.name}
                   </h3>
@@ -128,11 +80,11 @@ export default function Specialists() {
                       {specialist.specialization}
                     </p>
                   </div>
-                  <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                  <p className="text-gray-500 text-xs leading-relaxed">
                     {specialist.description}
                   </p>
 
-                  <div className="mt-4 pt-4 border-t border-gray-100">
+                  <div className="mt-4 w-full pt-4 border-t border-gray-100">
                     <button className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium">
                       دریافت نوبت مشاوره
                     </button>

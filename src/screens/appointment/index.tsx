@@ -102,34 +102,9 @@ const Appointment: React.FC = () => {
     description: "",
   });
 
-  const { loading, execute } = usePost<any, AppointmentFormData>(
-    API_URL.Appointments.Create,
-    {
-      onSuccess: () => {
-        alert("نوبت شما با موفقیت ثبت شد!");
-        // Reset form
-        setFormData({
-          name: "",
-          lastName: "",
-          phone: "",
-          email: "",
-          age: 0,
-          gender: "",
-          services: "",
-          date: dayjs().calendar("jalali").format("YYYY/MM/DD"),
-          time: DEFAULT_TIME,
-          description: "",
-        });
-      },
-      onError: (error) => {
-        alert(error || "خطا در ثبت نوبت. لطفا دوباره تلاش کنید.");
-      },
-    }
-  );
-
   const handleInputChange = (
     field: keyof AppointmentFormData,
-    value: string | number
+    value: string | number,
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -138,32 +113,6 @@ const Appointment: React.FC = () => {
     (field: keyof AppointmentFormData) => (option: DropdownOption) => {
       setFormData((prev) => ({ ...prev, [field]: option.value }));
     };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Convert Jalali date to Gregorian
-    const gregorianDate = convertJalaliToGregorian(formData.date);
-
-    // Map service to backend enum
-    const mappedService = SERVICE_MAP[formData.services] || "consultation";
-
-    // Prepare payload
-    const payload: AppointmentFormData = {
-      name: formData.name,
-      lastName: formData.lastName,
-      phone: formData.phone,
-      email: formData.email || undefined,
-      age: Number(formData.age),
-      gender: formData.gender,
-      services: mappedService,
-      date: gregorianDate,
-      time: formData.time,
-      description: formData.description,
-    };
-
-    await execute(payload);
-  };
 
   const handleDateSelect = (date: string) => {
     handleInputChange("date", date);
@@ -203,39 +152,19 @@ const Appointment: React.FC = () => {
                 اولیه با شما تماس بگیرند.
               </p>
 
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      نام *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) =>
-                        handleInputChange("name", e.target.value)
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                      placeholder="نام خود را وارد کنید"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      نام خانوادگی *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.lastName}
-                      onChange={(e) =>
-                        handleInputChange("lastName", e.target.value)
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                      placeholder="نام خانوادگی خود را وارد کنید"
-                    />
-                  </div>
+              <form className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    نام و نام خانوادگی *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
+                    placeholder="نام خود را وارد کنید"
+                  />
                 </div>
 
                 <div>
@@ -251,76 +180,6 @@ const Appointment: React.FC = () => {
                     placeholder="۰۹۱۲۳۴۵۶۷۸۹"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    آدرس ایمیل
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                    placeholder="example@email.com"
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      سن *
-                    </label>
-                    <input
-                      type="number"
-                      required
-                      min="1"
-                      max="100"
-                      value={formData.age || ""}
-                      onChange={(e) =>
-                        handleInputChange("age", Number(e.target.value))
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                      placeholder="سن خود را وارد کنید"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      جنسیت *
-                    </label>
-                    <CustomDropdown
-                      options={GENDERS}
-                      value={formData.gender}
-                      onSelect={handleDropdownSelect("gender")}
-                      placeholder="انتخاب جنسیت"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    نوع خدمت مورد نیاز *
-                  </label>
-                  <CustomDropdown
-                    options={SERVICES}
-                    value={formData.services}
-                    onSelect={handleDropdownSelect("services")}
-                    placeholder="انتخاب نوع خدمت"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
-                    ترجیح زمانی *
-                  </label>
-                  <CalendarPicker
-                    selectedDate={formData.date}
-                    selectedTime={formData.time}
-                    onDateSelect={handleDateSelect}
-                    onTimeSelect={handleTimeSelect}
-                  />
-                </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     توضیح مشکل یا نیاز *
@@ -337,12 +196,23 @@ const Appointment: React.FC = () => {
                   />
                 </div>
 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    ترجیح زمانی *
+                  </label>
+                  <CalendarPicker
+                    selectedDate={formData.date}
+                    selectedTime={formData.time}
+                    onDateSelect={handleDateSelect}
+                    onTimeSelect={handleTimeSelect}
+                  />
+                </div>
+
                 <button
                   type="submit"
-                  disabled={loading}
                   className="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 px-6 rounded-lg hover:opacity-90 transition-opacity duration-200 font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? "در حال ارسال..." : "ارسال درخواست نوبت"}
+                  ثبت نوبت
                 </button>
               </form>
             </div>

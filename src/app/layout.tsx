@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import I92 from "../../public/icon/logo192.png";
 
 export const metadata: Metadata = {
   title: "راه تناسب - مرکز تندرستی و حرکات اصلاحی",
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#2d5aa0",
+  themeColor: "#fff",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,

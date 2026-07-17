@@ -6,7 +6,6 @@ import BurgerMenu from "../../../public/icon/BurgerMenu";
 import Close from "../../../public/icon/Close";
 import Profile from "../../../public/icon/Profile";
 import Image from "next/image";
-import LoginAction from "./login";
 
 const ScreenLinks = [
   {
@@ -202,8 +201,6 @@ function Navbar() {
               </li>
             ))}
           </ul>
-
-          <LoginAction />
         </div>
       </header>
 
