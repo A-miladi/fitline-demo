@@ -39,22 +39,6 @@ export interface AppointmentFormData {
   description: string;
 }
 
-export interface Appointment {
-  id: string;
-  name: string;
-  lastName: string;
-  email?: string;
-  mobile: string;
-  gender: string;
-  age: number;
-  services: string;
-  date: string;
-  time: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface AppointmentCreatePayload {
   date: string;
   description: string;

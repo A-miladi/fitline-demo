@@ -8,7 +8,7 @@ import {
   ProcessStep,
 } from "@/types";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ContactInfoCard from "@/components/contactInfoCard";
 import ProcessInfo from "@/components/processInfo";
 import CustomDropdown from "@/components/DropDown";
@@ -81,10 +81,18 @@ const Appointment: React.FC = () => {
   const searchParams = useSearchParams();
   const doctorIdFromUrl = searchParams.get("doctorId") ?? "";
   const { data: doctors } = useFetch<Doctor[]>(API_URL.Doctors);
+  // در Appointment component
   const { loading: isSubmitting, execute: submitAppointment } = usePost<
     AppointmentCreatePayload,
     AppointmentCreatePayload
-  >(`${API_URL.Appointments}`);
+  >(`${API_URL.Appointments}`, {
+    onSuccess: (data) => {
+      console.log("✅ Appointment created:", data);
+    },
+    onError: (error) => {
+      console.error("❌ Error creating appointment:", error);
+    },
+  });
   const [selectedDoctorId, setSelectedDoctorId] = useState<string>("");
   const [toast, setToast] = useState<{
     type: "success" | "error";
@@ -103,14 +111,6 @@ const Appointment: React.FC = () => {
     time: DEFAULT_TIME,
     description: "",
   });
-
-  useEffect(() => {
-    if (doctorIdFromUrl) {
-      setSelectedDoctorId(doctorIdFromUrl);
-    } else {
-      setSelectedDoctorId("");
-    }
-  }, [doctorIdFromUrl]);
 
   const handleInputChange = (
     field: keyof AppointmentFormData,
@@ -133,54 +133,76 @@ const Appointment: React.FC = () => {
       label: doctor.name,
     })) ?? [];
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
 
-    if (isSubmitting || isSubmittingLocal) {
-      return;
-    }
+      if (isSubmitting || isSubmittingLocal) {
+        return;
+      }
 
-    setToast(null);
-    setIsSubmittingLocal(true);
+      setToast(null);
+      setIsSubmittingLocal(true);
 
-    const doctorId = Number(selectedDoctorId || doctorIdFromUrl);
+      const doctorId = Number(selectedDoctorId || doctorIdFromUrl);
 
-    if (!doctorId) {
-      setToast({
-        type: "error",
-        message: "لطفاً پزشک را انتخاب کنید",
-      });
-      return;
-    }
-
-    const payload: AppointmentCreatePayload = {
-      id: 0,
-      full_name: `${formData.name} ${formData.lastName}`.trim(),
-      phone: formData.phone,
-      date: `${formData.date} ${formData.time}`,
-      description: formData.description,
-      doctor_id: doctorId,
-    };
-
-    try {
-      const result = await submitAppointment(payload);
-
-      if (result) {
-        setToast({
-          type: "success",
-          message: "درخواست نوبت با موفقیت ثبت شد",
-        });
-      } else {
+      if (!doctorId) {
         setToast({
           type: "error",
-          message: "ثبت نوبت با خطا مواجه شد. لطفاً دوباره تلاش کنید",
+          message: "لطفاً پزشک را انتخاب کنید",
         });
+        setIsSubmittingLocal(false);
+        return;
       }
-    } finally {
-      setIsSubmittingLocal(false);
-    }
-  };
 
+      const payload: AppointmentCreatePayload = {
+        id: 0,
+        full_name: `${formData.name} ${formData.lastName}`.trim(),
+        phone: formData.phone,
+        date: `${formData.date} ${formData.time}`,
+        description: formData.description,
+        doctor_id: doctorId,
+      };
+
+      try {
+        const result = await submitAppointment(payload);
+
+        if (result) {
+          setToast({
+            type: "success",
+            message: "درخواست نوبت با موفقیت ثبت شد",
+          });
+        } else {
+          setToast({
+            type: "error",
+            message: "ثبت نوبت با خطا مواجه شد. لطفاً دوباره تلاش کنید",
+          });
+        }
+      } catch (error) {
+        setToast({
+          type: "error",
+          message: "خطا در ارتباط با سرور. لطفاً مجدداً تلاش کنید",
+        });
+      } finally {
+        setIsSubmittingLocal(false);
+      }
+    },
+    [
+      isSubmitting,
+      isSubmittingLocal,
+      selectedDoctorId,
+      doctorIdFromUrl,
+      formData,
+      submitAppointment,
+    ],
+  );
+  useEffect(() => {
+    if (doctorIdFromUrl) {
+      setSelectedDoctorId(doctorIdFromUrl);
+    } else {
+      setSelectedDoctorId("");
+    }
+  }, [doctorIdFromUrl]);
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />

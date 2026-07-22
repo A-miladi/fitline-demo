@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+// hooks/usePost.ts
+import { useState, useCallback, useRef } from "react";
 import { AxiosError } from "axios";
 import API from "@/services";
 
@@ -14,15 +15,24 @@ interface UsePostResult<T, P> {
 
 const usePost = <T, P>(
   url: string,
-  options: UsePostOptions<T> = {}
+  options: UsePostOptions<T> = {},
 ): UsePostResult<T, P> => {
   const { onSuccess, onError } = options;
 
   const [loading, setLoading] = useState<boolean>(false);
+  const isExecutingRef = useRef<boolean>(false);
 
   const execute = useCallback(
     async (payload: P): Promise<T | void> => {
+      // جلوگیری از اجرای همزمان
+      if (isExecutingRef.current) {
+        console.log("⛔ Request already in progress, ignoring duplicate");
+        return;
+      }
+
+      isExecutingRef.current = true;
       setLoading(true);
+
       try {
         const response = await API.post<T>(url, payload);
         onSuccess?.(response.data);
@@ -41,9 +51,10 @@ const usePost = <T, P>(
         }
       } finally {
         setLoading(false);
+        isExecutingRef.current = false;
       }
     },
-    [url, onSuccess, onError]
+    [url, onSuccess, onError],
   );
 
   return { loading, execute };
