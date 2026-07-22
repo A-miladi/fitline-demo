@@ -1,9 +1,10 @@
 import axios from "axios";
+import { API_BASE_URL } from "@/constants/api";
 
 export const TOKEN = "TOKEN";
 
 const API = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL || API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -27,7 +28,7 @@ API.interceptors.response.use(
       window.location.href = "/auth/login";
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default API;

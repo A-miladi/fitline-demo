@@ -1,13 +1,14 @@
 "use client";
 import Navbar from "@/components/navbar";
 import {
+  AppointmentCreatePayload,
   AppointmentFormData,
   ContactInfo,
   DropdownOption,
   ProcessStep,
 } from "@/types";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContactInfoCard from "@/components/contactInfoCard";
 import ProcessInfo from "@/components/processInfo";
 import CustomDropdown from "@/components/DropDown";
@@ -15,11 +16,13 @@ import CalendarPicker from "@/components/callender";
 import dayjs from "dayjs";
 import jalaliday from "jalaliday";
 import usePost from "@/hooks/usePost";
+import useFetch from "@/hooks/useFetch";
 import { API_URL } from "@/constants/api";
+import { Doctor } from "@/types/doctor";
+import { useSearchParams } from "next/navigation";
 
 dayjs.extend(jalaliday);
 
-// Map services to backend enum values
 const SERVICE_MAP: Record<string, string> = {
   corrective: "consultation",
   rehabilitation: "treatment",
@@ -27,19 +30,6 @@ const SERVICE_MAP: Record<string, string> = {
   "taping-massage": "cleaning",
   evaluation: "checkup",
 };
-
-const SERVICES: DropdownOption[] = [
-  { value: "corrective", label: "حرکات اصلاحی" },
-  { value: "rehabilitation", label: "توانبخشی ورزشی" },
-  { value: "pain-treatment", label: "درمان دردهای اسکلتی-عضلانی" },
-  { value: "taping-massage", label: "تیپینگ و ماساژ" },
-  { value: "evaluation", label: "ارزیابی وضعیت جسمانی" },
-];
-
-const GENDERS: DropdownOption[] = [
-  { value: "مرد", label: "مرد" },
-  { value: "زن", label: "زن" },
-];
 
 const CONTACT_INFO: ContactInfo = {
   phone: ["۰۲۱-۱۲۳۴۵۶۷۸", "۰۹۱۲۳۴۵۶۷۸۹"],
@@ -71,7 +61,6 @@ const PROCESS_STEPS: ProcessStep[] = [
 ];
 const DEFAULT_TIME = "08:00";
 
-// Convert Jalali date (YYYY/MM/DD) to Gregorian date (YYYY-MM-DD)
 const convertJalaliToGregorian = (jalaliDate: string): string => {
   try {
     const [year, month, day] = jalaliDate.split("/").map(Number);
@@ -89,6 +78,19 @@ const convertJalaliToGregorian = (jalaliDate: string): string => {
 };
 
 const Appointment: React.FC = () => {
+  const searchParams = useSearchParams();
+  const doctorIdFromUrl = searchParams.get("doctorId") ?? "";
+  const { data: doctors } = useFetch<Doctor[]>(API_URL.Doctors);
+  const { loading: isSubmitting, execute: submitAppointment } = usePost<
+    AppointmentCreatePayload,
+    AppointmentCreatePayload
+  >(`${API_URL.Appointments}`);
+  const [selectedDoctorId, setSelectedDoctorId] = useState<string>("");
+  const [toast, setToast] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const [isSubmittingLocal, setIsSubmittingLocal] = useState(false);
   const [formData, setFormData] = useState<AppointmentFormData>({
     name: "",
     lastName: "",
@@ -102,6 +104,14 @@ const Appointment: React.FC = () => {
     description: "",
   });
 
+  useEffect(() => {
+    if (doctorIdFromUrl) {
+      setSelectedDoctorId(doctorIdFromUrl);
+    } else {
+      setSelectedDoctorId("");
+    }
+  }, [doctorIdFromUrl]);
+
   const handleInputChange = (
     field: keyof AppointmentFormData,
     value: string | number,
@@ -109,17 +119,66 @@ const Appointment: React.FC = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleDropdownSelect =
-    (field: keyof AppointmentFormData) => (option: DropdownOption) => {
-      setFormData((prev) => ({ ...prev, [field]: option.value }));
-    };
-
   const handleDateSelect = (date: string) => {
     handleInputChange("date", date);
   };
 
   const handleTimeSelect = (time: string) => {
     handleInputChange("time", time);
+  };
+
+  const doctorOptions: DropdownOption[] =
+    doctors?.map((doctor) => ({
+      value: doctor.id.toString(),
+      label: doctor.name,
+    })) ?? [];
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (isSubmitting || isSubmittingLocal) {
+      return;
+    }
+
+    setToast(null);
+    setIsSubmittingLocal(true);
+
+    const doctorId = Number(selectedDoctorId || doctorIdFromUrl);
+
+    if (!doctorId) {
+      setToast({
+        type: "error",
+        message: "لطفاً پزشک را انتخاب کنید",
+      });
+      return;
+    }
+
+    const payload: AppointmentCreatePayload = {
+      id: 0,
+      full_name: `${formData.name} ${formData.lastName}`.trim(),
+      phone: formData.phone,
+      date: `${formData.date} ${formData.time}`,
+      description: formData.description,
+      doctor_id: doctorId,
+    };
+
+    try {
+      const result = await submitAppointment(payload);
+
+      if (result) {
+        setToast({
+          type: "success",
+          message: "درخواست نوبت با موفقیت ثبت شد",
+        });
+      } else {
+        setToast({
+          type: "error",
+          message: "ثبت نوبت با خطا مواجه شد. لطفاً دوباره تلاش کنید",
+        });
+      }
+    } finally {
+      setIsSubmittingLocal(false);
+    }
   };
 
   return (
@@ -142,6 +201,17 @@ const Appointment: React.FC = () => {
 
       <section className="py-16 ">
         <div className="max-w-6xl mx-auto px-5">
+          {toast && (
+            <div
+              className={`mb-6 rounded-lg border px-4 py-3 text-sm ${
+                toast.type === "success"
+                  ? "border-green-200 bg-green-50 text-green-700"
+                  : "border-red-200 bg-red-50 text-red-700"
+              }`}
+            >
+              {toast.message}
+            </div>
+          )}
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6 font-morabba">
@@ -152,7 +222,7 @@ const Appointment: React.FC = () => {
                 اولیه با شما تماس بگیرند.
               </p>
 
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     نام و نام خانوادگی *
@@ -164,6 +234,19 @@ const Appointment: React.FC = () => {
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
                     placeholder="نام خود را وارد کنید"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    انتخاب پزشک
+                  </label>
+                  <CustomDropdown
+                    options={doctorOptions}
+                    value={selectedDoctorId}
+                    onSelect={(option) => setSelectedDoctorId(option.value)}
+                    placeholder="پزشک مورد نظر را انتخاب کنید"
+                    disabled={doctorOptions.length === 0}
                   />
                 </div>
 
@@ -210,9 +293,12 @@ const Appointment: React.FC = () => {
 
                 <button
                   type="submit"
+                  disabled={isSubmitting || isSubmittingLocal}
                   className="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 px-6 rounded-lg hover:opacity-90 transition-opacity duration-200 font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  ثبت نوبت
+                  {isSubmitting || isSubmittingLocal
+                    ? "در حال ثبت..."
+                    : "ثبت نوبت"}
                 </button>
               </form>
             </div>

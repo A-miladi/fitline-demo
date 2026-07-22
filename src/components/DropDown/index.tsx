@@ -84,7 +84,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
           `}
           >
             {options.map((option, index) => (
-              <div>
+              <div key={index}>
                 <button
                   key={option.value}
                   type="button"

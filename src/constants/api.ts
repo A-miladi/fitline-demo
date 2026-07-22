@@ -1,13 +1,6 @@
+export const API_BASE_URL = "http://localhost:8000";
+
 export const API_URL = {
-  Auth: {
-    AdminLogin: "/auth/admin/login",
-    Send_Email: "/auth/register-user-send-email",
-    OTP: "/auth/register-user-step-Two",
-    GOOGLE: "http://localhost:4123/auth/google/login",
-  },
-  Appointments: {
-    Create: "/appointments/create",
-    GetAll: "/appointments/all",
-    GetOne: (id: string) => `/appointments/${id}`,
-  },
+  Doctors: `${API_BASE_URL}/api/doctors`,
+  Appointments: `${API_BASE_URL}/api/appointments`,
 };

@@ -1,9 +1,23 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
 import Navbar from "@/components/navbar";
 import Button from "@/components/ui/Button";
+import useFetch from "@/hooks/useFetch";
+import useDelete from "@/hooks/useDelete";
+import usePut from "@/hooks/usePut";
+import { API_URL } from "@/constants/api";
+
+type AppointmentApiItem = {
+  id?: number;
+  full_name?: string;
+  phone: string;
+  date: string;
+  description: string;
+  doctor_id?: number;
+  created_at?: string;
+};
 
 type Appointment = {
   id: number;
@@ -11,52 +25,66 @@ type Appointment = {
   phoneNumber: string;
   date: string;
   description: string;
+  doctorId?: number;
+  createdAt?: string;
 };
 
 const STATIC_USERNAME = "admin";
 const STATIC_PASSWORD = "123456";
 
-const initialAppointments: Appointment[] = [
-  {
-    id: 1,
-    fullName: "آرمان رضایی",
-    phoneNumber: "09120000001",
-    date: "1403/09/10",
-    description: "ناراحتی گردن و شانه",
-  },
-  {
-    id: 2,
-    fullName: "سارا محمدی",
-    phoneNumber: "09120000002",
-    date: "1403/09/11",
-    description: "آسیب زانو و تمرین توانبخشی",
-  },
-  {
-    id: 3,
-    fullName: "بهرام احمدی",
-    phoneNumber: "09120000003",
-    date: "1403/09/12",
-    description: "مشکلات کمر و اصلاح فرم",
-  },
-  {
-    id: 4,
-    fullName: "مریم طاهری",
-    phoneNumber: "09120000004",
-    date: "1403/09/13",
-    description: "تمرینات بازتوانی بعد از جراحی",
-  },
-];
+const mapAppointment = (item: AppointmentApiItem): Appointment => ({
+  id: item.id ?? 0,
+  fullName: item.full_name || "—",
+  phoneNumber: item.phone || "—",
+  date: item.date || "—",
+  description: item.description || "—",
+  doctorId: item.doctor_id,
+  createdAt: item.created_at,
+});
 
 export default function Admin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState("");
-  const [appointments, setAppointments] =
-    useState<Appointment[]>(initialAppointments);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Appointment | null>(null);
+
+  const {
+    data,
+    loading,
+    error: fetchError,
+    refetch,
+  } = useFetch<AppointmentApiItem[]>(API_URL.Appointments);
+  const { loading: isDeleting, execute: deleteAppointment } = useDelete<
+    unknown,
+    number
+  >(API_URL.Appointments);
+  const { loading: isSaving, execute: updateAppointment } = usePut<
+    AppointmentApiItem,
+    AppointmentApiItem
+  >(API_URL.Appointments, {
+    onSuccess: (updatedAppointment) => {
+      setAppointments((current) =>
+        current.map((item) =>
+          item.id === updatedAppointment.id
+            ? mapAppointment(updatedAppointment)
+            : item,
+        ),
+      );
+      setEditingId(null);
+      setEditForm(null);
+      refetch();
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      setAppointments(data.map(mapAppointment));
+    }
+  }, [data]);
 
   const stats = useMemo(
     () => ({
@@ -93,12 +121,14 @@ export default function Admin() {
   };
 
   const handleDelete = (id: number) => {
-    setAppointments((current) => current.filter((item) => item.id !== id));
+    deleteAppointment(id);
+    refetch();
   };
 
   const handleEdit = (appointment: Appointment) => {
     setEditingId(appointment.id);
     setEditForm({ ...appointment });
+    refetch();
   };
 
   const handleSaveEdit = (event: React.FormEvent) => {
@@ -108,16 +138,21 @@ export default function Admin() {
       return;
     }
 
-    setAppointments((current) =>
-      current.map((item) => (item.id === editForm.id ? editForm : item)),
-    );
-    setEditingId(null);
-    setEditForm(null);
+    const payload: AppointmentApiItem = {
+      full_name: editForm.fullName,
+      phone: editForm.phoneNumber,
+      date: editForm.date,
+      description: editForm.description,
+      doctor_id: editForm.doctorId,
+    };
+
+    updateAppointment(payload, `/${editForm.id}`);
   };
 
   const handleCancelEdit = () => {
     setEditingId(null);
     setEditForm(null);
+    refetch();
   };
 
   return (
@@ -372,52 +407,82 @@ export default function Admin() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredAppointments.map((appointment) => (
-                        <tr
-                          key={appointment.id}
-                          className="border-t border-gray-100 hover:bg-gray-50"
-                        >
-                          <td className="max-w-[90px] px-2 py-3 text-center text-gray-700">
-                            <div className="truncate">{appointment.id}</div>
-                          </td>
-                          <td className="max-w-[180px] px-2 py-3 text-center font-medium text-gray-900">
-                            <div className="truncate">
-                              {appointment.fullName}
-                            </div>
-                          </td>
-                          <td className="max-w-[140px] px-2 py-3 text-center text-gray-700">
-                            <div className="truncate">
-                              {appointment.phoneNumber}
-                            </div>
-                          </td>
-                          <td className="max-w-[140px] px-2 py-3 text-center text-gray-700">
-                            <div className="truncate">{appointment.date}</div>
-                          </td>
-                          <td className="max-w-[220px] px-2 py-3 text-center text-gray-700">
-                            <div className="truncate">
-                              {appointment.description}
-                            </div>
-                          </td>
-                          <td className="px-2 py-3">
-                            <div className="flex justify-center gap-2">
-                              <button
-                                onClick={() => handleEdit(appointment)}
-                                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-blue-600 text-white transition hover:bg-blue-700"
-                                aria-label="ویرایش"
-                              >
-                                <FiEdit3 size={16} />
-                              </button>
-                              <button
-                                onClick={() => handleDelete(appointment.id)}
-                                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-red-500 text-white transition hover:bg-red-600"
-                                aria-label="حذف"
-                              >
-                                <FiTrash2 size={16} />
-                              </button>
-                            </div>
+                      {loading ? (
+                        <tr>
+                          <td
+                            colSpan={6}
+                            className="px-4 py-8 text-center text-gray-500"
+                          >
+                            در حال بارگذاری نوبت‌ها...
                           </td>
                         </tr>
-                      ))}
+                      ) : fetchError ? (
+                        <tr>
+                          <td
+                            colSpan={6}
+                            className="px-4 py-8 text-center text-red-500"
+                          >
+                            {fetchError}
+                          </td>
+                        </tr>
+                      ) : filteredAppointments.length === 0 ? (
+                        <tr>
+                          <td
+                            colSpan={6}
+                            className="px-4 py-8 text-center text-gray-500"
+                          >
+                            هیچ نوبتی یافت نشد.
+                          </td>
+                        </tr>
+                      ) : (
+                        filteredAppointments.map((appointment) => (
+                          <tr
+                            key={appointment.id}
+                            className="border-t border-gray-100 hover:bg-gray-50"
+                          >
+                            <td className="max-w-[90px] px-2 py-3 text-center text-gray-700">
+                              <div className="truncate">{appointment.id}</div>
+                            </td>
+                            <td className="max-w-[180px] px-2 py-3 text-center font-medium text-gray-900">
+                              <div className="truncate">
+                                {appointment.fullName}
+                              </div>
+                            </td>
+                            <td className="max-w-[140px] px-2 py-3 text-center text-gray-700">
+                              <div className="truncate">
+                                {appointment.phoneNumber}
+                              </div>
+                            </td>
+                            <td className="max-w-[140px] px-2 py-3 text-center text-gray-700">
+                              <div className="truncate">{appointment.date}</div>
+                            </td>
+                            <td className="max-w-[220px] px-2 py-3 text-center text-gray-700">
+                              <div className="truncate">
+                                {appointment.description}
+                              </div>
+                            </td>
+                            <td className="px-2 py-3">
+                              <div className="flex justify-center gap-2">
+                                <button
+                                  onClick={() => handleEdit(appointment)}
+                                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-blue-600 text-white transition hover:bg-blue-700"
+                                  aria-label="ویرایش"
+                                >
+                                  <FiEdit3 size={16} />
+                                </button>
+                                <button
+                                  onClick={() => handleDelete(appointment.id)}
+                                  disabled={isDeleting}
+                                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-red-500 text-white transition hover:bg-red-600 disabled:opacity-50"
+                                  aria-label="حذف"
+                                >
+                                  <FiTrash2 size={16} />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

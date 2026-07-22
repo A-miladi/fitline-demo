@@ -1,37 +1,119 @@
+"use client";
 import Navbar from "@/components/navbar";
-import Image from "next/image";
-
-const specialists = [
-  {
-    id: 1,
-    name: "دکتر مهسا عسگری",
-    title: "متخصص حرکات اصلاحی و آسیب شناسی ورزشی",
-    experience: "عضو انجمن آسیب شناسی ورزشی و حرکات اصلاحی ایران",
-    education: "دکتری تخصصی آسیب شناسی ورزشی و حرکات اصلاحی - دانشگاه اصفهان",
-    specialization: "بازتوانی دردهای اسکلتی-عضلانی، اصلاح ناهنجاری‌های قامتی",
-    image: "/images/doctor-female-placeholder.jpg",
-    description:
-      "نائب رئیس کمیته حرکات اصلاحی و تندرستی استان مرکزی و جزو استعدادهای درخشان دانشگاه. متخصص در بازتوانی دردهای اسکلتی عضلانی مانند کمردرد، دیسک گردن، آرتروز زانو، روماتیسم مفصلی، بهبود دردهای سیاتیک و گرفتگی‌های عضلانی، و حرکات اصلاحی برای اصلاح گودی کمر، گودپشتی، زانوی پرانتزی و ضربدری، و کف پای صاف.",
-  },
-  {
-    id: 2,
-    name: "دکتر حسین حیدری نیک",
-    title: "متخصص حرکات اصلاحی و آسیب شناسی ورزشی",
-    experience: "عضو انجمن آسیب شناسی ورزشی و حرکات اصلاحی ایران",
-    education: "دکتری تخصصی آسیب شناسی ورزشی و حرکات اصلاحی - دانشگاه تهران",
-    specialization: "پیشگیری و توانبخشی آسیب‌های اسکلتی-عضلانی",
-    image: "/images/doctor-male-placeholder.jpg",
-    description:
-      "رئیس کمیته حرکات اصلاحی و تندرستی استان مرکزی، مولف، پژوهشگر و مدرس دانشگاه. متخصص در مشاوره، ارزیابی و تجویز برنامه تمرینی، پیشگیری و اصلاح ناهنجاری‌های بدنی، پیشگیری و توانبخشی دردهای اسکلتی عضلانی (کمردرد، آرتروز، دردهای شانه و ...)، و بازگشت به ورزش.",
-  },
-];
+import { API_URL } from "@/constants/api";
+import useFetch from "@/hooks/useFetch";
+import { Doctor } from "@/types/doctor";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { FadeLoader } from "react-spinners";
 
 export default function Specialists() {
+  const router = useRouter();
+  const { data, loading, error, refetch } = useFetch<Doctor[]>(API_URL.Doctors);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (loading) {
+      timer = setTimeout(() => {
+        setIsLoading(true);
+      }, 1000);
+    } else {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, 1000 - elapsed);
+
+      if (remaining > 0) {
+        timer = setTimeout(() => {
+          setIsLoading(false);
+        }, remaining);
+      } else {
+        setIsLoading(false);
+      }
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [loading]);
+
+  const [startTime] = useState(Date.now());
+
+  if (loading || isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50" dir="rtl">
+        <Navbar />
+        <div className="flex h-screen flex-1 items-center justify-center">
+          <FadeLoader
+            color="#583f99"
+            loading
+            height={15}
+            width={4}
+            speedMultiplier={1}
+            margin={3}
+            cssOverride={{
+              marginBottom: 150,
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50" dir="rtl">
+        <Navbar />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center max-w-md mx-auto p-8 bg-white rounded-xl shadow-lg">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg
+                className="w-8 h-8 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">
+              خطا در دریافت اطلاعات
+            </h3>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <button
+              onClick={refetch}
+              className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              تلاش مجدد
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50" dir="rtl">
+        <Navbar />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <p className="text-gray-600 text-lg">هیچ متخصصی یافت نشد</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
 
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
@@ -46,46 +128,46 @@ export default function Specialists() {
         </div>
       </section>
 
-      {/* Specialists Grid */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
-            {specialists.map((specialist) => (
+            {data?.map((i, idx) => (
               <div
-                key={specialist.id}
+                key={idx}
                 className="bg-white flex flex-col w-full h-full rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
               >
                 <div className="h-64 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative">
                   <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="w-32 h-32 rounded-full shadow-lg shadow-primary/40 border-4 border-white bg-gray-200 flex items-center justify-center text-5xl text-primary/50">
-                    {specialist.id === 1 ? "👩‍⚕️" : "👨‍⚕️"}
+                    {i.id === 1 ? "👩‍⚕️" : "👨‍⚕️"}
                   </div>
                 </div>
 
                 <div className="p-6 h-full w-full flex items-start justify-between flex-col">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 font-morabba">
-                    {specialist.name}
+                    {i.name}
                   </h3>
-                  <p className="text-primary font-semibold mb-2">
-                    {specialist.title}
-                  </p>
+                  <p className="text-primary font-semibold mb-2">{i.title}</p>
                   <div className="mb-3">
                     <span className="inline-block bg-primary/10 text-primary text-xs px-2 py-1 rounded-full mb-2">
-                      {specialist.experience}
+                      {i.experience}
                     </span>
-                    <p className="text-gray-600 text-sm mb-1">
-                      {specialist.education}
-                    </p>
+                    <p className="text-gray-600 text-sm mb-1">{i.education}</p>
                     <p className="text-gray-600 text-sm font-medium">
-                      {specialist.specialization}
+                      {i.specialization}
                     </p>
                   </div>
                   <p className="text-gray-500 text-xs leading-relaxed">
-                    {specialist.description}
+                    {i.description}
                   </p>
 
                   <div className="mt-4 w-full pt-4 border-t border-gray-100">
-                    <button className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium">
+                    <button
+                      onClick={() =>
+                        router.push(`/appointment?doctorId=${i.id}`)
+                      }
+                      className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium"
+                    >
                       دریافت نوبت مشاوره
                     </button>
                   </div>

@@ -55,6 +55,15 @@ export interface Appointment {
   updatedAt: string;
 }
 
+export interface AppointmentCreatePayload {
+  date: string;
+  description: string;
+  doctor_id: number;
+  full_name: string;
+  id: number;
+  phone: string;
+}
+
 export interface AdminLoginData {
   email: string;
   password: string;

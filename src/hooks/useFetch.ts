@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import API from "@/services";
@@ -20,7 +21,7 @@ interface UseFetchResult<T> {
 
 const useFetch = <T>(
   url: string,
-  options: UseFetchOptions<T> = {}
+  options: UseFetchOptions<T> = {},
 ): UseFetchResult<T> => {
   const { autoFetch = true, dependencies = [], onSuccess, onError } = options;
   const [data, setData] = useState<T | null>(null);
