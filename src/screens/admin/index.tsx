@@ -64,12 +64,10 @@ export default function AdminPage() {
     number
   >(API_URL.Appointments, {
     onSuccess: () => {
-      // حذف موفق - نیازی به کاری نیست چون state قبلاً به‌روز شده
       showToast("success", "نوبت با موفقیت حذف شد");
     },
     onError: (error) => {
       showToast("error", `خطا در حذف: ${error}`);
-      // در صورت خطا، دوباره fetch کن
       refetch();
     },
   });
@@ -95,7 +93,6 @@ export default function AdminPage() {
 
       showToast("success", "نوبت با موفقیت ویرایش شد");
 
-      // بعد از ۱ ثانیه refetch برای هماهنگی با سرور
       setTimeout(() => {
         isUpdatingRef.current = false;
         refetch();

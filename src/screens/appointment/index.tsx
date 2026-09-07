@@ -8,7 +8,7 @@ import {
   ProcessStep,
 } from "@/types";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo, memo } from "react";
 import ContactInfoCard from "@/components/contactInfoCard";
 import ProcessInfo from "@/components/processInfo";
 import CustomDropdown from "@/components/DropDown";
@@ -20,6 +20,11 @@ import useFetch from "@/hooks/useFetch";
 import { API_URL } from "@/constants/api";
 import { Doctor } from "@/types/doctor";
 import { useSearchParams } from "next/navigation";
+import {
+  isValidPhoneNumber,
+  formatPhoneNumber,
+  getPhoneError,
+} from "@/utils/validation";
 
 dayjs.extend(jalaliday);
 
@@ -59,6 +64,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     description: "شروع فرآیند درمان با برنامه‌ریزی شخصی‌سازی شده",
   },
 ];
+
 const DEFAULT_TIME = "08:00";
 
 const convertJalaliToGregorian = (jalaliDate: string): string => {
@@ -77,11 +83,90 @@ const convertJalaliToGregorian = (jalaliDate: string): string => {
   }
 };
 
+// کامپوننت ورودی با memo
+const InputField = memo(
+  ({
+    label,
+    type,
+    required,
+    value,
+    onChange,
+    placeholder,
+    error,
+    dir,
+  }: {
+    label: string;
+    type?: string;
+    required?: boolean;
+    value: string | number;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    placeholder: string;
+    error?: string;
+    dir?: string;
+  }) => (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-2">
+        {label} {required && "*"}
+      </label>
+      <input
+        type={type || "text"}
+        required={required}
+        value={value}
+        onChange={onChange}
+        className={`w-full px-4 py-3 border rounded-lg focus:bg-neutral-100 focus:outline-none ${
+          error
+            ? "border-red-500 focus:ring-2 focus:ring-red-500"
+            : "border-gray-300 focus:ring-2 focus:ring-primary"
+        }`}
+        placeholder={placeholder}
+        dir={dir}
+      />
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+    </div>
+  ),
+);
+
+InputField.displayName = "InputField";
+
+// کامپوننت Textarea با memo
+const TextareaField = memo(
+  ({
+    label,
+    required,
+    value,
+    onChange,
+    placeholder,
+    rows = 4,
+  }: {
+    label: string;
+    required?: boolean;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    placeholder: string;
+    rows?: number;
+  }) => (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-2">
+        {label} {required && "*"}
+      </label>
+      <textarea
+        rows={rows}
+        required={required}
+        value={value}
+        onChange={onChange}
+        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+        placeholder={placeholder}
+      />
+    </div>
+  ),
+);
+
+TextareaField.displayName = "TextareaField";
+
 const Appointment: React.FC = () => {
   const searchParams = useSearchParams();
   const doctorIdFromUrl = searchParams.get("doctorId") ?? "";
   const { data: doctors } = useFetch<Doctor[]>(API_URL.Doctors);
-  // در Appointment component
   const { loading: isSubmitting, execute: submitAppointment } = usePost<
     AppointmentCreatePayload,
     AppointmentCreatePayload
@@ -93,12 +178,14 @@ const Appointment: React.FC = () => {
       console.error("❌ Error creating appointment:", error);
     },
   });
+
   const [selectedDoctorId, setSelectedDoctorId] = useState<string>("");
   const [toast, setToast] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
   const [isSubmittingLocal, setIsSubmittingLocal] = useState(false);
+  const [phoneError, setPhoneError] = useState<string>("");
   const [formData, setFormData] = useState<AppointmentFormData>({
     name: "",
     lastName: "",
@@ -112,26 +199,78 @@ const Appointment: React.FC = () => {
     description: "",
   });
 
-  const handleInputChange = (
-    field: keyof AppointmentFormData,
-    value: string | number,
-  ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+  // استفاده از useMemo برای doctorOptions
+  const doctorOptions = useMemo(() => {
+    return (
+      doctors?.map((doctor) => ({
+        value: doctor.id.toString(),
+        label: doctor.name,
+      })) ?? []
+    );
+  }, [doctors]);
 
-  const handleDateSelect = (date: string) => {
-    handleInputChange("date", date);
-  };
+  // استفاده از useCallback برای تمام handlerها
+  const handleInputChange = useCallback(
+    (field: keyof AppointmentFormData, value: string | number) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    },
+    [],
+  );
 
-  const handleTimeSelect = (time: string) => {
-    handleInputChange("time", time);
-  };
+  const handlePhoneChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const rawValue = e.target.value;
+      const formattedValue = formatPhoneNumber(rawValue);
 
-  const doctorOptions: DropdownOption[] =
-    doctors?.map((doctor) => ({
-      value: doctor.id.toString(),
-      label: doctor.name,
-    })) ?? [];
+      if (formattedValue.length <= 11) {
+        setFormData((prev) => ({ ...prev, phone: formattedValue }));
+
+        if (formattedValue.length > 0) {
+          const error = getPhoneError(formattedValue);
+          setPhoneError(error);
+        } else {
+          setPhoneError("");
+        }
+      }
+    },
+    [],
+  );
+
+  const handleDateSelect = useCallback((date: string) => {
+    console.log("Appointment - Date selected:", date);
+    setFormData((prev) => {
+      const newData = { ...prev, date };
+      console.log("New formData after date change:", newData);
+      return newData;
+    });
+  }, []);
+
+  const handleTimeSelect = useCallback((time: string) => {
+    console.log("Appointment - Time selected:", time);
+    setFormData((prev) => {
+      const newData = { ...prev, time };
+      console.log("New formData after time change:", newData);
+      return newData;
+    });
+  }, []);
+
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, name: e.target.value }));
+    },
+    [],
+  );
+
+  const handleDescriptionChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setFormData((prev) => ({ ...prev, description: e.target.value }));
+    },
+    [],
+  );
+
+  const handleDoctorSelect = useCallback((option: DropdownOption) => {
+    setSelectedDoctorId(option.value);
+  }, []);
 
   const handleSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
@@ -142,6 +281,15 @@ const Appointment: React.FC = () => {
       }
 
       setToast(null);
+
+      if (!isValidPhoneNumber(formData.phone)) {
+        setToast({
+          type: "error",
+          message: "لطفاً یک شماره تماس معتبر وارد کنید (مثال: ۰۹۱۲۳۴۵۶۷۸۹)",
+        });
+        return;
+      }
+
       setIsSubmittingLocal(true);
 
       const doctorId = Number(selectedDoctorId || doctorIdFromUrl);
@@ -155,14 +303,19 @@ const Appointment: React.FC = () => {
         return;
       }
 
+      const gregorianDate = convertJalaliToGregorian(formData.date);
+      const dateTime = `${gregorianDate} ${formData.time}`;
+
       const payload: AppointmentCreatePayload = {
         id: 0,
         full_name: `${formData.name} ${formData.lastName}`.trim(),
         phone: formData.phone,
-        date: `${formData.date} ${formData.time}`,
+        date: dateTime,
         description: formData.description,
         doctor_id: doctorId,
       };
+
+      console.log("Payload being sent:", payload); // لاگ برای دیباگ
 
       try {
         const result = await submitAppointment(payload);
@@ -172,6 +325,20 @@ const Appointment: React.FC = () => {
             type: "success",
             message: "درخواست نوبت با موفقیت ثبت شد",
           });
+          setFormData({
+            name: "",
+            lastName: "",
+            phone: "",
+            email: "",
+            age: 0,
+            gender: "",
+            services: "",
+            date: dayjs().calendar("jalali").format("YYYY/MM/DD"),
+            time: DEFAULT_TIME,
+            description: "",
+          });
+          setSelectedDoctorId("");
+          setPhoneError("");
         } else {
           setToast({
             type: "error",
@@ -185,6 +352,9 @@ const Appointment: React.FC = () => {
         });
       } finally {
         setIsSubmittingLocal(false);
+        setTimeout(() => {
+          setToast(null);
+        }, 5000);
       }
     },
     [
@@ -196,6 +366,7 @@ const Appointment: React.FC = () => {
       submitAppointment,
     ],
   );
+
   useEffect(() => {
     if (doctorIdFromUrl) {
       setSelectedDoctorId(doctorIdFromUrl);
@@ -203,9 +374,34 @@ const Appointment: React.FC = () => {
       setSelectedDoctorId("");
     }
   }, [doctorIdFromUrl]);
+
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
+
+      {toast && (
+        <div className="fixed top-4 left-0 right-0 z-50 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div
+              className={`rounded-lg border px-4 py-3 text-sm shadow-lg ${
+                toast.type === "success"
+                  ? "border-green-200 bg-green-50 text-green-700"
+                  : "border-red-200 bg-red-50 text-red-700"
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span>{toast.message}</span>
+                <button
+                  onClick={() => setToast(null)}
+                  className="mr-4 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
         <div className="max-w-6xl mx-auto px-4">
@@ -221,19 +417,8 @@ const Appointment: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-16 ">
+      <section className="py-16">
         <div className="max-w-6xl mx-auto px-5">
-          {toast && (
-            <div
-              className={`mb-6 rounded-lg border px-4 py-3 text-sm ${
-                toast.type === "success"
-                  ? "border-green-200 bg-green-50 text-green-700"
-                  : "border-red-200 bg-red-50 text-red-700"
-              }`}
-            >
-              {toast.message}
-            </div>
-          )}
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6 font-morabba">
@@ -245,19 +430,13 @@ const Appointment: React.FC = () => {
               </p>
 
               <form className="space-y-6" onSubmit={handleSubmit}>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    نام و نام خانوادگی *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                    placeholder="نام خود را وارد کنید"
-                  />
-                </div>
+                <InputField
+                  label="نام و نام خانوادگی"
+                  required
+                  value={formData.name}
+                  onChange={handleNameChange}
+                  placeholder="نام خود را وارد کنید"
+                />
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -266,40 +445,30 @@ const Appointment: React.FC = () => {
                   <CustomDropdown
                     options={doctorOptions}
                     value={selectedDoctorId}
-                    onSelect={(option) => setSelectedDoctorId(option.value)}
+                    onSelect={handleDoctorSelect}
                     placeholder="پزشک مورد نظر را انتخاب کنید"
                     disabled={doctorOptions.length === 0}
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    شماره تماس *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:bg-neutral-100 focus:outline-none"
-                    placeholder="۰۹۱۲۳۴۵۶۷۸۹"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    توضیح مشکل یا نیاز *
-                  </label>
-                  <textarea
-                    rows={4}
-                    required
-                    value={formData.description}
-                    onChange={(e) =>
-                      handleInputChange("description", e.target.value)
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="مشکل خود را به طور مختصر توضیح دهید..."
-                  />
-                </div>
+                <InputField
+                  label="شماره تماس"
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={handlePhoneChange}
+                  placeholder="۰۹۱۲۳۴۵۶۷۸۹"
+                  error={phoneError}
+                  dir="ltr"
+                />
+
+                <TextareaField
+                  label="توضیح مشکل یا نیاز"
+                  required
+                  value={formData.description}
+                  onChange={handleDescriptionChange}
+                  placeholder="مشکل خود را به طور مختصر توضیح دهید..."
+                />
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -315,7 +484,7 @@ const Appointment: React.FC = () => {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting || isSubmittingLocal}
+                  disabled={isSubmitting || isSubmittingLocal || !!phoneError}
                   className="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 px-6 rounded-lg hover:opacity-90 transition-opacity duration-200 font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting || isSubmittingLocal
@@ -335,4 +504,4 @@ const Appointment: React.FC = () => {
   );
 };
 
-export default Appointment;
+export default memo(Appointment);

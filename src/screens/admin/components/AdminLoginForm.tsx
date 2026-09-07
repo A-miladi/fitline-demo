@@ -35,7 +35,7 @@ export default function AdminLoginForm({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <section className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-white to-purple-50/30 p-4">
+    <section className="fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center bg-white p-4">
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/20 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
