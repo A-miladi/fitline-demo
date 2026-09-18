@@ -4,6 +4,7 @@
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
 import { FaSearch, FaSignOutAlt } from "react-icons/fa";
 import { AppointmentCreatePayload } from "@/types";
+import { formatDateTimeWithPersianDigits } from "@/utils/toPersianDigits";
 
 interface AdminAppointmentsTableProps {
   appointments: AppointmentCreatePayload[];
@@ -125,7 +126,9 @@ export default function AdminAppointmentsTable({
                     <div className="truncate">{appointment.phone}</div>
                   </td>
                   <td className="max-w-[140px] px-2 py-3 text-center text-gray-700">
-                    <div className="truncate">{appointment.date}</div>
+                    <div className="truncate">
+                      {formatDateTimeWithPersianDigits(appointment.date)}
+                    </div>
                   </td>
                   <td className="max-w-[220px] px-2 py-3 text-center text-gray-700">
                     <div className="truncate">{appointment.description}</div>

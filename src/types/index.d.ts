@@ -42,7 +42,7 @@ export interface AppointmentFormData {
 export interface AppointmentCreatePayload {
   date: string;
   description: string;
-  doctor_id: number;
+  doctor_id: string;
   full_name: string;
   id: number;
   phone: string;

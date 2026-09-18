@@ -1,12 +1,13 @@
 "use client";
 import { useState, useCallback, useMemo, memo } from "react";
-import dayjs, { Dayjs } from "dayjs";
-import jalaliday from "jalaliday";
 import ArrowDown from "../../../public/icon/ArrowDown";
-import toPersianDigits from "@/utils/toPersianDigits";
-
-dayjs.extend(jalaliday);
-dayjs.locale("fa");
+import toPersianDigits, { 
+  getJalaliToday, 
+  getJalaliMaxDate, 
+  isJalaliDateInRange,
+  getJalaliDaysInMonth,
+  getJalaliDayOfWeek
+} from "@/utils/toPersianDigits";
 
 interface CalendarPickerProps {
   selectedDate?: string;
@@ -15,17 +16,14 @@ interface CalendarPickerProps {
   onTimeSelect: (time: string) => void;
 }
 
-// ساعات کاری: ۸ تا ۱۳ و ۱۵ تا ۲۰
 const WORKING_HOURS = {
   morning: { start: 8, end: 13 },
   afternoon: { start: 15, end: 20 },
 };
 
-// تولید ساعات کاری
 const generateWorkingTimes = (): string[] => {
   const times: string[] = [];
 
-  // ساعات صبح: ۸ تا ۱۲:۵۹
   for (
     let hour = WORKING_HOURS.morning.start;
     hour < WORKING_HOURS.morning.end;
@@ -34,7 +32,6 @@ const generateWorkingTimes = (): string[] => {
     times.push(`${hour.toString().padStart(2, "0")}:00`);
   }
 
-  // ساعات عصر: ۱۵ تا ۱۹:۵۹
   for (
     let hour = WORKING_HOURS.afternoon.start;
     hour < WORKING_HOURS.afternoon.end;
@@ -48,18 +45,27 @@ const generateWorkingTimes = (): string[] => {
 
 const TIMES = generateWorkingTimes();
 const WEEK_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+const PERSIAN_MONTHS = [
+  "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
+  "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"
+];
 
-// کامپوننت دکمه روز با memo
+interface JalaliDate {
+  year: number;
+  month: number;
+  day: number;
+}
+
 const DayButton = memo(
   ({
-    date,
     dateStr,
+    dayNumber,
     isSelected,
     isDisabled,
     onSelect,
   }: {
-    date: Dayjs;
     dateStr: string;
+    dayNumber: number;
     isSelected: boolean;
     isDisabled: boolean;
     onSelect: (date: string) => void;
@@ -68,7 +74,6 @@ const DayButton = memo(
       (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("DayButton clicked:", dateStr); // لاگ برای دیباگ
         if (!isDisabled) {
           onSelect(dateStr);
         }
@@ -85,11 +90,11 @@ const DayButton = memo(
           isSelected
             ? "bg-gradient-to-tr from-primary to-secondary shadow-lg shadow-black/30 text-white"
             : isDisabled
-              ? "bg-gray-100 text-gray-300 cursor-not-allowed"
-              : "hover:bg-gray-100 text-gray-700 hover:scale-105"
+            ? "bg-gray-100 text-gray-300 cursor-not-allowed"
+            : "hover:bg-gray-100 text-gray-700 hover:scale-105"
         }`}
       >
-        {date.calendar("jalali").date()}
+        {toPersianDigits(dayNumber.toString())}
       </button>
     );
   },
@@ -97,7 +102,6 @@ const DayButton = memo(
 
 DayButton.displayName = "DayButton";
 
-// کامپوننت دکمه ساعت با memo
 const TimeButton = memo(
   ({
     time,
@@ -114,7 +118,6 @@ const TimeButton = memo(
       (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("TimeButton clicked:", time); // لاگ برای دیباگ
         if (!isDisabled) {
           onSelect(time);
         }
@@ -131,8 +134,8 @@ const TimeButton = memo(
           isSelected
             ? "bg-gradient-to-tr from-primary to-secondary text-white shadow-md"
             : isDisabled
-              ? "bg-gray-100 text-gray-300 cursor-not-allowed"
-              : "hover:bg-gray-200 hover:scale-105"
+            ? "bg-gray-100 text-gray-300 cursor-not-allowed"
+            : "hover:bg-gray-200 hover:scale-105"
         }`}
       >
         {toPersianDigits(time)}
@@ -149,20 +152,24 @@ export default function CalendarPicker({
   onDateSelect,
   onTimeSelect,
 }: CalendarPickerProps) {
-  const [currentMonth, setCurrentMonth] = useState<Dayjs>(
-    dayjs().calendar("jalali"),
-  );
+  const [currentMonth, setCurrentMonth] = useState<JalaliDate>(() => getJalaliToday());
 
-  // محاسبه تاریخ امروز و یک ماه آینده
-  const today = useMemo(() => dayjs().calendar("jalali"), []);
-  const maxDate = useMemo(() => today.add(1, "month"), [today]);
+  const today = useMemo(() => getJalaliToday(), []);
+  const maxDate = useMemo(() => getJalaliMaxDate(1), []);
 
-  // تغییر ماه با useCallback
   const handlePrevMonth = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      setCurrentMonth((prev) => prev.subtract(1, "month"));
+      setCurrentMonth((prev) => {
+        let year = prev.year;
+        let month = prev.month - 1;
+        if (month < 1) {
+          month = 12;
+          year -= 1;
+        }
+        return { year, month, day: 1 };
+      });
     },
     [],
   );
@@ -171,40 +178,46 @@ export default function CalendarPicker({
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      setCurrentMonth((prev) => prev.add(1, "month"));
+      setCurrentMonth((prev) => {
+        let year = prev.year;
+        let month = prev.month + 1;
+        if (month > 12) {
+          month = 1;
+          year += 1;
+        }
+        return { year, month, day: 1 };
+      });
     },
     [],
   );
 
-  // تولید روزهای ماه
-  const daysInMonth = useMemo(() => {
-    return Array.from({ length: currentMonth.daysInMonth() }, (_, i) =>
-      currentMonth.date(i + 1),
-    );
-  }, [currentMonth]);
+  const daysInMonthCount = useMemo(() => {
+    return getJalaliDaysInMonth(currentMonth.year, currentMonth.month);
+  }, [currentMonth.year, currentMonth.month]);
 
-  const startOfMonth = useMemo(() => {
-    return currentMonth.startOf("month").day();
-  }, [currentMonth]);
+  const startOfMonthDay = useMemo(() => {
+    return getJalaliDayOfWeek(currentMonth.year, currentMonth.month, 1);
+  }, [currentMonth.year, currentMonth.month]);
 
-  // بررسی اینکه آیا روز قابل انتخاب است
   const isDaySelectable = useCallback(
-    (date: Dayjs) => {
-      const dateStr = date.calendar("jalali").format("YYYY/MM/DD");
-      const todayStr = today.format("YYYY/MM/DD");
-      const maxDateStr = maxDate.format("YYYY/MM/DD");
-
-      return dateStr >= todayStr && dateStr <= maxDateStr;
+    (year: number, month: number, day: number) => {
+      return isJalaliDateInRange(year, month, day, today, maxDate);
     },
     [today, maxDate],
   );
 
-  // هندل کردن انتخاب تاریخ
+  const daysInMonth = useMemo(() => {
+    return Array.from({ length: daysInMonthCount }, (_, i) => {
+      const day = i + 1;
+      const dateStr = `${currentMonth.year}/${currentMonth.month.toString().padStart(2, "0")}/${day.toString().padStart(2, "0")}`;
+      return { dateStr, day };
+    });
+  }, [currentMonth.year, currentMonth.month, daysInMonthCount]);
+
   const handleDateSelect = useCallback(
     (dateStr: string) => {
-      console.log("Date selected:", dateStr); // لاگ برای دیباگ
-      const date = dayjs(dateStr, "YYYY/MM/DD").calendar("jalali");
-      if (isDaySelectable(date)) {
+      const [year, month, day] = dateStr.split("/").map(Number);
+      if (isDaySelectable(year, month, day)) {
         onDateSelect(dateStr);
       }
     },
@@ -232,7 +245,7 @@ export default function CalendarPicker({
           <ArrowDown color="black" className="rotate-[270deg]" />
         </button>
         <span className="font-bold">
-          {toPersianDigits(currentMonth.calendar("jalali").format("MMMM YYYY"))}
+          {PERSIAN_MONTHS[currentMonth.month - 1]} {toPersianDigits(currentMonth.year.toString())}
         </span>
         <button
           type="button"
@@ -250,19 +263,18 @@ export default function CalendarPicker({
       </div>
 
       <div className="grid grid-cols-7 gap-2 text-center mb-4">
-        {Array.from({ length: startOfMonth }).map((_, idx) => (
+        {Array.from({ length: startOfMonthDay }).map((_, idx) => (
           <div key={`empty-${idx}`} />
         ))}
-        {daysInMonth.map((d) => {
-          const dateStr = d.calendar("jalali").format("YYYY/MM/DD");
+        {daysInMonth.map(({ dateStr, day }) => {
           const isSelected = selectedDate === dateStr;
-          const isDisabled = !isDaySelectable(d);
+          const isDisabled = !isDaySelectable(currentMonth.year, currentMonth.month, day);
 
           return (
             <DayButton
               key={dateStr}
-              date={d}
               dateStr={dateStr}
+              dayNumber={day}
               isSelected={isSelected}
               isDisabled={isDisabled}
               onSelect={handleDateSelect}
@@ -274,7 +286,6 @@ export default function CalendarPicker({
       <div className="grid grid-cols-3 gap-2 border-t pt-6 border-neutral-200">
         {TIMES.map((time) => {
           const isSelected = selectedTime === time;
-          // اگر تاریخ انتخاب نشده باشد، ساعت‌ها غیرفعال هستند
           const isDisabled = !selectedDate;
 
           return (

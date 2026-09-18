@@ -203,7 +203,7 @@ const Appointment: React.FC = () => {
   const doctorOptions = useMemo(() => {
     return (
       doctors?.map((doctor) => ({
-        value: doctor.id.toString(),
+        value: doctor._id.toString(),
         label: doctor.name,
       })) ?? []
     );
@@ -292,7 +292,7 @@ const Appointment: React.FC = () => {
 
       setIsSubmittingLocal(true);
 
-      const doctorId = Number(selectedDoctorId || doctorIdFromUrl);
+      const doctorId = selectedDoctorId || doctorIdFromUrl;
 
       if (!doctorId) {
         setToast({

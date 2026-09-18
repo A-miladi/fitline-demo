@@ -139,7 +139,7 @@ export default function Specialists() {
                 <div className="h-64 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative">
                   <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="w-32 h-32 rounded-full shadow-lg shadow-primary/40 border-4 border-white bg-gray-200 flex items-center justify-center text-5xl text-primary/50">
-                    {i.id === 1 ? "👩‍⚕️" : "👨‍⚕️"}
+                    {i._id === "1" ? "👩‍⚕️" : "👨‍⚕️"}
                   </div>
                 </div>
 
@@ -164,7 +164,7 @@ export default function Specialists() {
                   <div className="mt-4 w-full pt-4 border-t border-gray-100">
                     <button
                       onClick={() =>
-                        router.push(`/appointment?doctorId=${i.id}`)
+                        router.push(`/appointment?doctorId=${i._id}`)
                       }
                       className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium"
                     >

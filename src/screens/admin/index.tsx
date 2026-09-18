@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
+import dayjs from "dayjs";
 import Navbar from "@/components/navbar";
 import useFetch from "@/hooks/useFetch";
 import useDelete from "@/hooks/useDelete";
@@ -17,14 +18,14 @@ const STATIC_USERNAME = "admin";
 const STATIC_PASSWORD = "123456";
 
 const mapAppointment = (
-  item: AppointmentCreatePayload,
+  item: any,
 ): AppointmentCreatePayload => ({
-  id: item.id ?? 0,
-  full_name: item.full_name || "—",
-  phone: item.phone || "—",
-  date: item.date || "—",
-  description: item.description || "—",
-  doctor_id: item.doctor_id,
+  id: item._id ?? item.id ?? 0,
+  full_name: item.fullName ?? item.full_name ?? "—",
+  phone: item.phoneNumber ?? item.phone ?? "—",
+  date: item.date ?? "—",
+  description: item.description ?? "—",
+  doctor_id: item.doctorId ?? item.doctor_id ?? "",
 });
 
 export default function AdminPage() {
@@ -136,6 +137,23 @@ export default function AdminPage() {
   );
 
   // ===== Computed =====
+  const { todayCount, weekCount } = useMemo(() => {
+    const now = dayjs();
+    const todayStr = now.format("YYYY-MM-DD");
+    const weekAgo = now.subtract(7, "day").format("YYYY-MM-DD");
+
+    let today = 0;
+    let week = 0;
+
+    appointments.forEach((apt) => {
+      const aptDate = dayjs(apt.date).format("YYYY-MM-DD");
+      if (aptDate === todayStr) today++;
+      if (aptDate >= weekAgo && aptDate <= todayStr) week++;
+    });
+
+    return { todayCount: today, weekCount: week };
+  }, [appointments]);
+
   const stats = useMemo(
     () => ({
       count: appointments.length,
@@ -301,6 +319,8 @@ export default function AdminPage() {
             count={stats.count}
             latest={stats.latest}
             isAuthenticated={isAuthenticated}
+            todayCount={todayCount}
+            weekCount={weekCount}
           />
 
           {!isAuthenticated ? (
