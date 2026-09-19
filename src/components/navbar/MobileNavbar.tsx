@@ -49,30 +49,36 @@ function MobileNavbar() {
           <div className="flex items-center w-full justify-between flex-row-reverse gap-2">
             <button
               onClick={() => handleNavigation("/admin")}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:bg-primary hover:text-white"
+              className="text-xl border-t-2 border-l-2 border-white shadow-sm bg-gradient-to-br from-neutral-100 rounded-xl flex items-center justify-center w-10 h-10 text-primary"
               aria-label="پنل مدیریت"
             >
-              <Profile size={18} color="currentColor" />
+              <Profile size={25} color="currentColor" />
             </button>
             <button
-              className="text-2xl text-gray-700"
+              className="text-xl border-t-2 border-l-2 border-white shadow-sm bg-gradient-to-br from-neutral-100 rounded-xl flex items-center justify-center w-10 h-10 text-primary"
               onClick={toggleMobileMenu}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
-                <Close size={25} color="#4b5563" />
+                <Close size={25} color="currentColor" />
               ) : (
-                <BurgerMenu size={25} color="#4b5563" />
+                <BurgerMenu size={25} color="currentColor" />
               )}
             </button>
           </div>
 
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <div
               className="gradient-text flex h-full cursor-pointer items-center justify-start font-sans font-extrabold text-blue-600"
               onClick={() => router.push("/")}
             >
-              <Image src="/images/logo2.png" alt="" width={150} height={200} />
+              <Image
+                src="/icon/TLogo.png"
+                className="h-[60%] w-full object-cover"
+                alt=""
+                width={150}
+                height={200}
+              />
             </div>
           </div>
         </div>

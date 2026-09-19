@@ -1,63 +1,64 @@
 import Navbar from "@/components/navbar";
 import Link from "next/link";
 import {
-  FaUserMd,
-  FaSyncAlt,
-  FaClipboardList,
-  FaBullseye,
+  FaUserFriends,
+  FaShieldAlt,
+  FaBrain,
+  FaHeartbeat,
   FaExclamationTriangle,
 } from "react-icons/fa";
 
-export default function PainTreatment() {
+export default function ElderlyExercise() {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
 
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-morabba">
-              درمان دردهای اسکلتی-عضلانی
+              ورزش سالمندان
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              کاهش و درمان دردهای ناشی از ناهنجاری‌های اسکلتی-عضلانی با تجویز و
-              ارجاع پزشک متخصص
+              حفظ تحرک، تعادل و کیفیت زندگی در دوران سالمندی با تمرینات ایمن و
+              تخصصی
             </p>
           </div>
         </div>
       </section>
 
-      {/* Service Details */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6 font-morabba">
-                خدمات درمان دردهای اسکلتی-عضلانی
+                خدمات ورزش سالمندان
               </h2>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  دردهای اسکلتی-عضلانی اغلب ناشی از ناهنجاری‌های ساختاری،
-                  الگوهای حرکتی نادرست یا عدم تعادل عضلانی هستند. در مرکز
-                  <strong> راه تناسب</strong>، با همکاری پزشکان متخصص، به درمان
-                  ریشه‌ای این دردها می‌پردازیم.
+                  با افزایش سن، قدرت عضلانی، تعادل و انعطاف‌پذیری به تدریج کاهش
+                  می‌یابد و خطر زمین‌خوردن و آسیب‌های حرکتی بیشتر می‌شود. در
+                  مرکز
+                  <strong> راه تناسب</strong>، برنامه‌های ورزشی اختصاصی برای
+                  سالمندان طراحی می‌کنیم تا با حفظ تحرک، استقلال و کیفیت زندگی
+                  آن‌ها را بهبود بخشیم.
                 </p>
                 <p>
-                  رویکرد ما در درمان دردها، ترکیبی از حرکات اصلاحی، تکنیک‌های
-                  کاهش درد و آموزش الگوهای حرکتی صحیح است. تمام برنامه‌های
-                  درمانی پس از ارزیابی دقیق و با تجویز پزشک متخصص طراحی می‌شوند.
+                  تمرینات ما کاملاً ایمن، ملایم و متناسب با شرایط جسمانی هر فرد
+                  است و زیر نظر متخصصین مجرب اجرا می‌شود. هدف ما پیشگیری از
+                  تحلیل عضلانی، بهبود تعادل و کاهش دردهای مفصلی است.
                 </p>
                 <p>
-                  هدف ما نه تنها کاهش درد، بلکه شناسایی و درمان علت اصلی ایجاد
-                  درد برای جلوگیری از بازگشت آن است.
+                  این برنامه‌ها نه تنها به سلامت جسمی کمک می‌کنند، بلکه با بهبود
+                  روحیه و کاهش اضطراب، به سلامت روان سالمندان نیز یاری
+                  می‌رسانند.
                 </p>
               </div>
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6 font-morabba">
-                انواع دردهای قابل درمان
+                اهداف و مزایای ورزش سالمندان
               </h3>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3 space-x-reverse">
@@ -66,10 +67,10 @@ export default function PainTreatment() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      دردهای ستون فقرات
+                      بهبود تعادل و پیشگیری از زمین‌خوردن
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      کمردرد، گردن درد، دردهای ناحیه توراسیک
+                      تمرینات تعادلی برای کاهش خطر افتادن و شکستگی
                     </p>
                   </div>
                 </div>
@@ -80,10 +81,10 @@ export default function PainTreatment() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      دردهای مفاصل
+                      افزایش قدرت و استقامت عضلانی
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      آرتروز، دردهای زانو، شانه، لگن و مچ
+                      مقابله با تحلیل عضلانی ناشی از افزایش سن
                     </p>
                   </div>
                 </div>
@@ -94,10 +95,10 @@ export default function PainTreatment() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      دردهای عضلانی
+                      حفظ دامنه حرکتی مفاصل
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      فیبرومیالژیا، میوفاشیال پین، کشیدگی عضلات
+                      بهبود انعطاف‌پذیری و کاهش خشکی مفاصل
                     </p>
                   </div>
                 </div>
@@ -108,10 +109,10 @@ export default function PainTreatment() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      دردهای ناشی از ناهنجاری
+                      کاهش دردهای مفصلی و عضلانی
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      دردهای ناشی از اسکولیوز، لوردوز، کایفوز
+                      تسکین دردهای مزمن با تمرینات ملایم و اصولی
                     </p>
                   </div>
                 </div>
@@ -122,10 +123,10 @@ export default function PainTreatment() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
-                      دردهای وضعیتی
+                      بهبود عملکرد قلبی-عروقی و تنفسی
                     </h4>
                     <p className="text-gray-600 text-sm">
-                      دردهای ناشی از وضعیت‌های نامناسب کاری و روزمره
+                      تقویت قلب و ریه با تمرینات هوازی سبک
                     </p>
                   </div>
                 </div>
@@ -140,10 +141,10 @@ export default function PainTreatment() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 font-morabba">
-              رویکرد درمانی ما
+              رویکرد تمرینی ما
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              روش‌های علمی و تخصصی برای درمان مؤثر دردها
+              اصول علمی و ایمن برای ورزش سالمندان
             </p>
           </div>
 
@@ -153,10 +154,10 @@ export default function PainTreatment() {
                 <span className="text-white text-xl font-bold">۱</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                ارزیابی دقیق
+                ارزیابی جامع
               </h3>
               <p className="text-gray-600 text-sm">
-                بررسی کامل وضعیت بدنی و تشخیص علت اصلی درد
+                بررسی وضعیت جسمانی، سابقه پزشکی و سطح تحرک فرد
               </p>
             </div>
 
@@ -165,10 +166,10 @@ export default function PainTreatment() {
                 <span className="text-white text-xl font-bold">۲</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                همکاری با پزشک
+                برنامه اختصاصی
               </h3>
               <p className="text-gray-600 text-sm">
-                دریافت تجویز و برنامه درمانی از پزشک متخصص
+                طراحی تمرینات متناسب با توانایی و شرایط هر سالمند
               </p>
             </div>
 
@@ -177,10 +178,10 @@ export default function PainTreatment() {
                 <span className="text-white text-xl font-bold">۳</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                درمان تخصصی
+                اجرای ایمن
               </h3>
               <p className="text-gray-600 text-sm">
-                اجرای تمرینات و تکنیک‌های کاهش درد تحت نظارت متخصص
+                نظارت مستمر متخصص برای پیشگیری از هرگونه آسیب
               </p>
             </div>
 
@@ -189,10 +190,10 @@ export default function PainTreatment() {
                 <span className="text-white text-xl font-bold">۴</span>
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                پیشگیری از بازگشت
+                پیگیری و پیشرفت
               </h3>
               <p className="text-gray-600 text-sm">
-                آموزش روش‌های پیشگیری و حفظ نتایج درمان
+                ارزیابی دوره‌ای و تنظیم برنامه بر اساس پیشرفت فرد
               </p>
             </div>
           </div>
@@ -204,68 +205,69 @@ export default function PainTreatment() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4 font-morabba">
-              همکاری با پزشکان متخصص
+              ویژگی‌های برنامه ورزش سالمندان
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              رویکردی بین‌رشته‌ای برای درمان مؤثر دردها
+              تمریناتی متناسب با نیازهای ویژه دوران سالمندی
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
-                <FaUserMd className="w-6 h-6 text-primary" />
+                <FaUserFriends className="w-6 h-6 text-primary" />
                 <h3 className="text-xl font-semibold text-gray-900">
-                  ارجاع پزشکی
+                  تمرینات گروهی و اجتماعی
                 </h3>
               </div>
               <p className="text-gray-600">
-                تمامی برنامه‌های درمانی پس از معاینه و تشخیص پزشک متخصص و با
-                دریافت ارجاع مناسب طراحی و اجرا می‌شوند.
+                برگزاری جلسات گروهی برای افزایش انگیزه، تعامل اجتماعی و کاهش
+                احساس تنهایی در سالمندان.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
-                <FaSyncAlt className="w-6 h-6 text-primary" />
+                <FaShieldAlt className="w-6 h-6 text-primary" />
                 <h3 className="text-xl font-semibold text-gray-900">
-                  پیگیری مستمر
+                  ایمنی در اولویت
                 </h3>
               </div>
               <p className="text-gray-600">
-                گزارش پیشرفت درمان به پزشک معالج و تنظیم برنامه بر اساس
-                توصیه‌های پزشکی و پاسخ بیمار به درمان.
+                تمام تمرینات با رعایت اصول ایمنی و با توجه به محدودیت‌های جسمانی
+                هر فرد طراحی و اجرا می‌شوند.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
-                <FaClipboardList className="w-6 h-6 text-primary" />
+                <FaBrain className="w-6 h-6 text-primary" />
                 <h3 className="text-xl font-semibold text-gray-900">
-                  برنامه یکپارچه
+                  تمرینات شناختی-حرکتی
                 </h3>
               </div>
               <p className="text-gray-600">
-                تلفیق درمان‌های پزشکی با حرکات اصلاحی برای دستیابی به بهترین
-                نتایج در کوتاه‌ترین زمان ممکن.
+                ترکیب تمرینات بدنی با فعالیت‌های ذهنی برای بهبود هماهنگی
+                عصبی-عضلانی و حفظ عملکرد شناختی.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
-                <FaBullseye className="w-6 h-6 text-primary" />
+                <FaHeartbeat className="w-6 h-6 text-primary" />
                 <h3 className="text-xl font-semibold text-gray-900">
-                  هدف مشترک
+                  بهبود کیفیت زندگی
                 </h3>
               </div>
               <p className="text-gray-600">
-                همکاری نزدیک با پزشک برای دستیابی به اهداف درمانی مشترک و بهبود
-                کیفیت زندگی بیمار.
+                افزایش استقلال، بهبود روحیه و ارتقای سلامت روانی و جسمی سالمندان
+                در زندگی روزمره.
               </p>
             </div>
           </div>
         </div>
       </section>
+
       <section className="py-16 bg-amber-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="bg-white rounded-2xl shadow-lg p-8">
@@ -278,24 +280,24 @@ export default function PainTreatment() {
                   توجه مهم
                 </h3>
                 <p className="text-gray-700">
-                  درمان دردهای اسکلتی-عضلانی باید تحت نظارت پزشک متخصص و توسط
-                  افراد دارای مجوز انجام شود. خوددرمانی یا مراجعه به افراد
-                  غیرمتخصص ممکن است باعث تشدید مشکل و ایجاد آسیب‌های
-                  جبران‌ناپذیر شود.
+                  ورزش سالمندان باید تحت نظارت متخصص و با در نظر گرفتن شرایط
+                  جسمانی، سابقه پزشکی و داروهای مصرفی فرد انجام شود. شروع هر
+                  برنامه تمرینی بدون ارزیابی تخصصی ممکن است خطرناک باشد.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+
       <section className="bg-gradient-to-r from-primary to-secondary py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4 font-morabba">
-            از دردهای اسکلتی-عضلانی رهایی یابید
+            سالمندی فعال و پویا را تجربه کنید
           </h2>
           <p className="text-white/90 mb-8 text-lg">
-            با برنامه‌ریزی تخصصی و همکاری پزشکان متخصص، زندگی بدون درد را تجربه
-            کنید
+            با برنامه‌های تخصصی ورزش سالمندان، تحرک، تعادل و کیفیت زندگی خود را
+            حفظ کنید
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/appointment">

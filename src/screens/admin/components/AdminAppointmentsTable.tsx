@@ -1,4 +1,3 @@
-// components/admin/AdminAppointmentsTable.tsx
 "use client";
 
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
@@ -30,7 +29,6 @@ export default function AdminAppointmentsTable({
 }: AdminAppointmentsTableProps) {
   return (
     <div className="overflow-hidden rounded-[32px] border border-gray-200 bg-white shadow-[0_24px_80px_-28px_rgba(15,23,42,0.22)]">
-      {/* Header */}
       <div className="flex flex-col gap-4 border-b border-gray-100 bg-gradient-to-r from-slate-50 to-white p-8 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">لیست نوبت‌ها</h2>
@@ -67,7 +65,7 @@ export default function AdminAppointmentsTable({
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-[70vh] border-collapse text-sm">
+        <table className="min-w-[70vh] w-full border-collapse text-sm">
           <thead>
             <tr className="text-gray-700">
               <th className="bg-gradient-to-l via-slate-100 px-2 py-3">

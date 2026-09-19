@@ -1,5 +1,12 @@
 import Navbar from "@/components/navbar";
 import Link from "next/link";
+import {
+  FaBullseye,
+  FaChartLine,
+  FaShieldAlt,
+  FaHandshake,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 
 export default function SportsRehabilitation() {
   return (
@@ -201,9 +208,12 @@ export default function SportsRehabilitation() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🎯 برنامه شخصی‌سازی شده
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaBullseye className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  برنامه شخصی‌سازی شده
+                </h3>
+              </div>
               <p className="text-gray-600">
                 هر برنامه توانبخشی بر اساس شرایط خاص شما طراحی می‌شود. نوع آسیب،
                 سطح ورزشی، اهداف و محدودیت‌های شما در طراحی برنامه در نظر گرفته
@@ -212,9 +222,12 @@ export default function SportsRehabilitation() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                📊 پایش مستمر پیشرفت
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaChartLine className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  پایش مستمر پیشرفت
+                </h3>
+              </div>
               <p className="text-gray-600">
                 با استفاده از تست‌های عملکردی و ارزیابی‌های دوره‌ای، پیشرفت شما
                 به دقت پایش شده و برنامه بر اساس نتایج به‌روزرسانی می‌شود.
@@ -222,9 +235,12 @@ export default function SportsRehabilitation() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🛡️ پیشگیری از آسیب مجدد
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaShieldAlt className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  پیشگیری از آسیب مجدد
+                </h3>
+              </div>
               <p className="text-gray-600">
                 آموزش تکنیک‌های صحیح حرکتی، تقویت عضلات stabilizer و بهبود
                 الگوهای حرکتی برای پیشگیری از آسیب‌های آینده.
@@ -232,9 +248,12 @@ export default function SportsRehabilitation() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🤝 همکاری تیمی
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaHandshake className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  همکاری تیمی
+                </h3>
+              </div>
               <p className="text-gray-600">
                 در صورت نیاز، با پزشک معالج، جراح و دیگر متخصصین در ارتباط هستیم
                 تا بهترین نتیجه برای شما حاصل شود.
@@ -248,19 +267,7 @@ export default function SportsRehabilitation() {
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-start space-x-3 space-x-reverse">
               <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <svg
-                  className="w-6 h-6 text-amber-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
+                <FaExclamationTriangle className="w-6 h-6 text-amber-600" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4 font-morabba">
