@@ -35,7 +35,7 @@ export default function AdminLoginForm({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <section className="fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center bg-white p-4">
+    <section className="fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center bg-white">
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/20 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
@@ -58,17 +58,10 @@ export default function AdminLoginForm({
         </div>
       </nav>
 
-      {/* Background Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-purple-200/30 blur-3xl" />
-        <div className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-blue-200/20 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-100/10 blur-3xl" />
-      </div>
-
       {/* Main Card */}
-      <div className="relative w-full max-w-md animate-fade-in-up overflow-hidden rounded-3xl border border-white/20 bg-white/80 shadow-2xl shadow-purple-500/10 backdrop-blur-xl">
+      <div className="relative w-full max-w-md animate-fade-in-up overflow-hidden lg:rounded-3xl lg:border border-white/20 lg:bg-white/80 lg:shadow-2xl shadow-purple-500/10 backdrop-blur-xl">
         {/* Card Header with Gradient */}
-        <div className="relative bg-gradient-to-r from-[#583f99] via-[#5b46a7] to-[#32bcce] px-8 pb-20 pt-12">
+        <div className="relative bg-gradient-to-r from-[#583f99] via-[#5b46a7] to-[#32bcce] px-8 pb-10 pt-12">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.2),_transparent_60%)]" />
 
           {/* Logo/Icon */}

@@ -1,4 +1,3 @@
-// app/admin/page.tsx
 "use client";
 
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
@@ -280,7 +279,6 @@ export default function AdminPage() {
     >
       <Navbar />
 
-      {/* Toast Notification */}
       {toast && (
         <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 animate-in fade-in slide-in-from-top-4 duration-300">
           <div
@@ -295,7 +293,7 @@ export default function AdminPage() {
         </div>
       )}
 
-      <section className="py-16">
+      <section className="py-10 lg:py-16 px-4">
         <div className="mx-auto flex max-w-6xl flex-col gap-6">
           <AdminStats
             count={stats.count}

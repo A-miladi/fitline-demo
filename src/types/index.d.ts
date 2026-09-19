@@ -65,9 +65,8 @@ export interface ContactInfo {
   phone: string[];
   address: string;
   workingHours: {
-    regular: string;
-    thursday: string;
-    friday: string;
+    morning: string;
+    afternoon: string;
   };
 }
 

@@ -37,12 +37,11 @@ const SERVICE_MAP: Record<string, string> = {
 };
 
 const CONTACT_INFO: ContactInfo = {
-  phone: ["۰۲۱-۱۲۳۴۵۶۷۸", "۰۹۱۲۳۴۵۶۷۸۹"],
-  address: "تهران، خیابان نمونه، پلاک ۱۲",
+  phone: ["۰۸۶-۳۲۲۴۱۷۵۲", "۰۹۳۸۴۸۰۸۸۱۶"],
+  address: "اراک ، چهارراه دکتر حسابی ، انتهای کوچه اردیبهشت ، نبش کوچه تربیت",
   workingHours: {
-    regular: "شنبه تا چهارشنبه: ۸:۰۰ - ۲۰:۰۰",
-    thursday: "پنجشنبه: ۸:۰۰ - ۱۶:۰۰",
-    friday: "جمعه‌ها تعطیل",
+    morning: "۸:۰۰ الی ۱۳‌:۰۰",
+    afternoon: "۱۵:۰۰ الی ۲۰:۰۰",
   },
 };
 
