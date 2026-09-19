@@ -68,7 +68,7 @@ export default function AdminAppointmentsTable({
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse text-sm">
+        <table className="min-w-[70vh] border-collapse text-sm">
           <thead>
             <tr className="text-gray-700">
               <th className="bg-gradient-to-l via-slate-100 px-2 py-3">
