@@ -175,7 +175,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
 
-      <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20 overflow-hidden">
+      <section className=" bg-gradient-to-br from-primary/20 via-white to-secondary/10 py-20 overflow-hidden">
         <div className="max-w-6xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -189,7 +189,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              مرکز تندرستی و حرکات اصلاحی{" "}
+              مرکز تندرستی و حرکات اصلاحی
               <span className="gradient-text"> راه تناسب</span>
             </motion.h1>
             <motion.p
@@ -215,6 +215,15 @@ export default function Home() {
                   whileTap={{ scale: 0.95 }}
                 >
                   دریافت نوبت ارزیابی
+                </motion.button>
+              </Link>
+              <Link href="/services">
+                <motion.button
+                  className="text-primary border border-primary w-full p-[1px] md:min-w-30 hover:text-white h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-lg"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  خدمات ما
                 </motion.button>
               </Link>
             </motion.div>
