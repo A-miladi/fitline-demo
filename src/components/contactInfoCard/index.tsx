@@ -29,11 +29,14 @@ const ContactInfoCard: React.FC<ContactInfoCardProps> = ({ contactInfo }) => {
               />
             </svg>
           </div>
-          <div className="flex-1">
-            <h4 className="font-semibold text-gray-900 mb-2">تلفن تماس</h4>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+          <div className="flex lg:flex-row flex-col lg:items-center justify-center gap-2">
+            <h4 className="font-semibold text-gray-900">تلفن تماس</h4>
+            <div className="flex sm:items-center gap-2">
               {contactInfo.phone.map((phone, index) => (
-                <p key={index} className="text-gray-600 py-1">
+                <p
+                  key={index}
+                  className="text-gray-600 bg-gradient-to-br from-neutral-50 flex px-4 h-9 text-sm border-t-2 border-l-2 shadow-sm rounded-xl border-white items-center justify-center text-center"
+                >
                   {phone}
                 </p>
               ))}
@@ -71,7 +74,7 @@ const ContactInfoCard: React.FC<ContactInfoCardProps> = ({ contactInfo }) => {
         </div>
 
         {/* Working Hours Section - Horizontal Layout */}
-        <div className="flex items-start gap-4">
+        <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
             <svg
               className="w-6 h-6 text-primary"
@@ -87,18 +90,15 @@ const ContactInfoCard: React.FC<ContactInfoCardProps> = ({ contactInfo }) => {
               />
             </svg>
           </div>
-          <div className="flex-1">
-            <h4 className="font-semibold text-gray-900 mb-2">ساعات کاری</h4>
-            <div className="space-y-1">
-              <p className="text-gray-600">
-                {contactInfo.workingHours.regular}
-              </p>
-              <p className="text-gray-600">
-                {contactInfo.workingHours.thursday}
-              </p>
-              <p className="text-gray-600 text-sm">
-                {contactInfo.workingHours.friday}
-              </p>
+          <div className="flex lg:flex-row flex-col gap-2 lg:items-center justify-center">
+            <h4 className="font-semibold text-gray-900">ساعات کاری :</h4>
+            <div className="flex gap-4">
+              <div className="text-gray-600 bg-gradient-to-br from-neutral-50 flex px-4 h-9 text-sm border-t-2 border-l-2 shadow-sm rounded-xl border-white items-center justify-center text-center">
+                <p>{contactInfo.workingHours.morning}</p>
+              </div>
+              <div className="text-gray-600 bg-gradient-to-br from-neutral-50 flex px-4 h-9 text-sm border-t-2 border-l-2 shadow-sm rounded-xl border-white items-center justify-center text-center">
+                <p>{contactInfo.workingHours.afternoon}</p>
+              </div>
             </div>
           </div>
         </div>

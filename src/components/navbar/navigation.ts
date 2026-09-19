@@ -35,6 +35,11 @@ export const ScreenLinks = [
         link: "/services/taping-massage",
         description: "خدمات تخصصی تیپینگ و ماساژ درمانی",
       },
+      {
+        name: "ورزش سالمندان",
+        link: "/services/elderly-exercise",
+        description: "حفظ تحرک، تعادل و کیفیت زندگی در دوران سالمندی",
+      },
     ],
   },
   {

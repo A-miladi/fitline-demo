@@ -51,10 +51,10 @@ function DesktopNavbar() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => handleNavigation("/admin")}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:bg-primary hover:text-white"
+            className="text-sm border-t-2 border-l-2 border-white shadow-sm bg-gradient-to-br from-neutral-100 rounded-xl flex items-center justify-center w-10 h-10 text-primary"
             aria-label="پنل مدیریت"
           >
-            <Profile size={18} color="currentColor" />
+            <Profile size={25} color="currentColor" />
           </button>
         </div>
 
@@ -122,12 +122,18 @@ function DesktopNavbar() {
           ))}
         </ul>
 
-        <div className="flex items-center justify-start">
+        <div className="flex items-center h-full justify-start">
           <div
-            className="gradient-text flex h-full cursor-pointer items-center justify-start font-sans font-extrabold text-blue-600 md:pr-4"
+            className="gradient-text flex h-[50%] cursor-pointer items-center justify-start font-sans font-extrabold text-blue-600 md:pr-4"
             onClick={() => router.push("/")}
           >
-            <Image src="/images/logo2.png" alt="" width={150} height={200} />
+            <Image
+              src="/icon/TLogo.png"
+              className="w-full h-full object-cover"
+              alt=""
+              width={150}
+              height={150}
+            />
           </div>
         </div>
       </div>

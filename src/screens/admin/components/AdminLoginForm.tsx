@@ -1,19 +1,18 @@
-// components/admin/AdminLoginForm.tsx
 "use client";
 
 import Button from "@/components/ui/Button";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import {
-  FaUser,
-  FaLock,
+  FaCalendarAlt,
   FaEye,
   FaEyeSlash,
-  FaSignInAlt,
-  FaArrowLeft,
+  FaLock,
   FaShieldAlt,
-  FaCalendarAlt,
+  FaSignInAlt,
+  FaUser,
 } from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
 
 interface AdminLoginFormProps {
   username: string;
@@ -35,11 +34,9 @@ export default function AdminLoginForm({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <section className="fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center bg-white p-4">
-      {/* Navbar */}
+    <section className="fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center bg-white">
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/20 bg-white/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-          {/* Logo/Brand */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#583f99] to-[#32bcce] text-white transition-transform group-hover:scale-105">
               <FaCalendarAlt className="h-5 w-5" />
@@ -47,31 +44,20 @@ export default function AdminLoginForm({
             <span className="text-lg font-bold text-gray-900">راه تناسب</span>
           </Link>
 
-          {/* Back to Site Button */}
           <Link
             href="/"
-            className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:border-[#583f99] hover:bg-[#583f99]/5 hover:text-[#583f99] hover:shadow-md"
+            className="text-sm border-t-2 border-l-2 gap-2 border-white shadow-sm bg-gradient-to-br from-neutral-100 rounded-xl flex items-center justify-center px-3 h-10 text-primary"
           >
-            <FaArrowLeft className="h-4 w-4" />
             بازگشت به سایت
+            <IoIosArrowBack className="h-4 w-4" />
           </Link>
         </div>
       </nav>
 
-      {/* Background Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-purple-200/30 blur-3xl" />
-        <div className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-blue-200/20 blur-3xl" />
-        <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-100/10 blur-3xl" />
-      </div>
-
-      {/* Main Card */}
-      <div className="relative w-full max-w-md animate-fade-in-up overflow-hidden rounded-3xl border border-white/20 bg-white/80 shadow-2xl shadow-purple-500/10 backdrop-blur-xl">
-        {/* Card Header with Gradient */}
-        <div className="relative bg-gradient-to-r from-[#583f99] via-[#5b46a7] to-[#32bcce] px-8 pb-20 pt-12">
+      <div className="relative w-full max-w-md animate-fade-in-up overflow-hidden lg:rounded-3xl lg:border border-white/20 lg:bg-white/80 lg:shadow-2xl shadow-purple-500/10 backdrop-blur-xl">
+        <div className="relative bg-gradient-to-r from-[#583f99] via-[#5b46a7] to-[#32bcce] px-8 pb-10 pt-12">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.2),_transparent_60%)]" />
 
-          {/* Logo/Icon */}
           <div className="relative mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm">
             <FaShieldAlt className="h-10 w-10 text-white" />
           </div>

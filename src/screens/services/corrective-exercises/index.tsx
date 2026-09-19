@@ -1,12 +1,18 @@
 import Navbar from "@/components/navbar";
 import Link from "next/link";
+import {
+  FaClock,
+  FaHeartbeat,
+  FaRunning,
+  FaMoneyBillWave,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 
 export default function CorrectiveExercises() {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
 
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
@@ -21,7 +27,6 @@ export default function CorrectiveExercises() {
         </div>
       </section>
 
-      {/* Service Details */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -142,9 +147,12 @@ export default function CorrectiveExercises() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                ⏰ پیشگیری از مشکلات آینده
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaClock className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  پیشگیری از مشکلات آینده
+                </h3>
+              </div>
               <p className="text-gray-600">
                 ناهنجاری‌های اصلاح نشده می‌توانند به مرور زمان منجر به
                 محدودیت‌های حرکتی، دردهای مزمن و بیماری‌های اسکلتی-عضلانی شوند.
@@ -152,9 +160,12 @@ export default function CorrectiveExercises() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                💪 بهبود کیفیت زندگی
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaHeartbeat className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  بهبود کیفیت زندگی
+                </h3>
+              </div>
               <p className="text-gray-600">
                 وضعیت بدنی صحیح نه تنها از درد جلوگیری می‌کند، بلکه باعث بهبود
                 عملکرد روزانه، افزایش انرژی و اعتماد به نفس می‌شود.
@@ -162,9 +173,12 @@ export default function CorrectiveExercises() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🏃‍♂️ افزایش کارایی حرکتی
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaRunning className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  افزایش کارایی حرکتی
+                </h3>
+              </div>
               <p className="text-gray-600">
                 اصلاح ناهنجاری‌ها باعث بهبود الگوهای حرکتی، افزایش راندمان ورزشی
                 و کاهش خطر آسیب‌های ورزشی می‌شود.
@@ -172,9 +186,12 @@ export default function CorrectiveExercises() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                💰 صرفه‌جویی در هزینه‌ها
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaMoneyBillWave className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  صرفه‌جویی در هزینه‌ها
+                </h3>
+              </div>
               <p className="text-gray-600">
                 سرمایه‌گذاری در پیشگیری و اصلاح ناهنجاری‌ها، از هزینه‌های سنگین
                 درمان‌های پیچیده و جراحی در آینده جلوگیری می‌کند.
@@ -248,25 +265,12 @@ export default function CorrectiveExercises() {
         </div>
       </section>
 
-      {/* Warning Section */}
       <section className="py-16 bg-amber-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-start space-x-3 space-x-reverse">
               <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <svg
-                  className="w-6 h-6 text-amber-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
+                <FaExclamationTriangle className="w-6 h-6 text-amber-600" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4 font-morabba">
@@ -290,7 +294,6 @@ export default function CorrectiveExercises() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="bg-gradient-to-r from-primary to-secondary py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4 font-morabba">

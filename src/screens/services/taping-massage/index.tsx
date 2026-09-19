@@ -1,5 +1,16 @@
 import Navbar from "@/components/navbar";
 import Link from "next/link";
+import {
+  FaChartLine,
+  FaBolt,
+  FaSyncAlt,
+  FaSmile,
+  FaLink,
+  FaBullseye,
+  FaClock,
+  FaDumbbell,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 
 export default function TapingMassage() {
   return (
@@ -126,7 +137,7 @@ export default function TapingMassage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">📉</span>
+                <FaChartLine className="text-white text-2xl" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 کاهش درد
@@ -138,7 +149,7 @@ export default function TapingMassage() {
 
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">⚡</span>
+                <FaBolt className="text-white text-2xl" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 تسریع بهبودی
@@ -150,7 +161,7 @@ export default function TapingMassage() {
 
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">🔄</span>
+                <FaSyncAlt className="text-white text-2xl" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 بهبود عملکرد
@@ -162,7 +173,7 @@ export default function TapingMassage() {
 
             <div className="text-center p-6 bg-gray-50 rounded-xl">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white text-2xl">😌</span>
+                <FaSmile className="text-white text-2xl" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 آرامش روانی
@@ -189,9 +200,12 @@ export default function TapingMassage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🔗 درمان مکمل
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaLink className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  درمان مکمل
+                </h3>
+              </div>
               <p className="text-gray-600">
                 تیپینگ و ماساژ به عنوان درمان‌های مکمل و تکمیلی alongside برنامه
                 اصلی حرکات اصلاحی ارائه می‌شوند و نه جایگزین آن.
@@ -199,9 +213,12 @@ export default function TapingMassage() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                🎯 هدف مشترک
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaBullseye className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  هدف مشترک
+                </h3>
+              </div>
               <p className="text-gray-600">
                 تمامی خدمات با هدف نهایی اصلاح ناهنجاری و بهبود کیفیت زندگی شما
                 ارائه می‌شوند و به صورت هماهنگ عمل می‌کنند.
@@ -209,9 +226,12 @@ export default function TapingMassage() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                ⏱️ صرفه‌جویی در زمان
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaClock className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  صرفه‌جویی در زمان
+                </h3>
+              </div>
               <p className="text-gray-600">
                 استفاده از این خدمات مکمل می‌تواند مدت زمان مورد نیاز برای
                 دستیابی به نتایج مطلوب را کاهش دهد.
@@ -219,9 +239,12 @@ export default function TapingMassage() {
             </div>
 
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                💪 افزایش اثربخشی
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <FaDumbbell className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  افزایش اثربخشی
+                </h3>
+              </div>
               <p className="text-gray-600">
                 ترکیب این روش‌ها با حرکات اصلاحی، اثربخشی کلی درمان را به طور
                 قابل توجهی افزایش می‌دهد.
@@ -235,19 +258,7 @@ export default function TapingMassage() {
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-start space-x-3 space-x-reverse">
               <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <svg
-                  className="w-6 h-6 text-amber-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
+                <FaExclamationTriangle className="w-6 h-6 text-amber-600" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4 font-morabba">
