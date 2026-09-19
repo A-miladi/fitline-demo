@@ -103,7 +103,7 @@ const InputField = memo(
     error?: string;
     dir?: string;
   }) => (
-    <div>
+    <div className="max-w-full">
       <label className="block text-sm font-medium text-gray-700 mb-2">
         {label} {required && "*"}
       </label>

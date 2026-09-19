@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 const siteUrl = "https://fitlineclinic.com";
-const siteName = "راه تناسب";
+const siteName = "کلینیک راه تناسب";
 const siteTitle = "راه تناسب | مرکز تخصصی حرکات اصلاحی و توانبخشی ورزشی";
 
 export const metadata: Metadata = {
@@ -40,6 +40,9 @@ export const metadata: Metadata = {
     "کلینیک",
     "آسیب",
     "دیسک",
+    "fitline",
+    "fitlineclinic",
+    "clinic",
   ],
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
@@ -97,7 +100,6 @@ export const metadata: Metadata = {
       follow: true,
       noimageindex: false,
       "max-video-preview": -1,
-      "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
@@ -116,8 +118,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+  minimumScale: 1,
   userScalable: false,
-  viewportFit: "cover",
   colorScheme: "light",
 };
 

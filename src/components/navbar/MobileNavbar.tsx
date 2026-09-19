@@ -44,7 +44,7 @@ function MobileNavbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 flex h-16 items-center justify-center border-b border-gray-100 bg-white/95 shadow-lg shadow-[rgba(0,0,0,0.1)] backdrop-blur-2xl lg:hidden">
+      <header className="sticky top-0 z-50 flex h-14 items-center justify-center border-b border-gray-100 bg-white/95 shadow-lg shadow-[rgba(0,0,0,0.1)] backdrop-blur-2xl lg:hidden">
         <div className="relative flex h-full w-full items-center justify-between px-4">
           <div className="flex items-center w-full justify-between flex-row-reverse gap-2">
             <button
@@ -74,10 +74,10 @@ function MobileNavbar() {
             >
               <Image
                 src="/icon/TLogo.png"
-                className="h-[60%] w-full object-cover"
+                className="h-[50%] w-full object-fill"
                 alt=""
                 width={150}
-                height={200}
+                height={100}
               />
             </div>
           </div>
