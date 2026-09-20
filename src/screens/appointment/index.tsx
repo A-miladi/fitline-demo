@@ -36,7 +36,7 @@ const SERVICE_MAP: Record<string, string> = {
   evaluation: "checkup",
 };
 
-const CONTACT_INFO: ContactInfo = {
+export const CONTACT_INFO: ContactInfo = {
   phone: ["۰۸۶-۳۲۲۴۱۷۵۲", "۰۹۳۸۴۸۰۸۸۱۶"],
   address: "اراک ، چهارراه دکتر حسابی ، انتهای کوچه اردیبهشت ، نبش کوچه تربیت",
   workingHours: {
@@ -112,7 +112,7 @@ const InputField = memo(
         required={required}
         value={value}
         onChange={onChange}
-        className={`w-full px-4 py-3 border rounded-lg focus:bg-neutral-100 focus:outline-none ${
+        className={`max-w-full w-full px-4 py-3 border rounded-lg focus:bg-neutral-100 focus:outline-none ${
           error
             ? "border-red-500 focus:ring-2 focus:ring-red-500"
             : "border-gray-300 focus:ring-2 focus:ring-primary"
@@ -417,8 +417,8 @@ const Appointment: React.FC = () => {
       </section>
 
       <section className="py-16">
-        <div className="max-w-6xl mx-auto px-5">
-          <div className="grid lg:grid-cols-2 gap-12">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-8">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6 font-morabba">
                 فرم درخواست نوبت

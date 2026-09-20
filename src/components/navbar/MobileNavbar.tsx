@@ -8,6 +8,7 @@ import Close from "../../../public/icon/Close";
 import Profile from "../../../public/icon/Profile";
 import Image from "next/image";
 import { ScreenLinks } from "./navigation";
+import { CONTACT_INFO } from "@/screens/appointment";
 
 function MobileNavbar() {
   const pathname = usePathname();
@@ -49,7 +50,7 @@ function MobileNavbar() {
           <div className="flex items-center w-full justify-between flex-row-reverse gap-2">
             <button
               onClick={() => handleNavigation("/admin")}
-              className="text-xl border-t-2 border-l-2 border-white shadow-sm bg-gradient-to-br from-neutral-100 rounded-xl flex items-center justify-center w-10 h-10 text-primary"
+              className="text-xl border-t-2 pb-[1px] pr-[1px] border-l-2 border-white shadow-sm bg-gradient-to-br from-neutral-100 rounded-xl flex items-center justify-center w-10 h-10 text-primary"
               aria-label="پنل مدیریت"
             >
               <Profile size={25} color="currentColor" />
@@ -74,7 +75,7 @@ function MobileNavbar() {
             >
               <Image
                 src="/icon/TLogo.png"
-                className="h-[50%] w-full object-fill"
+                className="h-[50%] w-auto object-fill"
                 alt=""
                 width={150}
                 height={100}
@@ -161,13 +162,110 @@ function MobileNavbar() {
               ))}
             </ul>
 
-            <div className="mt-8 pb-8">
-              <div className="rounded-lg bg-primary/10 p-4">
-                <h3 className="mb-2 font-medium text-primary">اطلاعات تماس</h3>
-                <p className="mb-2 text-sm text-gray-700">
-                  مرکز تندرستی و حرکات اصلاحی راه تناسب
-                </p>
-                <p className="text-sm text-gray-700">با کادر مجرب و متخصص</p>
+            <div className="mt-8 pb-24">
+              <div className="rounded-xl bg-primary/10 p-4 space-y-3">
+                <h3 className="font-semibold text-primary flex items-center gap-2">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  اطلاعات تماس
+                </h3>
+
+                {/* Phone */}
+                <div className="flex items-start gap-2.5">
+                  <svg
+                    className="w-4 h-4 text-primary mt-0.5 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                  <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+                    {CONTACT_INFO.phone.map((phone, index) => (
+                      <a
+                        key={index}
+                        href={`tel:${phone
+                          .replace(/[۰-۹]/g, (d) =>
+                            "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString(),
+                          )
+                          .replace(/[^\d+]/g, "")}`}
+                        dir="ltr"
+                        className="text-sm text-gray-700 hover:text-primary transition-colors text-right"
+                      >
+                        {phone}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Address */}
+                <div className="flex items-start gap-2.5">
+                  <svg
+                    className="w-4 h-4 text-primary mt-0.5 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <p className="text-sm text-gray-700 leading-relaxed flex-1 min-w-0">
+                    {CONTACT_INFO.address}
+                  </p>
+                </div>
+
+                {/* Working Hours */}
+                <div className="flex items-start gap-2.5">
+                  <svg
+                    className="w-4 h-4 text-primary mt-0.5 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <div className="flex flex-col gap-1 flex-1 min-w-0 text-sm text-gray-700">
+                    <span>
+                      <span className="text-gray-500">صبح: </span>
+                      {CONTACT_INFO.workingHours.morning}
+                    </span>
+                    <span>
+                      <span className="text-gray-500">عصر: </span>
+                      {CONTACT_INFO.workingHours.afternoon}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,96 +1,104 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import {
+  brandKeywords,
+  locationKeywords,
+  longTailKeywords,
+  benefitKeywords,
+  audienceKeywords,
+  serviceKeywords,
+  primaryKeywords,
+} from "./keywords";
 
 const siteUrl = "https://fitlineclinic.com";
 const siteName = "کلینیک راه تناسب";
-const siteTitle = "راه تناسب | مرکز تخصصی حرکات اصلاحی و توانبخشی ورزشی";
+const siteTitle = "کلینیک راه تناسب | حرکات اصلاحی و توانبخشی ورزشی در تهران";
+const siteDescription =
+  "کلینیک تخصصی حرکات اصلاحی و توانبخشی ورزشی در تهران. اصلاح ناهنجاری‌های اسکلتی-عضلانی مثل کف پای صاف، زانوی پرانتزی و ضربدری، لوردوز، کایفوز و اسکولیوز، درمان دردهای مزمن ستون فقرات و مفاصل، توانبخشی آسیب‌های ورزشی، تیپینگ و ماساژ درمانی و ورزش سالمندان با متخصصین دارای مدرک معتبر.";
+
+const allKeywordsList = Array.from(
+  new Set([
+    ...primaryKeywords,
+    ...brandKeywords,
+    ...locationKeywords,
+    ...longTailKeywords,
+    ...benefitKeywords,
+    ...audienceKeywords,
+    ...Object.values(serviceKeywords).flat(),
+  ]),
+);
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+
   title: {
     default: siteTitle,
     template: `%s | ${siteName}`,
   },
-  description:
-    "مرکز تخصصی حرکات اصلاحی، آسیب‌شناسی ورزشی و توانبخشی در تهران. اصلاح ناهنجاری‌های اسکلتی-عضلانی، درمان دردهای مزمن، توانبخشی ورزشی، تیپینگ و ماساژ درمانی و ورزش سالمندان با متخصصین دارای مدرک معتبر.",
-  keywords: [
-    "حرکات اصلاحی",
-    "مرکز حرکات اصلاحی",
-    "توانبخشی ورزشی",
-    "آسیب شناسی ورزشی",
-    "اصلاح ناهنجاری اسکلتی عضلانی",
-    "درمان کف پای صاف",
-    "درمان زانوی پرانتزی",
-    "زانوی ضربدری",
-    "لوردوز",
-    "کایفوز",
-    "اسکولیوز",
-    "سر به جلو",
-    "تورتیکولی",
-    "سندروم متقاطع",
-    "درمان کمردرد",
-    "گردن درد",
-    "درمان دردهای اسکلتی عضلانی",
-    "تیپینگ",
-    "ماساژ درمانی",
-    "ماساژ ورزشی",
-    "ورزش سالمندان",
-    "فیزیوتراپی ورزشی",
-    "راه تناسب",
-    "کلینیک",
-    "آسیب",
-    "دیسک",
-    "fitline",
-    "fitlineclinic",
-    "clinic",
-  ],
+
+  description: siteDescription,
+
+  keywords: allKeywordsList,
+
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
   publisher: siteName,
-  category: "سلامت و تندرستی",
+  category: "سلامت، تندرستی و توانبخشی",
   applicationName: siteName,
+  generator: "Next.js",
+
   manifest: "/manifest.json",
+
   alternates: {
     canonical: "/",
+    languages: {
+      "fa-IR": "/",
+    },
   },
+
   icons: {
     icon: [
-      { url: "/favicon.ico" },
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/icon/logo192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon/logo512.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [{ url: "/icon/logo192.png", sizes: "192x192" }],
-    shortcut: ["/icon/favicon.ico"],
+    shortcut: ["/favicon.ico"],
   },
+
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: siteName,
   },
+
   openGraph: {
     type: "website",
     locale: "fa_IR",
     url: siteUrl,
     siteName,
     title: siteTitle,
-    description:
-      "مرکز تخصصی حرکات اصلاحی و توانبخشی ورزشی — اصلاح ناهنجاری‌های اسکلتی-عضلانی با متخصصین مجرب و متدهای نوین.",
+    description: siteDescription,
     images: [
       {
-        url: "/icon/logo512.png",
-        width: 512,
-        height: 512,
-        alt: siteName,
+        url: "/og/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: `${siteName} — حرکات اصلاحی و توانبخشی ورزشی`,
+        type: "image/jpeg",
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
     title: siteTitle,
-    description:
-      "مرکز تخصصی حرکات اصلاحی و توانبخشی ورزشی — اصلاح ناهنجاری‌های اسکلتی-عضلانی.",
-    images: ["/icon/logo512.png"],
+    description: siteDescription,
+    images: ["/og/og-image.jpg"],
+    // site: "@rahtanasob",
+    // creator: "@rahtanasob",
   },
+
   robots: {
     index: true,
     follow: true,
@@ -100,16 +108,26 @@ export const metadata: Metadata = {
       follow: true,
       noimageindex: false,
       "max-video-preview": -1,
+      "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
+
   verification: {
     google: "YOUR_GOOGLE_VERIFICATION_CODE",
+    // yandex: "...",
+    // other: { "msvalidate.01": "..." },
   },
+
   formatDetection: {
     telephone: true,
     email: true,
     address: true,
+  },
+
+  other: {
+    "msapplication-TileColor": "#ffffff",
+    "msapplication-tap-highlight": "no",
   },
 };
 
@@ -117,22 +135,36 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  minimumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  userScalable: true,
   colorScheme: "light",
+  viewportFit: "cover",
 };
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "MedicalBusiness",
+  "@type": ["MedicalBusiness", "MedicalClinic", "Physiotherapy"],
+  "@id": `${siteUrl}/#organization`,
   name: siteName,
+  alternateName: ["راه تناسب", "Rahtanasob", "Fitline Clinic"],
   url: siteUrl,
-  logo: `${siteUrl}/icon/logo512.png`,
-  image: `${siteUrl}/icon/logo512.png`,
-  description:
-    "مرکز تخصصی حرکات اصلاحی، توانبخشی ورزشی و درمان دردهای اسکلتی-عضلانی.",
-  medicalSpecialty: ["Physiotherapy", "PhysicalTherapy"],
+  logo: {
+    "@type": "ImageObject",
+    url: `${siteUrl}/icon/logo512.png`,
+    width: 512,
+    height: 512,
+  },
+  image: `${siteUrl}/og/og-image.jpg`,
+  description: siteDescription,
+  medicalSpecialty: [
+    "Physiotherapy",
+    "PhysicalTherapy",
+    "SportsMedicine",
+    "Rehabilitation",
+  ],
+  priceRange: "$$",
+  currenciesAccepted: "IRR",
+  paymentAccepted: "Cash, Credit Card, Online Payment",
   areaServed: {
     "@type": "Country",
     name: "Iran",
@@ -141,24 +173,142 @@ const organizationJsonLd = {
     "@type": "PostalAddress",
     addressCountry: "IR",
     addressLocality: "تهران",
+    addressRegion: "تهران",
+    streetAddress: "YOUR_STREET_ADDRESS",
+    postalCode: "YOUR_POSTAL_CODE",
   },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: "YOUR_LATITUDE",
+    longitude: "YOUR_LONGITUDE",
+  },
+  telephone: "YOUR_PHONE_NUMBER",
+  email: "YOUR_EMAIL",
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Saturday",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+      ],
+      opens: "09:00",
+      closes: "21:00",
+    },
+  ],
   sameAs: [
     // "https://instagram.com/rahtanasob",
     // "https://t.me/rahtanasob",
+    // "https://www.aparat.com/rahtanasob",
   ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "خدمات کلینیک راه تناسب",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "MedicalTherapy",
+          name: "حرکات اصلاحی",
+          url: `${siteUrl}/services/corrective-exercises`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "MedicalTherapy",
+          name: "توانبخشی ورزشی",
+          url: `${siteUrl}/services/sports-rehabilitation`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "MedicalTherapy",
+          name: "درمان دردهای اسکلتی-عضلانی",
+          url: `${siteUrl}/services/pain-treatment`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "MedicalTherapy",
+          name: "تیپینگ و ماساژ",
+          url: `${siteUrl}/services/taping-massage`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "MedicalTherapy",
+          name: "ورزش سالمندان",
+          url: `${siteUrl}/services/elderly-exercise`,
+        },
+      },
+    ],
+  },
 };
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
   name: siteName,
+  alternateName: "Rahtanasob",
   url: siteUrl,
   inLanguage: "fa-IR",
+  publisher: {
+    "@id": `${siteUrl}/#organization`,
+  },
   potentialAction: {
     "@type": "SearchAction",
-    target: `${siteUrl}/search?q={search_term_string}`,
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${siteUrl}/search?q={search_term_string}`,
+    },
     "query-input": "required name=search_term_string",
   },
+};
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "@id": `${siteUrl}/#localbusiness`,
+  name: siteName,
+  image: `${siteUrl}/og/og-image.jpg`,
+  url: siteUrl,
+  telephone: "YOUR_PHONE_NUMBER",
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "IR",
+    addressLocality: "تهران",
+    streetAddress: "YOUR_STREET_ADDRESS",
+    postalCode: "YOUR_POSTAL_CODE",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: "YOUR_LATITUDE",
+    longitude: "YOUR_LONGITUDE",
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Saturday",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+      ],
+      opens: "09:00",
+      closes: "21:00",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -186,6 +336,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(websiteJsonLd),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessJsonLd),
           }}
         />
       </head>

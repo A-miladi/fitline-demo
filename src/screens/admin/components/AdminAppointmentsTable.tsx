@@ -39,10 +39,10 @@ export default function AdminAppointmentsTable({
         </div>
         <button
           onClick={onLogout}
-          className="flex items-center gap-2 rounded-2xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+          className="flex justify-center items-center gap-2 text-primary rounded-2xl border border-primary px-4 py-2 text-sm font-medium transition hover:bg-gray-100"
         >
-          <FaSignOutAlt className="h-4 w-4" />
           خروج
+          <FaSignOutAlt className="h-4 w-4 rotate-180" />
         </button>
       </div>
 

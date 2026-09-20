@@ -16,9 +16,7 @@ import AdminEditModal from "./components/AdminEditModal";
 const STATIC_USERNAME = "admin";
 const STATIC_PASSWORD = "123456";
 
-const mapAppointment = (
-  item: any,
-): AppointmentCreatePayload => ({
+const mapAppointment = (item: any): AppointmentCreatePayload => ({
   id: item._id ?? item.id ?? 0,
   full_name: item.fullName ?? item.full_name ?? "—",
   phone: item.phoneNumber ?? item.phone ?? "—",
@@ -80,7 +78,6 @@ export default function AdminPage() {
       if (isUpdatingRef.current) return;
       isUpdatingRef.current = true;
 
-      // به‌روزرسانی محلی
       setAppointments((current) =>
         current.map((item) =>
           item.id === updatedAppointment.id
@@ -119,7 +116,6 @@ export default function AdminPage() {
     };
   }, []);
 
-  // Show toast helper
   const showToast = useCallback(
     (type: "success" | "error", message: string) => {
       if (toastTimeoutRef.current) {
@@ -135,7 +131,6 @@ export default function AdminPage() {
     [],
   );
 
-  // ===== Computed =====
   const { todayCount, weekCount } = useMemo(() => {
     const now = dayjs();
     const todayStr = now.format("YYYY-MM-DD");
@@ -172,7 +167,6 @@ export default function AdminPage() {
     });
   }, [appointments, searchTerm]);
 
-  // ===== Handlers =====
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (username === STATIC_USERNAME && password === STATIC_PASSWORD) {
@@ -195,10 +189,8 @@ export default function AdminPage() {
     showToast("success", "خروج با موفقیت انجام شد");
   };
 
-  // ===== Handle Delete - اصلاح شده =====
   const handleDelete = useCallback(
     async (id: number) => {
-      // Confirm deletion
       if (!confirm("آیا از حذف این نوبت اطمینان دارید؟")) {
         return;
       }
@@ -210,15 +202,12 @@ export default function AdminPage() {
       isUpdatingRef.current = true;
 
       try {
-        // حذف از دیتابیس
         await deleteAppointment(id);
 
-        // حذف از state محلی (Optimistic Update)
         setAppointments((current) => current.filter((item) => item.id !== id));
 
         showToast("success", "نوبت با موفقیت حذف شد");
 
-        // بعد از ۱ ثانیه refetch برای هماهنگی با سرور
         setTimeout(() => {
           isUpdatingRef.current = false;
           refetch();
@@ -226,20 +215,17 @@ export default function AdminPage() {
       } catch (error) {
         isUpdatingRef.current = false;
         showToast("error", "خطا در حذف نوبت");
-        // در صورت خطا، دوباره fetch کن
         refetch();
       }
     },
     [deleteAppointment, refetch, showToast, isDeleting],
   );
 
-  // ===== Handle Edit =====
   const handleEdit = useCallback((appointment: AppointmentCreatePayload) => {
     setEditingId(appointment.id);
     setEditForm({ ...appointment });
   }, []);
 
-  // ===== Handle Save Edit =====
   const handleSaveEdit = useCallback(
     (updatedAppointment: AppointmentCreatePayload) => {
       if (isUpdatingRef.current || isSaving) {
@@ -260,22 +246,17 @@ export default function AdminPage() {
     [updateAppointment, isSaving],
   );
 
-  // ===== Handle Cancel Edit =====
   const handleCancelEdit = useCallback(() => {
     setEditingId(null);
     setEditForm(null);
-    // ❌ حذف refetch از اینجا
-    // refetch();
   }, []);
 
-  // ===== Handle Refresh =====
   const handleRefresh = useCallback(() => {
     if (!isUpdatingRef.current) {
       refetch();
     }
   }, [refetch]);
 
-  // Show loading state
   if (loading && !data) {
     return (
       <div className="min-h-screen bg-gray-50" dir="rtl">

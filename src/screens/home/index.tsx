@@ -219,11 +219,24 @@ export default function Home() {
               </Link>
               <Link href="/services">
                 <motion.button
-                  className="text-primary border border-primary w-full p-[1px] md:min-w-30 hover:text-white h-12 cursor-pointer rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-200 text-lg"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="group relative inline-flex items-center justify-center gap-2 w-full md:min-w-32 h-12 px-6 rounded-lg font-semibold text-lg text-primary border-2 border-primary bg-transparent hover:bg-primary hover:text-white transition-colors duration-300 cursor-pointer overflow-hidden"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  خدمات ما
+                  <span className="relative z-10">خدمات ما</span>
+                  <svg
+                    className="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
                 </motion.button>
               </Link>
             </motion.div>

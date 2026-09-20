@@ -51,7 +51,7 @@ function DesktopNavbar() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => handleNavigation("/admin")}
-            className="text-sm border-t-2 border-l-2 border-white shadow-sm bg-gradient-to-br from-neutral-100 rounded-xl flex items-center justify-center w-10 h-10 text-primary"
+            className="text-sm cursor-pointer border-t-2 hover:from-primary/40 hover:to-primary/10 transition-all duration-150 border-l-2 border-white shadow-sm bg-gradient-to-br from-neutral-100 rounded-xl flex items-center justify-center w-10 h-10 text-primary"
             aria-label="پنل مدیریت"
           >
             <Profile size={25} color="currentColor" />
@@ -129,7 +129,7 @@ function DesktopNavbar() {
           >
             <Image
               src="/icon/TLogo.png"
-              className="w-full h-full object-cover"
+              className=" h-full w-auto object-fill"
               alt=""
               width={150}
               height={150}

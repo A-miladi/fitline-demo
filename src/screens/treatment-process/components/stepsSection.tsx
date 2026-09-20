@@ -54,14 +54,13 @@ const StepsSection: React.FC = () => {
         </motion.div>
 
         <div className="relative">
-          {/* خط اتصال با انیمیشن */}
-          <div className="hidden md:block absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-4/5 h-2 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full z-0">
+          <div className="hidden md:block absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-4/5 h-1 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full z-0">
             <motion.div
               initial={{ width: 0 }}
               whileInView={{ width: "100%" }}
               transition={{ duration: 1.5, delay: 0.3 }}
               className="h-full bg-gradient-to-r from-primary to-secondary rounded-full"
-            ></motion.div>
+            />
           </div>
 
           <div className="grid md:grid-cols-4 gap-8 relative z-10">

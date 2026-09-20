@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { IoIosArrowBack } from "react-icons/io";
 import { useInView } from "react-intersection-observer";
 
 interface AnimatedStepProps {
@@ -37,18 +38,8 @@ const AnimatedStep: React.FC<AnimatedStepProps> = ({
           {number}
         </div>
         {!isLast && (
-          <div className="absolute -right-6 top-1/2 transform -translate-y-1/2 hidden md:block">
-            <svg
-              className="w-8 h-8 text-primary"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+          <div className="absolute text-primary -left-2 top-1/2 transform -translate-y-1/2 hidden md:block">
+            <IoIosArrowBack className="w-5 h-5" />
           </div>
         )}
       </div>
