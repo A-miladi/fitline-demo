@@ -1,5 +1,45 @@
 @import "tailwindcss";
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+@supports selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+}
+
+.mobile-menu-scroll {
+  scrollbar-width: none;
+}
+
+.mobile-menu-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 :root {
   --font-morabba: "Morabba", system-ui, -apple-system, sans-serif;
   --font-iransans: "IranSans", system-ui, -apple-system, sans-serif;
@@ -42,7 +82,7 @@
 /* Morabba Font Family */
 @font-face {
   font-family: "Morabba";
-  src: url("/fonts/Morabba/Morabba-Light.ttf") format("truetype");
+  src: url("/fonts/Morabba/Morabba-Light.v1.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -50,7 +90,7 @@
 
 @font-face {
   font-family: "Morabba";
-  src: url("/fonts/Morabba/Morabba-Regular.ttf") format("truetype");
+  src: url("/fonts/Morabba/Morabba-Regular.v1.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -58,7 +98,7 @@
 
 @font-face {
   font-family: "Morabba";
-  src: url("/fonts/Morabba/Morabba-Medium.ttf") format("truetype");
+  src: url("/fonts/Morabba/Morabba-Medium.v1.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -66,7 +106,7 @@
 
 @font-face {
   font-family: "Morabba";
-  src: url("/fonts/Morabba/Morabba-Bold.ttf") format("truetype");
+  src: url("/fonts/Morabba/Morabba-Bold.v1.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -74,7 +114,7 @@
 
 @font-face {
   font-family: "Morabba";
-  src: url("/fonts/Morabba/Morabba-ExtraBold.ttf") format("truetype");
+  src: url("/fonts/Morabba/Morabba-ExtraBold.v1.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -83,7 +123,7 @@
 /* IranSans Font Family */
 @font-face {
   font-family: "IranSans";
-  src: url("/fonts/IranSans/IRANSansXFaNum-Light.ttf") format("truetype");
+  src: url("/fonts/IranSans/IRANSansXFaNum-Light.v1.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -91,7 +131,7 @@
 
 @font-face {
   font-family: "IranSans";
-  src: url("/fonts/IranSans/IRANSansXFaNum-Regular.ttf") format("truetype");
+  src: url("/fonts/IranSans/IRANSansXFaNum-Regular.v1.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -99,7 +139,7 @@
 
 @font-face {
   font-family: "IranSans";
-  src: url("/fonts/IranSans/IRANSansXFaNum-Medium.ttf") format("truetype");
+  src: url("/fonts/IranSans/IRANSansXFaNum-Medium.v1.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -107,7 +147,7 @@
 
 @font-face {
   font-family: "IranSans";
-  src: url("/fonts/IranSans/IRANSansXFaNum-Bold.ttf") format("truetype");
+  src: url("/fonts/IranSans/IRANSansXFaNum-Bold.v1.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -115,7 +155,7 @@
 
 @font-face {
   font-family: "IranSans";
-  src: url("/fonts/IranSans/IRANSansXFaNum-ExtraBold.ttf") format("truetype");
+  src: url("/fonts/IranSans/IRANSansXFaNum-ExtraBold.v1.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -350,4 +390,14 @@
 
 .animate-fade-in-up {
   animation: fade-in-up 0.4s ease-out forwards;
+}
+
+/* Keep animations inexpensive and respect the device's motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

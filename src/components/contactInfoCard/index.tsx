@@ -1,4 +1,5 @@
 import { ContactInfo } from "@/types";
+import ClinicLocation from "@/components/ClinicLocation";
 
 interface ContactInfoCardProps {
   contactInfo: ContactInfo;
@@ -102,6 +103,11 @@ const ContactInfoCard: React.FC<ContactInfoCardProps> = ({ contactInfo }) => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="mt-8">
+        <h4 className="mb-3 font-semibold text-gray-900">موقعیت مرکز روی نقشه</h4>
+        <ClinicLocation location={contactInfo.location} />
       </div>
 
       <div className="mt-8 p-6 bg-primary/10 rounded-lg">

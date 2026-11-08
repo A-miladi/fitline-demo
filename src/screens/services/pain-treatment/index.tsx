@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Navbar from "@/components/navbar";
 import Link from "next/link";
 import {
@@ -12,6 +13,7 @@ export default function PainTreatment() {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
+      <Breadcrumbs path="/services/pain-treatment" />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
@@ -298,10 +300,10 @@ export default function PainTreatment() {
             کنید
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/appointment">
-              <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+            <Link href="/appointment" className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+              
                 دریافت نوبت ارزیابی
-              </button>
+              
             </Link>
           </div>
         </div>

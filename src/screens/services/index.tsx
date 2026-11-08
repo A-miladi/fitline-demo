@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Navbar from "@/components/navbar";
 import Link from "next/link";
 import {
@@ -107,6 +108,7 @@ export default function Services() {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
+      <Breadcrumbs path="/services" />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-white to-secondary/10 py-24">
         <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
@@ -184,11 +186,11 @@ export default function Services() {
                       </span>
                     </div>
 
-                    <Link href={service.link}>
-                      <button className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-secondary text-white py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-200 font-medium">
+                    <Link href={service.link} className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-secondary text-white py-3 px-6 rounded-lg hover:opacity-90 transition-opacity duration-200 font-medium">
+                      
                         بیشتر بدانید
                         <FaArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
-                      </button>
+                      
                     </Link>
                   </div>
                 </div>
@@ -316,10 +318,10 @@ export default function Services() {
             جراحی پیشگیری کنید
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/appointment">
-              <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 shadow-lg">
+            <Link href="/appointment" className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 shadow-lg">
+              
                 دریافت نوبت ارزیابی
-              </button>
+              
             </Link>
           </div>
         </div>

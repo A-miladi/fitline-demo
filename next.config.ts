@@ -1,21 +1,39 @@
-// next.config.js
-/** @type {import('next').NextConfig} */
-const withPWA = require("next-pwa")({
-  dest: "public",
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === "development",
+import type { NextConfig } from "next";
+import withSerwistInit from "@serwist/next";
+
+const withSerwist = withSerwistInit({
+  swSrc: "src/app/sw.ts",
+  swDest: "public/sw.js",
+  register: false,
+  reloadOnOnline: false,
+  globPublicPatterns: [
+    "favicon.ico",
+    "manifest.json",
+    "icon/logo192.png",
+    "icon/logo512.png",
+    "fonts/**/*.woff2",
+  ],
+  disable: process.env.NODE_ENV !== "production",
 });
 
-const nextConfig = withPWA({
-  typescript: {
-    ignoreBuildErrors: true, // خطاهای TypeScript را نادیده بگیر
+const nextConfig: NextConfig = {
+  outputFileTracingRoot: process.cwd(),
+  async headers() {
+    return [
+      {
+        source: "/admin/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
+      },
+      {
+        source: "/sw.js",
+        headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }],
+      },
+      {
+        source: "/fonts/:font*.v1.woff2",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+    ];
   },
-  eslint: {
-    ignoreDuringBuilds: true, // خطاهای ESLint را نادیده بگیر
-  },
-  outputFileTracingRoot: __dirname,
-  // برای رفع warning لاک فایل‌ها
-});
+};
 
-module.exports = nextConfig;
+export default withSerwist(nextConfig);

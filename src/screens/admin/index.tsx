@@ -16,7 +16,14 @@ import AdminEditModal from "./components/AdminEditModal";
 const STATIC_USERNAME = "admin";
 const STATIC_PASSWORD = "123456";
 
-const mapAppointment = (item: any): AppointmentCreatePayload => ({
+type AppointmentResponse = Partial<AppointmentCreatePayload> & {
+  _id?: number;
+  fullName?: string;
+  phoneNumber?: string;
+  doctorId?: string;
+};
+
+const mapAppointment = (item: AppointmentResponse): AppointmentCreatePayload => ({
   id: item._id ?? item.id ?? 0,
   full_name: item.fullName ?? item.full_name ?? "—",
   phone: item.phoneNumber ?? item.phone ?? "—",
@@ -48,13 +55,18 @@ export default function AdminPage() {
   const isUpdatingRef = useRef(false);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const handleAppointmentsLoaded = useCallback((items: AppointmentResponse[]) => {
+    setAppointments(items.map(mapAppointment));
+  }, []);
+
   const {
     data,
     loading,
     error: fetchError,
     refetch,
-  } = useFetch<AppointmentCreatePayload[]>(API_URL.Appointments, {
-    autoFetch: true,
+  } = useFetch<AppointmentResponse[]>(API_URL.Appointments, {
+    enabled: isAuthenticated,
+    onSuccess: handleAppointmentsLoaded,
   });
 
   const { loading: isDeleting, execute: deleteAppointment } = useDelete<
@@ -100,12 +112,6 @@ export default function AdminPage() {
       showToast("error", `خطا در ویرایش: ${error}`);
     },
   });
-
-  useEffect(() => {
-    if (data && !isUpdatingRef.current) {
-      setAppointments(data.map(mapAppointment));
-    }
-  }, [data]);
 
   // Clear toast on unmount
   useEffect(() => {
@@ -212,7 +218,7 @@ export default function AdminPage() {
           isUpdatingRef.current = false;
           refetch();
         }, 1000);
-      } catch (error) {
+      } catch {
         isUpdatingRef.current = false;
         showToast("error", "خطا در حذف نوبت");
         refetch();
@@ -250,12 +256,6 @@ export default function AdminPage() {
     setEditingId(null);
     setEditForm(null);
   }, []);
-
-  const handleRefresh = useCallback(() => {
-    if (!isUpdatingRef.current) {
-      refetch();
-    }
-  }, [refetch]);
 
   if (loading && !data) {
     return (
@@ -318,7 +318,7 @@ export default function AdminPage() {
                 loading={loading}
                 error={fetchError}
                 searchTerm={searchTerm}
-                isDeleting={isDeleting || isUpdatingRef.current}
+                isDeleting={isDeleting || isSaving}
                 onSearchChange={setSearchTerm}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
@@ -328,7 +328,7 @@ export default function AdminPage() {
               {editingId && editForm && (
                 <AdminEditModal
                   appointment={editForm}
-                  isSaving={isSaving || isUpdatingRef.current}
+                  isSaving={isSaving || isDeleting}
                   onSave={handleSaveEdit}
                   onCancel={handleCancelEdit}
                 />

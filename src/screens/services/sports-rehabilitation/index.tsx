@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Navbar from "@/components/navbar";
 import Link from "next/link";
 import {
@@ -12,6 +13,7 @@ export default function SportsRehabilitation() {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
+      <Breadcrumbs path="/services/sports-rehabilitation" />
 
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
         <div className="max-w-6xl mx-auto px-4">
@@ -293,10 +295,10 @@ export default function SportsRehabilitation() {
             با برنامه‌ریزی تخصصی و علمی، ایمن و مطمئن به میادین ورزشی بازگردید
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/appointment">
-              <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+            <Link href="/appointment" className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+              
                 دریافت نوبت ارزیابی
-              </button>
+              
             </Link>
           </div>
         </div>

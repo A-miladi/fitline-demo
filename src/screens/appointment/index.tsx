@@ -1,49 +1,34 @@
 "use client";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Navbar from "@/components/navbar";
+import { CONTACT_INFO } from "@/constants/contact";
 import {
   AppointmentCreatePayload,
   AppointmentFormData,
-  ContactInfo,
-  DropdownOption,
   ProcessStep,
 } from "@/types";
 
-import { useCallback, useEffect, useState, useMemo, memo } from "react";
+import { useCallback, useState, useMemo, memo, Suspense } from "react";
 import ContactInfoCard from "@/components/contactInfoCard";
 import ProcessInfo from "@/components/processInfo";
-import CustomDropdown from "@/components/DropDown";
+import DoctorPicker from "./components/DoctorPicker";
 import CalendarPicker from "@/components/callender";
-import dayjs from "dayjs";
-import jalaliday from "jalaliday";
+import { getJalaliToday, jalaliToGregorian } from "@/utils/toPersianDigits";
 import usePost from "@/hooks/usePost";
 import useFetch from "@/hooks/useFetch";
 import { API_URL } from "@/constants/api";
 import { Doctor } from "@/types/doctor";
-import { useSearchParams } from "next/navigation";
 import {
   isValidPhoneNumber,
   formatPhoneNumber,
   getPhoneError,
 } from "@/utils/validation";
 
-dayjs.extend(jalaliday);
-
-const SERVICE_MAP: Record<string, string> = {
-  corrective: "consultation",
-  rehabilitation: "treatment",
-  "pain-treatment": "treatment",
-  "taping-massage": "cleaning",
-  evaluation: "checkup",
+const todayJalali = () => {
+  const { year, month, day } = getJalaliToday();
+  return `${year}/${String(month).padStart(2, "0")}/${String(day).padStart(2, "0")}`;
 };
 
-export const CONTACT_INFO: ContactInfo = {
-  phone: ["۰۸۶-۳۲۲۴۱۷۵۲", "۰۹۳۸۴۸۰۸۸۱۶"],
-  address: "اراک ، چهارراه دکتر حسابی ، انتهای کوچه اردیبهشت ، نبش کوچه تربیت",
-  workingHours: {
-    morning: "۸:۰۰ الی ۱۳‌:۰۰",
-    afternoon: "۱۵:۰۰ الی ۲۰:۰۰",
-  },
-};
 
 const PROCESS_STEPS: ProcessStep[] = [
   {
@@ -67,19 +52,9 @@ const PROCESS_STEPS: ProcessStep[] = [
 const DEFAULT_TIME = "08:00";
 
 const convertJalaliToGregorian = (jalaliDate: string): string => {
-  try {
-    const [year, month, day] = jalaliDate.split("/").map(Number);
-    const jalaliDateObj = dayjs()
-      .calendar("jalali")
-      .year(year)
-      .month(month - 1)
-      .date(day);
-    const gregorianDate = jalaliDateObj.calendar("gregory");
-    return gregorianDate.format("YYYY-MM-DD");
-  } catch (error) {
-    console.error("Error converting date:", error);
-    return dayjs().format("YYYY-MM-DD");
-  }
+  const [year, month, day] = jalaliDate.split("/").map(Number);
+  const { gy, gm, gd } = jalaliToGregorian(year, month, day);
+  return `${gy}-${String(gm).padStart(2, "0")}-${String(gd).padStart(2, "0")}`;
 };
 
 // کامپوننت ورودی با memo
@@ -163,8 +138,6 @@ const TextareaField = memo(
 TextareaField.displayName = "TextareaField";
 
 const Appointment: React.FC = () => {
-  const searchParams = useSearchParams();
-  const doctorIdFromUrl = searchParams.get("doctorId") ?? "";
   const { data: doctors } = useFetch<Doctor[]>(API_URL.Doctors);
   const { loading: isSubmitting, execute: submitAppointment } = usePost<
     AppointmentCreatePayload,
@@ -178,14 +151,14 @@ const Appointment: React.FC = () => {
     },
   });
 
-  const [selectedDoctorId, setSelectedDoctorId] = useState<string>("");
+  const [doctorPickerVersion, setDoctorPickerVersion] = useState(0);
   const [toast, setToast] = useState<{
     type: "success" | "error";
     message: string;
   } | null>(null);
   const [isSubmittingLocal, setIsSubmittingLocal] = useState(false);
   const [phoneError, setPhoneError] = useState<string>("");
-  const [formData, setFormData] = useState<AppointmentFormData>({
+  const [formData, setFormData] = useState<AppointmentFormData>(() => ({
     name: "",
     lastName: "",
     phone: "",
@@ -193,10 +166,10 @@ const Appointment: React.FC = () => {
     age: 0,
     gender: "",
     services: "",
-    date: dayjs().calendar("jalali").format("YYYY/MM/DD"),
+    date: todayJalali(),
     time: DEFAULT_TIME,
     description: "",
-  });
+  }));
 
   // استفاده از useMemo برای doctorOptions
   const doctorOptions = useMemo(() => {
@@ -207,14 +180,6 @@ const Appointment: React.FC = () => {
       })) ?? []
     );
   }, [doctors]);
-
-  // استفاده از useCallback برای تمام handlerها
-  const handleInputChange = useCallback(
-    (field: keyof AppointmentFormData, value: string | number) => {
-      setFormData((prev) => ({ ...prev, [field]: value }));
-    },
-    [],
-  );
 
   const handlePhoneChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -267,10 +232,6 @@ const Appointment: React.FC = () => {
     [],
   );
 
-  const handleDoctorSelect = useCallback((option: DropdownOption) => {
-    setSelectedDoctorId(option.value);
-  }, []);
-
   const handleSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -291,9 +252,9 @@ const Appointment: React.FC = () => {
 
       setIsSubmittingLocal(true);
 
-      const doctorId = selectedDoctorId || doctorIdFromUrl;
+      const doctorId = new FormData(event.currentTarget).get("doctor_id");
 
-      if (!doctorId) {
+      if (typeof doctorId !== "string" || !doctorId) {
         setToast({
           type: "error",
           message: "لطفاً پزشک را انتخاب کنید",
@@ -332,11 +293,11 @@ const Appointment: React.FC = () => {
             age: 0,
             gender: "",
             services: "",
-            date: dayjs().calendar("jalali").format("YYYY/MM/DD"),
+            date: todayJalali(),
             time: DEFAULT_TIME,
             description: "",
           });
-          setSelectedDoctorId("");
+          setDoctorPickerVersion((version) => version + 1);
           setPhoneError("");
         } else {
           setToast({
@@ -344,7 +305,7 @@ const Appointment: React.FC = () => {
             message: "ثبت نوبت با خطا مواجه شد. لطفاً دوباره تلاش کنید",
           });
         }
-      } catch (error) {
+      } catch {
         setToast({
           type: "error",
           message: "خطا در ارتباط با سرور. لطفاً مجدداً تلاش کنید",
@@ -359,24 +320,16 @@ const Appointment: React.FC = () => {
     [
       isSubmitting,
       isSubmittingLocal,
-      selectedDoctorId,
-      doctorIdFromUrl,
       formData,
       submitAppointment,
     ],
   );
 
-  useEffect(() => {
-    if (doctorIdFromUrl) {
-      setSelectedDoctorId(doctorIdFromUrl);
-    } else {
-      setSelectedDoctorId("");
-    }
-  }, [doctorIdFromUrl]);
 
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
+      <Breadcrumbs path="/appointment" />
 
       {toast && (
         <div className="fixed top-4 left-0 right-0 z-50 px-4">
@@ -437,18 +390,9 @@ const Appointment: React.FC = () => {
                   placeholder="نام خود را وارد کنید"
                 />
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    انتخاب پزشک
-                  </label>
-                  <CustomDropdown
-                    options={doctorOptions}
-                    value={selectedDoctorId}
-                    onSelect={handleDoctorSelect}
-                    placeholder="پزشک مورد نظر را انتخاب کنید"
-                    disabled={doctorOptions.length === 0}
-                  />
-                </div>
+                <Suspense fallback={<p role="status" className="rounded-lg border border-gray-200 p-3 text-sm text-gray-500">در حال بارگذاری انتخاب پزشک…</p>}>
+                  <DoctorPicker key={doctorPickerVersion} options={doctorOptions} />
+                </Suspense>
 
                 <InputField
                   label="شماره تماس"

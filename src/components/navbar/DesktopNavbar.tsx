@@ -5,6 +5,7 @@ import { useState } from "react";
 import ArrowDown from "../../../public/icon/ArrowDown";
 import Profile from "../../../public/icon/Profile";
 import Image from "next/image";
+import Link from "next/link";
 import { ScreenLinks } from "./navigation";
 
 function DesktopNavbar() {
@@ -68,8 +69,8 @@ function DesktopNavbar() {
               onMouseEnter={() => handleMouseEnter(idx, item.name)}
               onMouseLeave={handleMouseLeave}
             >
-              <button
-                onClick={() => handleNavigation(item.link)}
+              <Link
+                href={item.link} prefetch={false} onFocus={() => handleMouseEnter(idx, item.name)} 
                 className={`flex h-full cursor-pointer items-center justify-center px-3 text-sm font-medium font-morabba ${
                   (activeLink === idx || isLinkActive(item.link)) &&
                   !item.highlight
@@ -94,7 +95,7 @@ function DesktopNavbar() {
                     }
                   />
                 )}
-              </button>
+              </Link>
 
               {item.children && hoveredMenu === item.name && (
                 <div
@@ -103,9 +104,9 @@ function DesktopNavbar() {
                   onMouseLeave={handleMouseLeave}
                 >
                   {item.children.map((child, childIdx) => (
-                    <button
+                    <Link
                       key={childIdx}
-                      onClick={() => handleNavigation(child.link)}
+                      href={child.link} prefetch={false} 
                       className="flex w-full flex-col border-b border-gray-100 px-4 py-3 text-right text-sm transition-colors last:border-0 hover:bg-blue-50"
                     >
                       <span className="font-medium text-gray-800">
@@ -114,7 +115,7 @@ function DesktopNavbar() {
                       <span className="mt-1 text-xs text-gray-500">
                         {child.description}
                       </span>
-                    </button>
+                    </Link>
                   ))}
                 </div>
               )}
@@ -123,18 +124,20 @@ function DesktopNavbar() {
         </ul>
 
         <div className="flex items-center h-full justify-start">
-          <div
+          <Link
             className="gradient-text flex h-[50%] cursor-pointer items-center justify-start font-sans font-extrabold text-blue-600 md:pr-4"
-            onClick={() => router.push("/")}
+            href="/" prefetch={false} aria-label="صفحه اصلی راه تناسب"
           >
             <Image
-              src="/icon/TLogo.png"
+              src="/icon/TLogo.v1.webp"
+                sizes="120px"
+                loading="eager"
               className=" h-full w-auto object-fill"
-              alt=""
-              width={150}
-              height={150}
+              alt="لوگوی مرکز راه تناسب"
+              width={360}
+              height={110}
             />
-          </div>
+          </Link>
         </div>
       </div>
     </header>

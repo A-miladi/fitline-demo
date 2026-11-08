@@ -1,50 +1,33 @@
 "use client";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Navbar from "@/components/navbar";
 import { API_URL } from "@/constants/api";
 import useFetch from "@/hooks/useFetch";
 import { Doctor } from "@/types/doctor";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { FadeLoader } from "react-spinners";
+import Image, { type StaticImageData } from "next/image";
+import asgaryPortrait from "../../../public/images/asgary.jpg";
+import heydariPortrait from "../../../public/images/heydari.jpg";
 
-export default function Specialists() {
+const specialistPortraits: Record<string, StaticImageData> = {
+  مهساعسگری: asgaryPortrait,
+  حسینحیدرینیک: heydariPortrait,
+};
+
+function getSpecialistPortrait(name: string) {
+  const normalizedName = name
+    .replace(/ي/g, "ی")
+    .replace(/ك/g, "ک")
+    .replace(/[\s\u200c\u200d]/g, "")
+    .replace(/^دکتر/, "");
+  return specialistPortraits[normalizedName];
+}
+
+function SpecialistsList() {
   const router = useRouter();
   const { data, loading, error, refetch } = useFetch<Doctor[]>(API_URL.Doctors);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-
-    if (loading) {
-      timer = setTimeout(() => {
-        setIsLoading(true);
-      }, 1000);
-    } else {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, 1000 - elapsed);
-
-      if (remaining > 0) {
-        timer = setTimeout(() => {
-          setIsLoading(false);
-        }, remaining);
-      } else {
-        setIsLoading(false);
-      }
-    }
-
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
-  }, [loading]);
-
-  const [startTime] = useState(Date.now());
-
-  if (loading || isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50" dir="rtl">
-        <Navbar />
-        <div className="flex h-screen flex-1 items-center justify-center">
+  if (loading) return (<div role="status" className="flex min-h-[70vh] flex-col items-center justify-center gap-6">
           <FadeLoader
             color="#583f99"
             loading
@@ -53,18 +36,12 @@ export default function Specialists() {
             speedMultiplier={1}
             margin={3}
             cssOverride={{
-              marginBottom: 150,
+              margin: 0,
             }}
           />
-        </div>
-      </div>
-    );
-  }
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50" dir="rtl">
-        <Navbar />
-        <div className="flex items-center justify-center min-h-[60vh]">
+          <p className="text-sm text-gray-600">در حال دریافت اطلاعات متخصصین…</p>
+        </div>);
+  if (error) return (<div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center max-w-md mx-auto p-8 bg-white rounded-xl shadow-lg">
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg
@@ -92,27 +69,84 @@ export default function Specialists() {
               تلاش مجدد
             </button>
           </div>
-        </div>
-      </div>
-    );
-  }
+        </div>);
+  if (!data || data.length === 0) return <p className="py-16 text-center text-gray-600">هیچ متخصصی یافت نشد.</p>;
+  return (<section className="py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-8">
+            {data.map((i) => {
+              const portrait = getSpecialistPortrait(i.name);
+              return (
+                <div
+                  key={i._id || i.name}
+                  className="bg-white flex flex-col w-full h-full rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
+                >
+                  <div className="h-64 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative">
+                    <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-full border-4 border-white bg-white shadow-lg shadow-primary/20">
+                      {portrait ? (
+                        <Image
+                          src={portrait}
+                          alt={i.name}
+                          width={160}
+                          height={160}
+                          sizes="160px"
+                          placeholder="blur"
+                          className="h-full w-full object-cover object-top"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-primary/5 text-primary/40">
+                          <svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-  if (!data || data.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-50" dir="rtl">
-        <Navbar />
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <p className="text-gray-600 text-lg">هیچ متخصصی یافت نشد</p>
+                  <div className="p-6 h-full w-full flex items-start justify-between flex-col">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 font-morabba">
+                      {i.name}
+                    </h3>
+                    <p className="text-primary font-semibold mb-2">{i.title}</p>
+                    <div className="mb-3">
+                      <span className="inline-block bg-primary/10 text-primary text-xs px-2 py-1 rounded-full mb-2">
+                        {i.experience}
+                      </span>
+                      <p className="text-gray-600 text-sm mb-1">{i.education}</p>
+                      <p className="text-gray-600 text-sm font-medium">
+                        {i.specialization}
+                      </p>
+                    </div>
+                    <p className="text-gray-500 text-xs leading-relaxed">
+                      {i.description}
+                    </p>
+
+                    <div className="mt-4 w-full pt-4 border-t border-gray-100">
+                      <button
+                        onClick={() =>
+                          router.push(`/appointment?doctorId=${i._id}`)
+                        }
+                        className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium"
+                      >
+                        دریافت نوبت مشاوره
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
-      </div>
-    );
-  }
+      </section>);
+}
 
+export default function Specialists() {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
       <Navbar />
+      <Breadcrumbs path="/specialists" />
 
       <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
         <div className="max-w-6xl mx-auto px-4">
@@ -128,55 +162,7 @@ export default function Specialists() {
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8">
-            {data?.map((i, idx) => (
-              <div
-                key={idx}
-                className="bg-white flex flex-col w-full h-full rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
-              >
-                <div className="h-64 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative">
-                  <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="w-32 h-32 rounded-full shadow-lg shadow-primary/40 border-4 border-white bg-gray-200 flex items-center justify-center text-5xl text-primary/50">
-                    {i._id === "1" ? "👩‍⚕️" : "👨‍⚕️"}
-                  </div>
-                </div>
-
-                <div className="p-6 h-full w-full flex items-start justify-between flex-col">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 font-morabba">
-                    {i.name}
-                  </h3>
-                  <p className="text-primary font-semibold mb-2">{i.title}</p>
-                  <div className="mb-3">
-                    <span className="inline-block bg-primary/10 text-primary text-xs px-2 py-1 rounded-full mb-2">
-                      {i.experience}
-                    </span>
-                    <p className="text-gray-600 text-sm mb-1">{i.education}</p>
-                    <p className="text-gray-600 text-sm font-medium">
-                      {i.specialization}
-                    </p>
-                  </div>
-                  <p className="text-gray-500 text-xs leading-relaxed">
-                    {i.description}
-                  </p>
-
-                  <div className="mt-4 w-full pt-4 border-t border-gray-100">
-                    <button
-                      onClick={() =>
-                        router.push(`/appointment?doctorId=${i._id}`)
-                      }
-                      className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors duration-200 font-medium"
-                    >
-                      دریافت نوبت مشاوره
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <SpecialistsList />
 
       <section className="bg-white py-16">
         <div className="max-w-6xl mx-auto px-4">

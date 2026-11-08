@@ -1,5 +1,3 @@
-"use client";
-import { motion } from "framer-motion";
 import AnimatedStep from "./AnimateStep";
 
 interface StepData {
@@ -39,10 +37,7 @@ const StepsSection: React.FC = () => {
   return (
     <section className="py-20 relative">
       <div className="max-w-6xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.7 }}
+        <div
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-4 font-morabba">
@@ -51,14 +46,11 @@ const StepsSection: React.FC = () => {
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             از اولین تماس تا بهبود کامل، همراه شما هستیم
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative">
           <div className="hidden md:block absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-4/5 h-1 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full z-0">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: "100%" }}
-              transition={{ duration: 1.5, delay: 0.3 }}
+            <div
               className="h-full bg-gradient-to-r from-primary to-secondary rounded-full"
             />
           </div>

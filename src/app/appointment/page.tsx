@@ -1,10 +1,14 @@
+import { createPageMetadata } from "@/lib/seo";
+import PageSeo from "@/components/seo/PageSeo";
 import Appointment from "@/screens/appointment";
-import { Suspense } from "react";
+
+export const metadata = createPageMetadata("/appointment");
 
 export default function AppointmentPage() {
   return (
-    <Suspense fallback={<p>Loading ...</p>}>
+    <>
+      <PageSeo path="/appointment" />
       <Appointment />
-    </Suspense>
+    </>
   );
 }

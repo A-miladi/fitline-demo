@@ -7,8 +7,10 @@ import BurgerMenu from "../../../public/icon/BurgerMenu";
 import Close from "../../../public/icon/Close";
 import Profile from "../../../public/icon/Profile";
 import Image from "next/image";
+import Link from "next/link";
 import { ScreenLinks } from "./navigation";
-import { CONTACT_INFO } from "@/screens/appointment";
+import { CONTACT_INFO } from "@/constants/contact";
+import ClinicLocation from "@/components/ClinicLocation";
 
 function MobileNavbar() {
   const pathname = usePathname();
@@ -69,24 +71,26 @@ function MobileNavbar() {
           </div>
 
           <div className="absolute h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div
+            <Link
               className="gradient-text flex h-full cursor-pointer items-center justify-start font-sans font-extrabold text-blue-600"
-              onClick={() => router.push("/")}
+              href="/" prefetch={false} aria-label="صفحه اصلی راه تناسب"
             >
               <Image
-                src="/icon/TLogo.png"
+                src="/icon/TLogo.v1.webp"
+                sizes="120px"
+                loading="eager"
                 className="h-[50%] w-auto object-fill"
-                alt=""
-                width={150}
-                height={100}
+                alt="لوگوی مرکز راه تناسب"
+                width={360}
+                height={110}
               />
-            </div>
+            </Link>
           </div>
         </div>
       </header>
 
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 overflow-hidden bg-white pt-20 lg:hidden">
+        <div className="mobile-menu-scroll fixed inset-0 z-40 overflow-x-hidden overflow-y-auto overscroll-contain bg-white pt-20 lg:hidden">
           <div className="px-4">
             <ul className="flex flex-col gap-1">
               {ScreenLinks.map((item, idx) => (
@@ -120,14 +124,14 @@ function MobileNavbar() {
                           {openSubMenu === item.name && (
                             <div className="space-y-2 pb-2 pl-4">
                               {item.children.map((child, childIdx) => (
-                                <button
+                                <Link
                                   key={childIdx}
                                   className={`block w-full rounded px-2 py-2 text-right ${
                                     isLinkActive(child.link)
                                       ? "bg-blue-50 text-primary font-medium"
                                       : "text-gray-700 hover:bg-gray-50"
                                   }`}
-                                  onClick={() => handleNavigation(child.link)}
+                                  href={child.link} prefetch={false} onClick={() => setMobileMenuOpen(false)}
                                 >
                                   <div className="flex flex-col">
                                     <span>{child.name}</span>
@@ -135,13 +139,13 @@ function MobileNavbar() {
                                       {child.description}
                                     </span>
                                   </div>
-                                </button>
+                                </Link>
                               ))}
                             </div>
                           )}
                         </>
                       ) : (
-                        <button
+                        <Link
                           className={`w-full px-2 py-4 text-right ${
                             isLinkActive(item.link)
                               ? "text-primary font-medium"
@@ -151,10 +155,10 @@ function MobileNavbar() {
                               ? "my-2 flex items-center justify-center rounded-lg bg-primary text-white"
                               : ""
                           }`}
-                          onClick={() => handleNavigation(item.link)}
+                          href={item.link} prefetch={false} onClick={() => setMobileMenuOpen(false)}
                         >
                           {item.name}
-                        </button>
+                        </Link>
                       )}
                     </div>
                   </li>
@@ -266,6 +270,7 @@ function MobileNavbar() {
                     </span>
                   </div>
                 </div>
+                <ClinicLocation location={CONTACT_INFO.location} compact />
               </div>
             </div>
           </div>

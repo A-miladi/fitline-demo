@@ -1,38 +1,19 @@
-"use client";
-
 import FAQItem from "./FAQItem";
-
-interface FAQData {
-  question: string;
-  answer: string;
-}
+import { TREATMENT_FAQ } from "@/constants/treatmentFaq";
+import JsonLd from "@/components/seo/JsonLd";
 
 const FAQSection: React.FC = () => {
-  const faqData: FAQData[] = [
-    {
-      question: "چه مدارکی برای اولین جلسه نیاز است؟",
-      answer:
-        "بهتر است مدارک پزشکی مرتبط، نتایج آزمایشات و تصویربرداری‌های قبلی (در صورت وجود) را همراه داشته باشید.",
-    },
-    {
-      question: "هر جلسه درمانی چقدر زمان می‌برد؟",
-      answer:
-        "جلسات بین ۴۵ تا ۹۰ دقیقه بسته به نوع خدمت و مرحله درمان متفاوت است.",
-    },
-    {
-      question: "هر چند وقت یکبار نیاز به ارزیابی مجدد است؟",
-      answer:
-        "معمولاً هر ۴-۶ هفته یکبار بر اساس پیشرفت و نوع ناهنجاری نیاز به ارزیابی مجدد است.",
-    },
-    {
-      question: "آیا بیمه هزینه‌ها را پرداخت می‌کند؟",
-      answer:
-        "بسته به نوع بیمه و پوشش آن متفاوت است. بهتر است با شرکت بیمه خود مشورت کنید.",
-    },
-  ];
+
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-100 to-gray-200">
+      <JsonLd data={{
+        "@context": "https://schema.org", "@type": "FAQPage",
+        mainEntity: TREATMENT_FAQ.map((faq) => ({
+          "@type": "Question", name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      }} />
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4 font-morabba">
@@ -44,7 +25,7 @@ const FAQSection: React.FC = () => {
         </div>
 
         <div className="space-y-6">
-          {faqData.map((faq, index) => (
+          {TREATMENT_FAQ.map((faq, index) => (
             <FAQItem
               key={index}
               question={faq.question}

@@ -1,7 +1,3 @@
-"use client";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-
 interface DetailSectionProps {
   step: string;
   title: string;
@@ -17,19 +13,11 @@ const DetailSection: React.FC<DetailSectionProps> = ({
   time,
   index,
 }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.2,
-  });
 
   const isEven = index % 2 === 0;
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.7 }}
+    <div
       className={`grid md:grid-cols-2 gap-10 items-center ${
         !isEven ? "md:direction-rtl" : ""
       }`}
@@ -85,7 +73,7 @@ const DetailSection: React.FC<DetailSectionProps> = ({
           </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

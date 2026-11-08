@@ -18,7 +18,6 @@ export type ProjectData = {
   year: number;
   master?: string;
   section: number;
-  s;
   image?: StaticImageData;
 };
 export interface DropdownOption {
@@ -64,6 +63,11 @@ export interface AdminLoginResponse {
 export interface ContactInfo {
   phone: string[];
   address: string;
+  location: {
+    mapUrl: string;
+    neshanUrl: string;
+    embedUrl: string;
+  };
   workingHours: {
     morning: string;
     afternoon: string;

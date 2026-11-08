@@ -146,7 +146,7 @@ const TimeButton = memo(
 
 TimeButton.displayName = "TimeButton";
 
-export default function CalendarPicker({
+function CalendarPicker({
   selectedDate,
   selectedTime,
   onDateSelect,
@@ -314,3 +314,5 @@ export default function CalendarPicker({
     </div>
   );
 }
+
+export default memo(CalendarPicker);

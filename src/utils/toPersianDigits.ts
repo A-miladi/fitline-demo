@@ -1,3 +1,12 @@
+import dayjs from "dayjs";
+import jalaliday from "jalaliday/dayjs";
+
+dayjs.extend(jalaliday);
+
+const persianDateFormatter = new Intl.DateTimeFormat("en-US-u-ca-persian", {
+  year: "numeric", month: "numeric", day: "numeric",
+});
+
 export default function toPersianDigits(value: string) {
   const charCodeZero = "۰".charCodeAt(0);
   return String(value).replace(/[0-9]/g, (w) =>
@@ -11,83 +20,17 @@ export const toPersianNumber = (value: string) => {
 };
 
 export function gregorianToJalali(gy: number, gm: number, gd: number) {
-  const gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  const jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
-
-  let gy2 = gm > 2 ? gy + 1 : gy;
-  let days =
-    355666 +
-    365 * gy +
-    Math.floor((gy2 + 3) / 4) -
-    Math.floor((gy2 + 99) / 100) +
-    Math.floor((gy2 + 399) / 400);
-
-  for (let i = 0; i < gm - 1; i++) {
-    days += gDaysInMonth[i];
-  }
-  days += gd;
-
-  let jy = -1595 + 33 * Math.floor(days / 12053);
-  days %= 12053;
-  jy += 4 * Math.floor(days / 1461);
-  days %= 1461;
-  if (days > 365) {
-    jy += Math.floor((days - 1) / 365);
-    days = (days - 1) % 365;
-  }
-
-  let jm, jd;
-  if (days < 186) {
-    jm = 1 + Math.floor(days / 31);
-    jd = 1 + (days % 31);
-  } else {
-    days -= 186;
-    jm = 7 + Math.floor(days / 30);
-    jd = 1 + (days % 30);
-  }
-
-  return { jy, jm, jd };
+  const parts = persianDateFormatter.formatToParts(new Date(gy, gm - 1, gd));
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    Number(parts.find((value) => value.type === type)?.value);
+  return { jy: part("year"), jm: part("month"), jd: part("day") };
 }
 
 export function jalaliToGregorian(jy: number, jm: number, jd: number) {
-  const jDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
-  const gDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-  let jy2 = jm > 2 ? jy + 1 : jy;
-  let days =
-    -355668 +
-    365 * jy +
-    Math.floor((jy2 + 3) / 4) -
-    Math.floor((jy2 + 99) / 100) +
-    Math.floor((jy2 + 399) / 400);
-
-  for (let i = 0; i < jm - 1; i++) {
-    days += jDaysInMonth[i];
-  }
-  days += jd;
-
-  let gy = 621 + 33 * Math.floor(days / 12053);
-  days %= 12053;
-  gy += 4 * Math.floor(days / 1461);
-  days %= 1461;
-  if (days > 365) {
-    gy += Math.floor((days - 1) / 365);
-    days = (days - 1) % 365;
-  }
-
-  let gm, gd;
-  if ((gy % 4 === 0 && gy % 100 !== 0) || gy % 400 === 0) {
-    gDaysInMonth[1] = 29;
-  } else {
-    gDaysInMonth[1] = 28;
-  }
-
-  for (gm = 0; gm < 12 && days >= gDaysInMonth[gm]; gm++) {
-    days -= gDaysInMonth[gm];
-  }
-  gd = days + 1;
-
-  return { gy, gm: gm + 1, gd };
+  const date = dayjs(`${jy}-${String(jm).padStart(2, "0")}-${String(jd).padStart(2, "0")}`, {
+    jalali: true,
+  }).calendar("gregory");
+  return { gy: date.year(), gm: date.month() + 1, gd: date.date() };
 }
 
 export function formatGregorianToJalali(dateString: string): string {
@@ -193,29 +136,14 @@ export function getJalaliDaysInMonth(year: number, month: number): number {
 }
 
 export function isJalaliLeapYear(year: number): boolean {
-  const breaks = [
-    -61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097,
-    2192, 2262, 2324, 2394, 2456, 3178,
-  ];
-  let leap = -14;
-  let jp = breaks[0];
-  let jump = 0;
-
-  for (let i = 1; i < breaks.length; i++) {
-    const jm = breaks[i];
-    jump = jm - jp;
-    if (year < jm) break;
-    leap = leap + jump / 33 * 8 + (jump % 33) / 4;
-    jp = jm;
-  }
-  const n = year - jp;
-  leap = leap + n / 33 * 8 + (n % 33 + 3) / 4;
-  if (jump % 33 === 4 && jump - n === 4) leap++;
-  return (leap % 33) === 4 || (leap % 33) === 1;
+  const start = jalaliToGregorian(year, 1, 1);
+  const next = jalaliToGregorian(year + 1, 1, 1);
+  return (Date.UTC(next.gy, next.gm - 1, next.gd) -
+    Date.UTC(start.gy, start.gm - 1, start.gd)) / 86400000 === 366;
 }
 
 export function getJalaliDayOfWeek(year: number, month: number, day: number): number {
   const { gy, gm, gd } = jalaliToGregorian(year, month, day);
   const jsDate = new Date(gy, gm - 1, gd);
-  return jsDate.getDay();
+  return (jsDate.getDay() + 1) % 7;
 }

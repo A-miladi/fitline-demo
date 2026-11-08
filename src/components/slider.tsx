@@ -1,13 +1,10 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image1 from "../../public/images/image.jpg";
 import Image2 from "../../public/images/image2.jpg";
 
-export default function ImageSlider() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [fading, setFading] = useState(false);
-  const slides = [
+const slides = [
     {
       image: Image1,
       alt: "Beautiful landscape",
@@ -16,35 +13,45 @@ export default function ImageSlider() {
       image: Image2,
       alt: "Mountain scenery",
     },
-  ];
+];
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      handleNext();
-    }, 3000);
+export default function ImageSlider() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [fading, setFading] = useState(false);
+  const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleNext = () => {
+  const changeSlide = useCallback((offset: number) => {
+    if (transitionTimer.current) clearTimeout(transitionTimer.current);
     setFading(true);
-    setTimeout(() => {
-      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    transitionTimer.current = setTimeout(() => {
+      setCurrentSlide((prev) => (prev + offset + slides.length) % slides.length);
       setFading(false);
     }, 300);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      changeSlide(1);
+    }, 3000);
+
+    return () => {
+      clearInterval(timer);
+      if (transitionTimer.current) clearTimeout(transitionTimer.current);
+    };
+  }, [changeSlide]);
+
+  const handleNext = () => {
+    changeSlide(1);
   };
 
   const handlePrev = () => {
-    setFading(true);
-    setTimeout(() => {
-      setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-      setFading(false);
-    }, 300);
+    changeSlide(-1);
   };
 
   const goToSlide = (index: number) => {
+    if (transitionTimer.current) clearTimeout(transitionTimer.current);
     setFading(true);
-    setTimeout(() => {
+    transitionTimer.current = setTimeout(() => {
       setCurrentSlide(index);
       setFading(false);
     }, 100);

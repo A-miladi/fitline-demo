@@ -1,5 +1,3 @@
-"use client";
-import { motion } from "framer-motion";
 import DetailSection from "./DetailSection";
 
 interface DetailData {
@@ -64,14 +62,11 @@ const DetailsSection: React.FC = () => {
     <section className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+          <h2
             className="text-4xl font-bold text-gray-900 mb-4 font-morabba"
           >
             جزئیات هر مرحله
-          </motion.h2>
+          </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             آشنایی کامل با آنچه در هر مرحله از فرآیند درمان انتظار می‌رود
           </p>

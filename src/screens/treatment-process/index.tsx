@@ -1,7 +1,7 @@
-"use client";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import Navbar from "@/components/navbar";
 import Link from "next/link";
-import { motion } from "framer-motion";
+
 import CTA from "./components/CTA";
 import FAQSection from "./components/FAQSection";
 import DetailsSection from "./components/DetailsSection";
@@ -14,6 +14,7 @@ const TreatmentProcess: React.FC = () => {
       dir="rtl"
     >
       <Navbar />
+      <Breadcrumbs path="/treatment-process" />
 
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 z-0"></div>
@@ -21,10 +22,7 @@ const TreatmentProcess: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full translate-y-48 -translate-x-48"></div>
 
         <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+          <div
             className="text-center"
           >
             <h1 className="text-3xl md:text-6xl font-bold text-gray-900 mb-6 font-morabba">
@@ -36,18 +34,18 @@ const TreatmentProcess: React.FC = () => {
             </p>
 
             <div className="flex justify-center gap-4">
-              <Link href="/appointment">
-                <button className="bg-gradient-to-r h-12 from-primary to-secondary text-white px-8 flex items-center justify-center rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+              <Link href="/appointment" className="bg-gradient-to-r h-12 from-primary to-secondary text-white px-8 flex items-center justify-center rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                
                   رزرو نوبت ارزیابی
-                </button>
+                
               </Link>
-              <Link href="/about">
-                <button className="border-2 border-primary h-12 text-primary px-8 rounded-lg flex items-center justify-center font-semibold hover:bg-primary hover:text-white transition-colors duration-300">
+              <Link href="/about" className="border-2 border-primary h-12 text-primary px-8 rounded-lg flex items-center justify-center font-semibold hover:bg-primary hover:text-white transition-colors duration-300">
+                
                   درباره مرکز ما
-                </button>
+                
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
